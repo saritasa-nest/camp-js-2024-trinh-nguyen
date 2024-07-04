@@ -2,4 +2,24 @@
   --heading-color-1: #ffd700;
   --heading-color-2: #e9967a;
   --heading-color-3: #b0e0e6;
+
+  /* height */
+  --height-main-header: 64px;
+  --height-main-footer: 128px;
+  --gap-medium: 10px;
+
+  /* space */
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 40px;
+  --spacing-3xl: 72px;
+
+  /* font size */
+  --font-size-sm: 8px;
+  --font-size-md: 16px;
+  --font-size-lg: 24px;
+  --font-size-xl: 32px;
+  --font-size-2xl: 40px;
 }

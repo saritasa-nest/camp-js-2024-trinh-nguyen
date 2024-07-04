@@ -4,13 +4,148 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./index.css" />
-    <title>Vite App</title>
+    <title>Book App</title>
   </head>
-  <body class="default-layout">
-    <h1 class="title">Main page ⚡</h1>
-    <div class="links">
-      <a href="example/">Go to example page</a>
-    </div>
+  <body class="content">
+    <header class="header content__header">
+      <h5 class="">📚 Books app</h5>
+    </header>
+    <div class="content__separate__1"></div>
+    <main class="main content__main">
+      <section class="main__section">
+        <div class="main__section__wrapper">
+          <h5 class="main__section__year">2020 YEAR</h5>
+          <div class="content__main__group">
+            <article class="group__element">
+              <img src="images/rfui.jpg" class="group__element--img" />
+              <p class="group__element--title">Author</p>
+            </article>
+            <article class="group__element">
+              <img src="images/debug.jpg" class="group__element--img" />
+              <p class="group__element--title">Master</p>
+            </article>
+            <article class="group__element">
+              <img src="images/blue.jpg" class="group__element--img" />
+              <p class="group__element--title">Author</p>
+            </article>
+          </div>
+        </div>
+        <div class="main__section__wrapper">
+          <h5 class="main__section__year">1980 YEAR</h5>
+          <div class="content__main__group">
+            <article class="group__element">
+              <img src="images/yoko.jpg" class="group__element--img" />
+              <p class="group__element--title">Author</p>
+            </article>
+            <article class="group__element">
+              <img src="images/js.jpg" class="group__element--img" />
+              <p class="group__element--title">
+                hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì
+              </p>
+            </article>
+            <article class="group__element">
+              <img src="images/yotsuba.png" class="group__element--img" />
+              <p class="group__element--title">Author</p>
+            </article>
+            <article class="group__element">
+              <img src="images/design.jpg" class="group__element--img" />
+              <p class="group__element--title">Author</p>
+            </article>
+            <article class="group__element">
+              <img src="images/DDV.jpeg" class="group__element--img" />
+              <p class="group__element--title">Author</p>
+            </article>
+            <article class="group__element">
+              <img src="images/7HABIT.jpg" class="group__element--img" />
+              <p class="group__element--title">Author</p>
+            </article>
+          </div>
+        </div>
+        <div class="main__section__wrapper">
+          <h5 class="main__section__year">1980 YEAR</h5>
+          <div class="group content__main__group">
+            <article class="group__element">
+              <img src="images/yoko.jpg" class="group__element--img" />
+              <p class="group__element--title">Author</p>
+            </article>
+            <article class="group__element">
+              <img src="images/js.jpg" class="group__element--img" />
+              <p class="group__element--title">hì hì hì hì</p>
+            </article>
+            <article class="group__element">
+              <img src="images/yotsuba.png" class="group__element--img" />
+              <p class="group__element--title">Author</p>
+            </article>
+            <article class="group__element">
+              <img src="images/design.jpg" class="group__element--img" />
+              <p class="group__element--title">Author</p>
+            </article>
+            <article class="group__element">
+              <img src="images/DDV.jpeg" class="group__element--img" />
+              <p class="group__element--title">Author</p>
+            </article>
+            <article class="group__element">
+              <img src="images/7HABIT.jpg" class="group__element--img" />
+              <p class="group__element--title">Author</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <form class="main__filters">
+        <h6 class="main__filters__title">FILTERS</h6>
+
+        <div class="filters main__filters__container">
+          <div class="filters__search">
+            <input type="search" value="" placeholder="e.g Refactoring" class="filters__search__input" />
+            <button type="button" class="filters__search__button">
+              <svg>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+              </svg>
+            </button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none">
+              <symbol id="search" viewBox="0 0 32 32">
+                <path
+                  d="M 19.5 3 C 14.26514 3 10 7.2651394 10 12.5 C 10 14.749977 10.810825 16.807458 12.125 18.4375 L 3.28125 27.28125 L 4.71875 28.71875 L 13.5625 19.875 C 15.192542 21.189175 17.250023 22 19.5 22 C 24.73486 22 29 17.73486 29 12.5 C 29 7.2651394 24.73486 3 19.5 3 z M 19.5 5 C 23.65398 5 27 8.3460198 27 12.5 C 27 16.65398 23.65398 20 19.5 20 C 15.34602 20 12 16.65398 12 12.5 C 12 8.3460198 15.34602 5 19.5 5 z"
+                />
+              </symbol>
+            </svg>
+          </div>
+
+          <select class="filters__select">
+            <option>Choose sort field</option>
+            <option>Field 1</option>
+            <option>Field 2</option>
+            <option>Field 3</option>
+          </select>
+
+          <label class="filters__checkbox">
+            <div class="filters__checkbox__wrapper">
+              <label><input type="checkbox" name="cb" /></label>
+            </div>
+
+            <span class="filters__checkbox__text">Show comics</span>
+          </label>
+        </div>
+
+        <div class="content__separate__2"></div>
+      </form>
+    </main>
+
+    <div class="content__separate__3"></div>
+    <footer class="footer">
+      <div class="footer__first">
+        <div class="footer__info">
+          <span class="footer__info__title">Books app</span>
+          <span>© 2023</span>
+        </div>
+        <div class="footer__link">
+          <a>Github</a>
+        </div>
+      </div>
+      <div onclick="window.scrollTo({top: 0, behavior: 'smooth'});" class="footer__second">Go to top ↑</div>
+    </footer>
+
     <script type="module" src="./index.ts"></script>
   </body>
 </html>
