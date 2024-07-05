@@ -22,4 +22,9 @@
   --font-size-lg: 24px;
   --font-size-xl: 32px;
   --font-size-2xl: 40px;
+
+  /* screen size */
+  --screen-size-sm: 360px;
+  --screen-size-md: 786px;
+  --screen-size-lg: 1280px;
 }
