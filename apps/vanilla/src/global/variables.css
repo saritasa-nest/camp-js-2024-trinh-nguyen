@@ -1,30 +1,40 @@
 :root {
-  --heading-color-1: #ffd700;
-  --heading-color-2: #e9967a;
-  --heading-color-3: #b0e0e6;
+	--heading-color-1: #ffd700;
+	--heading-color-2: #e9967a;
+	--heading-color-3: #b0e0e6;
 
-  /* height */
-  --height-main-header: 64px;
-  --height-main-footer: 128px;
-  --gap-medium: 10px;
+	/* color */
+	--primary-color: #fff;
+	--second-color: #000;
 
-  /* space */
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-2xl: 40px;
-  --spacing-3xl: 72px;
+	/* custom color */
+	--light-gray: #9098a9;
 
-  /* font size */
-  --font-size-sm: 8px;
-  --font-size-md: 16px;
-  --font-size-lg: 24px;
-  --font-size-xl: 32px;
-  --font-size-2xl: 40px;
+	/* divider */
+	/* stylelint-disable-next-line color-hex-length */
+	--divider-color: #ffffff;
 
-  /* screen size */
-  --screen-size-sm: 360px;
-  --screen-size-md: 786px;
-  --screen-size-lg: 1280px;
+	/* height */
+	--height-main-header: 64px;
+	--height-main-footer: 128px;
+
+	/* space */
+	--spacing-sm: 8px;
+	--spacing-md: 16px;
+	--spacing-lg: 24px;
+	--spacing-xl: 32px;
+	--spacing-2xl: 40px;
+	--spacing-3xl: 72px;
+
+	/* font size */
+	--font-size-sm: 8px;
+	--font-size-md: 16px;
+	--font-size-lg: 24px;
+	--font-size-xl: 32px;
+	--font-size-2xl: 40px;
+
+	/* screen size */
+	--screen-size-sm: 360px;
+	--screen-size-md: 786px;
+	--screen-size-lg: 1280px;
 }

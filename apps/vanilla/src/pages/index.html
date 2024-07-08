@@ -1,149 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./index.css" />
-    <title>Book App</title>
-  </head>
-  <body class="content">
-    <header class="header">
-      <h5>📚 Books app</h5>
-    </header>
-    <hr class="sparate" />
-    <main class="main main--reverse">
-      <section class="section">
-        <div>
-          <h5 class="section__year">2020 YEAR</h5>
-          <div class="section__group">
-            <article class="article">
-              <img alt="book 1" src="images/rfui.jpg" class="article__img" />
-              <p class="article__title">Author</p>
-            </article>
-            <article class="article">
-              <img alt="book 2" src="images/debug.jpg" class="article__img" />
-              <p class="article__title">Master</p>
-            </article>
-            <article class="article">
-              <img alt="book 3" src="images/blue.jpg" class="article__img" />
-              <p class="article__title">Author</p>
-            </article>
-          </div>
-        </div>
-        <div>
-          <h5 class="section__year">1980 YEAR</h5>
-          <div class="section__group">
-            <article class="article">
-              <img alt="book 4" src="images/yoko.jpg" class="article__img" />
-              <p class="article__title">Author</p>
-            </article>
-            <article class="article">
-              <img alt="book 5" src="images/js.jpg" class="article__img" />
-              <p class="article__title">
-                hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì hì
-              </p>
-            </article>
-            <article class="article">
-              <img alt="book 6" src="images/yotsuba.png" class="article__img" />
-              <p class="article__title">Author</p>
-            </article>
-            <article class="article">
-              <img alt="book 7" src="images/design.jpg" class="article__img" />
-              <p class="article__title">Author</p>
-            </article>
-            <article class="article">
-              <img alt="book 8" src="images/DDV.jpeg" class="article__img" />
-              <p class="article__title">Author</p>
-            </article>
-            <article class="article">
-              <img alt="book 9" src="images/7HABIT.jpg" class="article__img" />
-              <p class="article__title">Author</p>
-            </article>
-          </div>
-        </div>
-        <div>
-          <h5 class="section__year">1980 YEAR</h5>
-          <div class="section__group">
-            <article class="article">
-              <img alt="book 9" src="images/yoko.jpg" class="article__img" />
-              <p class="article__title">Author</p>
-            </article>
-            <article class="article">
-              <img alt="book 10" src="images/js.jpg" class="article__img" />
-              <p class="article__title">hì hì hì hì</p>
-            </article>
-            <article class="article">
-              <img alt="book 11" src="images/yotsuba.png" class="article__img" />
-              <p class="article__title">Author</p>
-            </article>
-            <article class="article">
-              <img alt="book 12" src="images/design.jpg" class="article__img" />
-              <p class="article__title">Author</p>
-            </article>
-            <article class="article">
-              <img alt="book 13" src="images/DDV.jpeg" class="article__img" />
-              <p class="article__title">Author</p>
-            </article>
-            <article class="article">
-              <img alt="book 14" src="images/7HABIT.jpg" class="article__img" />
-              <p class="article__title">Author</p>
-            </article>
-          </div>
-        </div>
-      </section>
-      <hr class="sparate sparate--disable" />
-      <form class="filters">
-        <h6 class="filters__title">FILTERS</h6>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./index.css" />
+		<title>Book App</title>
+	</head>
+	<body class="content">
+		<header class="header">
+			<h1 class="header__title">📚 Books app</h1>
+		</header>
+		<hr class="divider" />
+		<main class="main main--reverse">
+			<section class="section">
+				<section>
+					<h2 class="section__year">2020 YEAR</h2>
+					<ul class="section__group section__group--padding">
+						<li class="group__item">
+							<article class="article">
+								<img alt="book 1" src="images/rfui.jpg" class="article__img" />
+								<p class="article__title">Refactoring UI</p>
+							</article>
+						</li>
+						<li class="group__item">
+							<article class="article">
+								<img alt="book 2" src="images/debug.jpg" class="article__img" />
+								<p class="article__title">Master the Skill of Debugging CSS</p>
+							</article>
+						</li>
+						<li class="group__item">
+							<article class="article">
+								<img alt="book 3" src="images/blue.jpg" class="article__img" />
+								<p class="article__title">Blue Period</p>
+							</article>
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h2 class="section__year">1980 YEAR</h2>
+					<ul class="section__group section__group--padding">
+						<li class="group__item">
+							<article class="article">
+								<img alt="book 4" src="images/yoko.jpg" class="article__img" />
+								<p class="article__title">Yokohama Kaidashi Kikou</p>
+							</article>
+						</li>
+						<li class="group__item">
+							<article class="article">
+								<img alt="book 5" src="images/js.jpg" class="article__img" />
+								<p class="article__title">Learning JavaScript Design Patterns</p>
+							</article>
+						</li>
+						<li class="group__item">
+							<article class="article">
+								<img alt="book 6" src="images/yotsuba.png" class="article__img" />
+								<p class="article__title">Yotsuba to!</p>
+							</article>
+						</li>
+						<li class="group__item">
+							<article class="article">
+								<img alt="book 7" src="images/design.jpg" class="article__img" />
+								<p class="article__title">Domain-Driven Design</p>
+							</article>
+						</li>
+						<li class="group__item">
+							<article class="article">
+								<img alt="book 8" src="images/DDV.jpeg" class="article__img" />
+								<p class="article__title">Implementing Domain-driven Design</p>
+							</article>
+						</li>
+						<li class="group__item">
+							<article class="article">
+								<img alt="book 9" src="images/7HABIT.jpg" class="article__img" />
+								<p class="article__title">7 Навыков высокэффективных</p>
+							</article>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<hr class="divider divider--hide" />
+			<form class="filters">
+				<h6 class="filters__title">FILTERS</h6>
 
-        <div class="filters__wrapper">
-          <div class="filters__search">
-            <input type="search" value="" placeholder="e.g Refactoring" class="filters__search-input" />
-            <button type="button" class="filters__search-button">
-              <svg>
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-              </svg>
-            </button>
-            <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none">
-              <symbol id="search" viewBox="0 0 32 32">
-                <path
-                  d="M 19.5 3 C 14.26514 3 10 7.2651394 10 12.5 C 10 14.749977 10.810825 16.807458 12.125 18.4375 L 3.28125 27.28125 L 4.71875 28.71875 L 13.5625 19.875 C 15.192542 21.189175 17.250023 22 19.5 22 C 24.73486 22 29 17.73486 29 12.5 C 29 7.2651394 24.73486 3 19.5 3 z M 19.5 5 C 23.65398 5 27 8.3460198 27 12.5 C 27 16.65398 23.65398 20 19.5 20 C 15.34602 20 12 16.65398 12 12.5 C 12 8.3460198 15.34602 5 19.5 5 z"
-                />
-              </symbol>
-            </svg>
-          </div>
+				<div class="filters__wrapper">
+					<div class="filters__search">
+						<input type="search" value="" placeholder="e.g Refactoring" class="filters__search-input" />
+						<button type="button" class="filters__search-button">
+							<svg>
+								<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+							</svg>
+						</button>
+						<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none">
+							<symbol id="search" viewBox="0 0 32 32">
+								<path
+									d="M 19.5 3 C 14.26514 3 10 7.2651394 10 12.5 C 10 14.749977 10.810825 16.807458 12.125 18.4375 L 3.28125 27.28125 L 4.71875 28.71875 L 13.5625 19.875 C 15.192542 21.189175 17.250023 22 19.5 22 C 24.73486 22 29 17.73486 29 12.5 C 29 7.2651394 24.73486 3 19.5 3 z M 19.5 5 C 23.65398 5 27 8.3460198 27 12.5 C 27 16.65398 23.65398 20 19.5 20 C 15.34602 20 12 16.65398 12 12.5 C 12 8.3460198 15.34602 5 19.5 5 z"
+								/>
+							</symbol>
+						</svg>
+					</div>
 
-          <select class="filters__select">
-            <option>Choose sort field</option>
-            <option>Field 1</option>
-            <option>Field 2</option>
-            <option>Field 3</option>
-          </select>
+					<select class="filters__select">
+						<option>Choose sort field</option>
+						<option>Field 1</option>
+						<option>Field 2</option>
+						<option>Field 3</option>
+					</select>
 
-          <label class="filters__checkbox">
-            <div class="filters__checkbox-wrapper">
-              <input type="checkbox" name="checkbox" />
-            </div>
+					<label class="filters__checkbox">
+						<div class="filters__checkbox-wrapper">
+							<input class="filters__checkbox-input" type="checkbox" name="checkbox" />
+						</div>
 
-            <span class="filters__checkbox-text">Show comics</span>
-          </label>
-        </div>
-      </form>
-    </main>
+						<span class="filters__checkbox-text">Show comics</span>
+					</label>
+				</div>
+			</form>
+		</main>
 
-    <hr class="sparate" />
-    <footer class="footer">
-      <div class="footer__first">
-        <div class="footer__info">
-          <span class="footer__info-title">Books app</span>
-          <span>© 2023</span>
-        </div>
-        <div class="footer__link">
-          <a>Github</a>
-        </div>
-      </div>
-      <div class="footer__second">Go to top ↑</div>
-    </footer>
+		<hr class="divider" />
+		<footer class="footer">
+			<div class="footer__first">
+				<div class="footer__info">
+					<span class="footer__info-title">Books app</span>
+					<span>© 2023</span>
+				</div>
+				<div class="footer__link">
+					<a href="#">Github</a>
+				</div>
+			</div>
+			<div class="footer__second">Go to top ↑</div>
+		</footer>
 
-    <script type="module" src="./index.ts"></script>
-  </body>
+		<script type="module" src="./index.ts"></script>
+	</body>
 </html>
