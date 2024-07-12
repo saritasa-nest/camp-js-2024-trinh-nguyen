@@ -1,18 +1,13 @@
 :root {
-	--heading-color-1: #ffd700;
-	--heading-color-2: #e9967a;
-	--heading-color-3: #b0e0e6;
-
 	/* color */
-	--primary-color: #fff;
-	--second-color: #000;
-
-	/* custom color */
-	--light-gray: #9098a9;
-
-	/* divider */
-	/* stylelint-disable-next-line color-hex-length */
-	--divider-color: #ffffff;
+	--primary-color: rgba(255 255 255 / 100%);
+	--on-surface-color: rgba(0 0 0 / 100%);
+	--border-color: rgba(0 0 0 / 15%);
+	--surface-overlay-color: rgba(0 0 0 / 5%);
+	--on-primary-color: rgba(241 89 36 / 100%);
+	--bg-color: rgba(244 244 244);
+	--shadow-color: rgba(74 74 79);
+	--light-pink-color: rgba(255 230 230);
 
 	/* height */
 	--height-main-header: 64px;

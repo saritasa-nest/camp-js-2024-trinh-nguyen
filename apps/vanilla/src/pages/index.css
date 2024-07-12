@@ -109,20 +109,20 @@
 	font-weight: 300;
 	height: 40px;
 	border-radius: 12px;
-	background: #f0f0f0;
+	background: var(--surface-overlay-color);
 	font-size: medium;
 	overflow: hidden;
 }
 
 .filters__select {
-	color: gray;
+	color: var(--border-color);
 	font-size: medium;
 	font-weight: 300;
 	position: relative;
 	height: 40px;
 	width: 100%;
 	border-radius: 12px;
-	background: #f0f0f0;
+	background: var(--surface-overlay-color);
 	transition: all 0.3s ease;
 	border: none;
 	/* stylelint-disable-next-line property-no-vendor-prefix */
@@ -131,14 +131,14 @@
 	-moz-appearance: none;
 	padding: var(--spacing-sm) var(--spacing-sm);
 	appearance: none;
-	background-image: url("https://static.thenounproject.com/png/1666929-200.png");
+	background-image: url("icons/arrow.svg");
 	background-repeat: no-repeat;
 	background-position: right 0.7rem top 50%;
 	background-size: 16px 16px;
 }
 
 .divider {
-	color: var(--divider-color);
+	color: var(--border-color);
 }
 
 .filters__search-input {
@@ -147,7 +147,6 @@
 	left: 38px;
 	font-size: 14px;
 	background: none;
-	color: #5a6674;
 	width: 100%;
 	height: 20px;
 	border: none;
@@ -174,7 +173,7 @@
 	& svg {
 		width: 20px;
 		height: 20px;
-		fill: #5a6674;
+		fill: var(--on-surface-color);
 	}
 }
 
@@ -188,29 +187,8 @@
 	cursor: pointer;
 }
 
-.content__main__filter__checkbox__input {
-	appearance: none;
-	/* stylelint-disable-next-line property-no-vendor-prefix */
-	-webkit-appearance: none;
-	width: 15px;
-	height: 15px;
-	border: 2px solid #ccc;
-	border-radius: 4px;
-	margin-right: 8px;
-	cursor: pointer;
-}
-
 .filters__checkbox-text {
 	font-size: small;
-}
-
-.content__footer__container {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	padding-top: 24px;
-	padding-bottom: 72px;
 }
 
 .footer__link {
@@ -225,7 +203,7 @@
 	gap: var(--spacing-lg);
 }
 
-.footer__first {
+.footer__copyright {
 	display: flex;
 	gap: var(--spacing-lg);
 }
@@ -234,24 +212,16 @@
 	gap: var(--spacing-sm);
 }
 
-.footer__second {
+.footer__go-to-top {
 	margin-left: auto;
-	color: var(--second-color);
+	color: var(--on-surface-color);
 	text-decoration: none;
 	text-decoration-color: none;
 }
 
-.footer a {
-	text-decoration: none;
-}
-
-.footer__link a {
-	color: var(--second-color);
+.footer__link-a {
+	color: var(--on-surface-color);
 	text-decoration: underline;
-}
-
-.footer__info__title {
-	font-weight: bold;
 }
 
 .filters__checkbox-wrapper label {
@@ -269,20 +239,15 @@
 	/* stylelint-disable-next-line property-no-unknown */
 	border-raudis: 4px;
 	font: inherit;
-	border: 0.12em solid var(--light-gray);
+	border: 0.12em solid var(--border-color);
 	margin-bottom: -0.125em;
 	border-radius: 0.25em;
 }
 
 .filters__checkbox-input:checked {
-	border-color: #f15924;
-	background: #f15924 border-box;
-	box-shadow: 0 0 0 0.1em inset #fff;
-}
-
-.filters__checkbox-input:not(:checked):hover {
-	border-color: gray;
-	background: linear-gradient(#fff, #fff) padding-box, gray border-box;
+	border-color: var(--on-primary-color);
+	background: var(--on-primary-color) border-box;
+	box-shadow: 0 0 0 0.1em inset var(--primary-color);
 }
 
 @media (min-width: 360px) {
@@ -314,16 +279,10 @@
 		gap: var(--spacing-lg);
 	}
 
-	.content__main__filter {
-		position: static;
-		width: 100%;
-	}
-
 	.filters__search {
 		width: 100%;
 		height: 40px;
 		border-radius: 15px;
-		background: #f0f0f0;
 	}
 
 	.filters__checkbox {
@@ -332,11 +291,6 @@
 }
 
 @media (min-width: 1280px) {
-	.content__main__filter {
-		right: var(--spacing-lg);
-		width: 276px;
-	}
-
 	.divider--hide {
 		display: none;
 	}
