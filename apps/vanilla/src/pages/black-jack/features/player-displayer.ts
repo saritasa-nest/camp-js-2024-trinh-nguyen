@@ -4,7 +4,7 @@ import { Subscriber } from '../models/subscriber';
 
 import { ResultDisplayer } from './result-displayer';
 
-/** Display winner. */
+/** Display player name, their score of each turn and their total score. */
 export class PlayerDisplayer extends ResultDisplayer implements Subscriber<number[]> {
 
 	/** HTMLElement display all dice result. */
@@ -39,8 +39,8 @@ export class PlayerDisplayer extends ResultDisplayer implements Subscriber<numbe
 	 */
 	public update(turnResult: number[]): void {
 		// Update score of all players.
-		const newestScore = turnResult[turnResult.length - 1];
-		PlayerDisplayer.totalScoreOfAllPlayer += newestScore;
+		const latestScore = turnResult.at(-1) ?? -1;
+		PlayerDisplayer.totalScoreOfAllPlayer += latestScore;
 
 		const spanDisplayAllTotalScore = PlayerDisplayer.debugElement?.querySelector('span');
 		if (isElement(spanDisplayAllTotalScore)) {
@@ -55,16 +55,16 @@ export class PlayerDisplayer extends ResultDisplayer implements Subscriber<numbe
 
 		// Append new dice result to each player display.
 		const listItem = document.createElement('li');
-		listItem.textContent = newestScore.toString();
+		listItem.textContent = latestScore.toString();
 
 		const listPlayerDiceResult = this.elementContainer.querySelector('ul');
 		if (isElement(listPlayerDiceResult)) {
 			listPlayerDiceResult.appendChild(listItem);
 		}
 
-		/** Append new dice result to all player display. */
+		// Append new dice result to all player display.
 		const listItemDebug = document.createElement('li');
-		listItemDebug.textContent = newestScore.toString();
+		listItemDebug.textContent = latestScore.toString();
 
 		const listAllDiceResult = PlayerDisplayer.debugElement?.querySelector('ul');
 		if (isElement(listAllDiceResult)) {

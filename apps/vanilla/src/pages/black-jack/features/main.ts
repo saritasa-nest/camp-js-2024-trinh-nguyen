@@ -40,25 +40,23 @@ function main(): void {
 
 		const playerContainer = document.getElementById('player-container');
 
-		return Array(numberOfPlayer)
-			.fill(null)
-			.map((_, index) => {
-				const player = new Player();
+		return Array.from({ length: numberOfPlayer }, (_, index) => {
+			const player = new Player();
 
-				const playerElement = document.createElement('div');
-				if (isElement(playerElement)) {
-					playerElement.id = `player${index}`;
-					if (isElement(playerContainer)) {
-						playerContainer.appendChild(playerElement);
-					}
+			const playerElement = document.createElement('div');
+			if (isElement(playerElement)) {
+				playerElement.id = `player${index}`;
+				if (isElement(playerContainer)) {
+					playerContainer.appendChild(playerElement);
 				}
-				const winnerDisplayer = new WinDisplayer(playerElement, index);
-				const playerResultDisplayer = new PlayerDisplayer(playerElement, index);
-				playerResultDisplayer.setupLayout();
-				player.winStatus.subscribe(winnerDisplayer);
-				player.result.subscribe(playerResultDisplayer);
-				return player;
-			});
+			}
+			const winnerDisplayer = new WinDisplayer(playerElement, index);
+			const playerResultDisplayer = new PlayerDisplayer(playerElement, index);
+			playerResultDisplayer.setupLayout();
+			player.winStatus.subscribe(winnerDisplayer);
+			player.result.subscribe(playerResultDisplayer);
+			return player;
+		});
 	}
 
 }

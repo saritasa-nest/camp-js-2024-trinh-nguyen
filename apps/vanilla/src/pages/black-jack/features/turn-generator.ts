@@ -1,14 +1,12 @@
 import { Publisher } from '../models/publisher';
 
-/** Class Turn Generator. */
+/** Class turn generator. */
 export class TurnGenerator extends Publisher<number> {
-	private readonly playersCount: number;
 
 	private currentPlayerIndex = 0;
 
-	public constructor(playersCount: number) {
+	public constructor(private readonly playersCount: number) {
 		super();
-		this.playersCount = playersCount;
 		this.currentPlayerIndex = 0;
 	}
 

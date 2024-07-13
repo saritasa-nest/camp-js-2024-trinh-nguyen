@@ -6,7 +6,7 @@ import { PlayerTurnResult } from '../models/player-turn-result';
 
 const WIN_SCORE = 21;
 
-/** Player. */
+/** Player: store their dice result of each turn and win-status which notify to displayer class after each their turn and when they win. */
 export class Player implements Subscriber<PlayerTurnResult> {
 
 	private readonly diceResults: number[] = [];

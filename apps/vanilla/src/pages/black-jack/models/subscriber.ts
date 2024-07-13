@@ -2,7 +2,7 @@
 export type Subscriber<T> = {
 
 	/**
-	 * Update.
+	 * Update when publisher has new message.
 	 * @param message Message.
 	 */
 	update(message: T): void;

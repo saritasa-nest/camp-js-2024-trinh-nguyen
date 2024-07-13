@@ -5,21 +5,20 @@ export class Publisher<T> {
 	private subscribers: Subscriber<T>[] = [];
 
 	/**
-	 * Constructor.
+	 * Get the subscriber info to push to subscriber db.
 	 * @param subscriber Info new Subscriber.
 	 */
 	public subscribe(subscriber: Subscriber<T>): void {
 		this.subscribers.push(subscriber);
 	}
 
-	// TODO
-	/** */
+	/** Get the subscribers to get player instance. */
 	public getSubcribers(): readonly Subscriber<T>[] {
 		return this.subscribers;
 	}
 
 	/**
-	 * Get the index.
+	 * Get the index of subscriber.
 	 * @param subscriber Info new Subscriber.
 	 */
 	public getSubscriberIndex(subscriber: Subscriber<T>): number {
@@ -27,7 +26,7 @@ export class Publisher<T> {
 	}
 
 	/**
-	 * Unsubscribe.
+	 * Remove subscriber.
 	 * @param subscriber Info of subscriber.
 	 */
 	public unsubscribe(subscriber: Subscriber<T>): void {
@@ -35,7 +34,7 @@ export class Publisher<T> {
 	}
 
 	/**
-	 * Notification.
+	 * Notification to subscriber.
 	 * @param message Message to Notify.
 	 */
 	public notify(message: T): void {

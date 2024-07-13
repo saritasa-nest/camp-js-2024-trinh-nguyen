@@ -1,3 +1,5 @@
+import { getRandomIntegerNumber } from '@js-camp/core/utils/get-integer-random';
+
 import { Subscriber } from '../models/subscriber';
 
 import { Publisher } from '../models/publisher';
@@ -6,11 +8,8 @@ import { PlayerTurnResult } from '../models/player-turn-result';
 
 /** Dice generator. */
 export class DiceGenerator extends Publisher<PlayerTurnResult> implements Subscriber<number> {
-	private readonly sidesCount: number;
-
-	public constructor(sidesCount: number) {
+	public constructor(private readonly sidesCount: number) {
 		super();
-		this.sidesCount = sidesCount;
 	}
 
 	/**
@@ -18,13 +17,7 @@ export class DiceGenerator extends Publisher<PlayerTurnResult> implements Subscr
 	 * @param diceResult Turn and dice result.
 	 **/
 	public override notify(diceResult: PlayerTurnResult): void {
-		this.getSubcribers().forEach(subscriber => {
-			if (
-				this.getSubscriberIndex(subscriber) === diceResult.playerIndex
-			) {
-				subscriber.update(diceResult);
-			}
-		});
+		this.getSubcribers()[diceResult.playerIndex].update(diceResult);
 	}
 
 	/**
@@ -32,7 +25,7 @@ export class DiceGenerator extends Publisher<PlayerTurnResult> implements Subscr
 	 * @param playerIndex Player this index need roll dice.
 	 */
 	private roll(playerIndex: number): PlayerTurnResult {
-		const diceResult = Math.floor(Math.random() * this.sidesCount) + 1;
+		const diceResult = getRandomIntegerNumber(this.sidesCount);
 		return new PlayerTurnResult(playerIndex, diceResult);
 	}
 
