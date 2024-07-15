@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchGenres } from './dispatchers';
 import { initialState } from './state';
 
+/** Initial genreSlice. */
 export const genresSlice = createSlice({
 	name: 'genres',
 	initialState,
