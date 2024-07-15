@@ -9,16 +9,16 @@ import { WinDisplayer } from './win-displayer';
 import { PlayerDisplayer } from './player-displayer';
 
 const DICE_SIDES = 6;
+const PLAYERS_NUMBER = 6;
 
 /** Main function. */
 function main(): void {
-	const playersCountInput = 6;
-	const turnGenerator = new TurnGenerator(playersCountInput);
+	const turnGenerator = new TurnGenerator(PLAYERS_NUMBER);
 	const diceGenerator = new DiceGenerator(DICE_SIDES);
 
 	turnGenerator.subscribe(diceGenerator);
 
-	const players = createPlayers(playersCountInput);
+	const players = createPlayers(PLAYERS_NUMBER);
 	players.forEach(player => {
 		diceGenerator.subscribe(player);
 	});
@@ -41,7 +41,7 @@ function main(): void {
 		const playerContainer = document.getElementById('player-container');
 
 		return Array.from({ length: numberOfPlayer }, (_, index) => {
-			const player = new Player();
+			const player = new Player(index);
 
 			const playerElement = document.createElement('div');
 			if (isElement(playerElement)) {

@@ -13,16 +13,8 @@ export class Publisher<T> {
 	}
 
 	/** Get the subscribers to get player instance. */
-	public getSubcribers(): readonly Subscriber<T>[] {
+	public get subscriberArr(): readonly Subscriber<T>[] {
 		return this.subscribers;
-	}
-
-	/**
-	 * Get the index of subscriber.
-	 * @param subscriber Info new Subscriber.
-	 */
-	public getSubscriberIndex(subscriber: Subscriber<T>): number {
-		return this.subscribers.findIndex(sub => sub === subscriber);
 	}
 
 	/**
@@ -30,6 +22,7 @@ export class Publisher<T> {
 	 * @param subscriber Info of subscriber.
 	 */
 	public unsubscribe(subscriber: Subscriber<T>): void {
+
 		this.subscribers = this.subscribers.filter(subscriberItem => subscriberItem !== subscriber);
 	}
 

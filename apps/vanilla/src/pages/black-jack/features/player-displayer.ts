@@ -40,6 +40,9 @@ export class PlayerDisplayer extends ResultDisplayer implements Subscriber<numbe
 	public update(turnResult: number[]): void {
 		// Update score of all players.
 		const latestScore = turnResult.at(-1) ?? -1;
+		if (latestScore === -1) {
+			return;
+		}
 		PlayerDisplayer.totalScoreOfAllPlayer += latestScore;
 
 		const spanDisplayAllTotalScore = PlayerDisplayer.debugElement?.querySelector('span');

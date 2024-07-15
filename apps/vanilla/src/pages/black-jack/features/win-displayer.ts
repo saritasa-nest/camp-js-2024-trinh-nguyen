@@ -13,13 +13,14 @@ export class WinDisplayer extends ResultDisplayer implements Subscriber<boolean>
 	 * @param isWinner Whether user has score >= 21(which win score required) firstly.
 	 */
 	public update(isWinner: boolean): void {
-		if (isWinner) {
-			const playerElement = this.elementContainer.querySelector('ul');
-			const rollButton = document.getElementById('roll-dice');
-			if (isElement(playerElement) && isButtonElement(rollButton)) {
-				playerElement.classList.add('pink');
-				rollButton.disabled = true;
-			}
+		if (!isWinner) {
+			return;
+		}
+		const playerElement = this.elementContainer.querySelector('ul');
+		const rollButton = document.getElementById('roll-dice');
+		if (isElement(playerElement) && isButtonElement(rollButton)) {
+			playerElement.classList.add('pink');
+			rollButton.disabled = true;
 		}
 	}
 }

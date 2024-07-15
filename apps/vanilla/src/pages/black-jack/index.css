@@ -9,7 +9,7 @@
 .container {
 	max-width: 600px;
 	margin: auto;
-	background: white;
+	background: var(--primary-color);
 	padding: 20px;
 	border-radius: 8px;
 	box-shadow: 0 0 5px var(--shadow-color);
@@ -31,7 +31,7 @@
 
 .results {
 	padding: 10px;
-	margin: 10px 0;
+	margin-block: 10px;
 	list-style: none;
 	overflow-x: auto;
 	display: flex;

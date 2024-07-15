@@ -3,7 +3,7 @@ import { Publisher } from '../models/publisher';
 /** Class turn generator. */
 export class TurnGenerator extends Publisher<number> {
 
-	private currentPlayerIndex = 0;
+	private currentPlayerIndex;
 
 	public constructor(private readonly playersCount: number) {
 		super();
@@ -20,11 +20,10 @@ export class TurnGenerator extends Publisher<number> {
 	 * @param currentIndex Current turn index.
 	 **/
 	public override notify(currentIndex: number): void {
-		this.getSubcribers().forEach(subscriber => {
+		this.subscriberArr.forEach(subscriber => {
 			subscriber.update(currentIndex);
-			this.next();
-
 		});
+		this.next();
 	}
 
 	/** Generate next player's turn. */

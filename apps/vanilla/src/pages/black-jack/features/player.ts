@@ -17,6 +17,18 @@ export class Player implements Subscriber<PlayerTurnResult> {
 	/** The result dice array when new dice is generated will notify to display result subscribers.  */
 	public readonly result: Publisher<number[]> = new Publisher<number[]>();
 
+	// eslint-disable-next-line jsdoc/require-jsdoc
+	public readonly playerIndex: number;
+
+	public constructor(playerIndex: number) {
+		this.playerIndex = playerIndex;
+	}
+
+	/** Get player's index. */
+	public get index(): number {
+		return this.playerIndex;
+	}
+
 	/** Get the score. */
 	private get getTotalScore(): number {
 		return this.diceResults.reduce((acc, result) => acc + result, 0);

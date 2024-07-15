@@ -1,7 +1,7 @@
 /** Store score and index of player for each turn dice generation. */
-export class PlayerTurnResult {
-
-	public constructor(public readonly playerIndex: number, public readonly diceResult: number) {
-
-	}
-}
+export type PlayerTurnResult = {
+	// eslint-disable-next-line jsdoc/require-jsdoc
+	readonly playerIndex: number;
+	// eslint-disable-next-line jsdoc/require-jsdoc
+	readonly diceResult: number;
+};

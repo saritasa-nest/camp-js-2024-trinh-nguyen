@@ -6,6 +6,8 @@ import { Publisher } from '../models/publisher';
 
 import { PlayerTurnResult } from '../models/player-turn-result';
 
+import { Player } from './player';
+
 /** Dice generator. */
 export class DiceGenerator extends Publisher<PlayerTurnResult> implements Subscriber<number> {
 	public constructor(private readonly sidesCount: number) {
@@ -14,10 +16,13 @@ export class DiceGenerator extends Publisher<PlayerTurnResult> implements Subscr
 
 	/**
 	 * Notify when a dice turn is generated.
-	 * @param diceResult Turn and dice result.
+	 * @param playerTurnResult Turn and dice result of player.
 	 **/
-	public override notify(diceResult: PlayerTurnResult): void {
-		this.getSubcribers()[diceResult.playerIndex].update(diceResult);
+	public override notify(playerTurnResult: PlayerTurnResult): void {
+		const currentPlayer = (this.subscriberArr as Player[]).find(s => s.index === playerTurnResult.playerIndex);
+		if (currentPlayer !== undefined) {
+			currentPlayer.update(playerTurnResult);
+		}
 	}
 
 	/**
@@ -26,7 +31,10 @@ export class DiceGenerator extends Publisher<PlayerTurnResult> implements Subscr
 	 */
 	private roll(playerIndex: number): PlayerTurnResult {
 		const diceResult = getRandomIntegerNumber(this.sidesCount);
-		return new PlayerTurnResult(playerIndex, diceResult);
+		return {
+			playerIndex,
+			diceResult,
+		};
 	}
 
 	/**
