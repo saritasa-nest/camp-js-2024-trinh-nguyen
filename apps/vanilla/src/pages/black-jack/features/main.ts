@@ -1,6 +1,7 @@
-import { isElement } from '@js-camp/vanilla/type-guards/is-element';
 
 import { isButtonElement } from '@js-camp/vanilla/type-guards/is-button-element';
+
+import { isNotNull } from '@js-camp/vanilla/type-guards/is-element';
 
 import { DiceGenerator } from './dice-generator';
 import { Player } from './player';
@@ -18,10 +19,7 @@ function main(): void {
 
 	turnGenerator.subscribe(diceGenerator);
 
-	const players = createPlayers(PLAYERS_NUMBER);
-	players.forEach(player => {
-		diceGenerator.subscribe(player);
-	});
+	createPlayers(PLAYERS_NUMBER);
 
 	const rollButton = document.getElementById('roll-dice');
 
@@ -39,20 +37,21 @@ function main(): void {
 	function createPlayers(numberOfPlayer: number): Player[] {
 
 		const playerContainer = document.getElementById('player-container');
-
+		if (!isNotNull(playerContainer)) {
+			return [];
+		}
 		return Array.from({ length: numberOfPlayer }, (_, index) => {
 			const player = new Player(index);
 
 			const playerElement = document.createElement('div');
-			if (isElement(playerElement)) {
-				playerElement.id = `player${index}`;
-				if (isElement(playerContainer)) {
-					playerContainer.appendChild(playerElement);
-				}
-			}
+
+			playerElement.id = `player${index}`;
+			playerContainer.appendChild(playerElement);
+
 			const winnerDisplayer = new WinDisplayer(playerElement, index);
 			const playerResultDisplayer = new PlayerDisplayer(playerElement, index);
 			playerResultDisplayer.setupLayout();
+			diceGenerator.subscribe(player);
 			player.winStatus.subscribe(winnerDisplayer);
 			player.result.subscribe(playerResultDisplayer);
 			return player;

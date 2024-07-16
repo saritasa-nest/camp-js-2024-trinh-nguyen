@@ -1,4 +1,5 @@
-import { isElement } from '@js-camp/vanilla/type-guards/is-element';
+
+import { isNotNull } from '@js-camp/vanilla/type-guards/is-element';
 
 import { Subscriber } from '../models/subscriber';
 
@@ -46,13 +47,13 @@ export class PlayerDisplayer extends ResultDisplayer implements Subscriber<numbe
 		PlayerDisplayer.totalScoreOfAllPlayer += latestScore;
 
 		const spanDisplayAllTotalScore = PlayerDisplayer.debugElement?.querySelector('span');
-		if (isElement(spanDisplayAllTotalScore)) {
+		if (isNotNull(spanDisplayAllTotalScore)) {
 			spanDisplayAllTotalScore.textContent = PlayerDisplayer.totalScoreOfAllPlayer.toString();
 		}
 
 		// Update each player's score.
 		const spanDisplayPlayerTotalScore = this.elementContainer.querySelector('span');
-		if (isElement(spanDisplayPlayerTotalScore)) {
+		if (isNotNull(spanDisplayPlayerTotalScore)) {
 			spanDisplayPlayerTotalScore.textContent = turnResult.reduce((acc, result) => acc + result, 0).toString();
 		}
 
@@ -61,7 +62,7 @@ export class PlayerDisplayer extends ResultDisplayer implements Subscriber<numbe
 		listItem.textContent = latestScore.toString();
 
 		const listPlayerDiceResult = this.elementContainer.querySelector('ul');
-		if (isElement(listPlayerDiceResult)) {
+		if (isNotNull(listPlayerDiceResult)) {
 			listPlayerDiceResult.appendChild(listItem);
 		}
 
@@ -70,7 +71,7 @@ export class PlayerDisplayer extends ResultDisplayer implements Subscriber<numbe
 		listItemDebug.textContent = latestScore.toString();
 
 		const listAllDiceResult = PlayerDisplayer.debugElement?.querySelector('ul');
-		if (isElement(listAllDiceResult)) {
+		if (isNotNull(listAllDiceResult)) {
 			listAllDiceResult.appendChild(listItemDebug);
 		}
 

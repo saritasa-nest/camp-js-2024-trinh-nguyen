@@ -1,7 +1,8 @@
+
 /**
- * Check an item is a HTMLElement or not.
- * @param element Element need checking.
+ * Check value is not null.
+ * @param value Element need checking.
  */
-export function isElement(element: unknown): element is HTMLElement {
-	return element instanceof HTMLElement;
+export function isNotNull<T>(value: T): value is NonNullable<T> {
+	return value !== null && value !== undefined;
 }

@@ -39,11 +39,15 @@ export class Player implements Subscriber<PlayerTurnResult> {
 	 * @param turnResult The result.
 	 */
 	public update(turnResult: PlayerTurnResult): void {
+		if (turnResult.playerIndex !== this.playerIndex) {
+			return;
+		}
 		this.diceResults.push(turnResult.diceResult);
 		this.result.notify(this.diceResults);
 		if (this.getTotalScore >= WIN_SCORE) {
 			this.winStatus.notify(true);
 		}
+
 	}
 
 }

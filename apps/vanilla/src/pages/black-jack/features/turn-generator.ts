@@ -16,11 +16,11 @@ export class TurnGenerator extends Publisher<number> {
 	}
 
 	/**
-	 * Notify to dice-generator to generate new result for current player.
+	 * Notify to subscriber to generate new result for current player.
 	 * @param currentIndex Current turn index.
 	 **/
 	public override notify(currentIndex: number): void {
-		this.subscriberArr.forEach(subscriber => {
+		this.subscribers.forEach(subscriber => {
 			subscriber.update(currentIndex);
 		});
 		this.next();

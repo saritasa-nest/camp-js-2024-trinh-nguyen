@@ -2,19 +2,19 @@ import { Subscriber } from './subscriber';
 
 /** Publisher model. */
 export class Publisher<T> {
-	private subscribers: Subscriber<T>[] = [];
+	private _subscribers: Subscriber<T>[] = [];
 
 	/**
 	 * Get the subscriber info to push to subscriber db.
 	 * @param subscriber Info new Subscriber.
 	 */
 	public subscribe(subscriber: Subscriber<T>): void {
-		this.subscribers.push(subscriber);
+		this._subscribers.push(subscriber);
 	}
 
 	/** Get the subscribers to get player instance. */
-	public get subscriberArr(): readonly Subscriber<T>[] {
-		return this.subscribers;
+	protected get subscribers(): readonly Subscriber<T>[] {
+		return this._subscribers;
 	}
 
 	/**
@@ -23,7 +23,7 @@ export class Publisher<T> {
 	 */
 	public unsubscribe(subscriber: Subscriber<T>): void {
 
-		this.subscribers = this.subscribers.filter(subscriberItem => subscriberItem !== subscriber);
+		this._subscribers = this.subscribers.filter(subscriberItem => subscriberItem !== subscriber);
 	}
 
 	/**

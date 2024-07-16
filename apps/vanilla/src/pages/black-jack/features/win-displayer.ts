@@ -1,4 +1,5 @@
-import { isElement } from '@js-camp/vanilla/type-guards/is-element';
+import { isNotNull } from '@js-camp/vanilla/type-guards/is-element';
+
 import { isButtonElement } from '@js-camp/vanilla/type-guards/is-button-element';
 
 import { Subscriber } from '../models/subscriber';
@@ -18,7 +19,7 @@ export class WinDisplayer extends ResultDisplayer implements Subscriber<boolean>
 		}
 		const playerElement = this.elementContainer.querySelector('ul');
 		const rollButton = document.getElementById('roll-dice');
-		if (isElement(playerElement) && isButtonElement(rollButton)) {
+		if (isNotNull(playerElement) && isButtonElement(rollButton)) {
 			playerElement.classList.add('pink');
 			rollButton.disabled = true;
 		}
