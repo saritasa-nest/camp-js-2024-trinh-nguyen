@@ -1,12 +1,12 @@
 import { getRandomIntegerNumber } from '@js-camp/core/utils/get-integer-random';
 
+import { isPlayer } from '@js-camp/vanilla/type-guards/is-player';
+
 import { Subscriber } from '../models/subscriber';
 
 import { Publisher } from '../models/publisher';
 
 import { PlayerTurnResult } from '../models/player-turn-result';
-
-import { Player } from './player';
 
 /** Dice generator. */
 export class DiceGenerator extends Publisher<PlayerTurnResult> implements Subscriber<number> {
@@ -19,8 +19,10 @@ export class DiceGenerator extends Publisher<PlayerTurnResult> implements Subscr
 	 * @param playerTurnResult Turn and dice result of player.
 	 **/
 	public override notify(playerTurnResult: PlayerTurnResult): void {
-		const currentPlayer = (this.subscriberArr as Player[]).find(s => s.index === playerTurnResult.playerIndex);
-		if (currentPlayer != null) {
+		const currentPlayer = this.subscriberArr
+			.filter(isPlayer)
+			.find(player => player.index === playerTurnResult.playerIndex);
+		if (currentPlayer) {
 			currentPlayer.update(playerTurnResult);
 		}
 	}
