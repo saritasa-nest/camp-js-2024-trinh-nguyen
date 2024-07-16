@@ -20,7 +20,7 @@ export class DiceGenerator extends Publisher<PlayerTurnResult> implements Subscr
 	 **/
 	public override notify(playerTurnResult: PlayerTurnResult): void {
 		const currentPlayer = (this.subscriberArr as Player[]).find(s => s.index === playerTurnResult.playerIndex);
-		if (currentPlayer !== undefined) {
+		if (currentPlayer != null) {
 			currentPlayer.update(playerTurnResult);
 		}
 	}

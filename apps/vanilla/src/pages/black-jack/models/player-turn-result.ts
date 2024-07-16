@@ -1,7 +1,9 @@
 /** Store score and index of player for each turn dice generation. */
 export type PlayerTurnResult = {
-	// eslint-disable-next-line jsdoc/require-jsdoc
+
+	/** Index of player. */
 	readonly playerIndex: number;
-	// eslint-disable-next-line jsdoc/require-jsdoc
+
+	/** The result of roll dice of player Index turn. */
 	readonly diceResult: number;
 };
