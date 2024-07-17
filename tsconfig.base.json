@@ -24,6 +24,9 @@
       "@js-camp/vanilla/*": ["apps/vanilla/src/*"]
     }
   },
+	"angularCompilerOptions": {
+    "strictTemplates": true,
+  },
   "exclude": ["node_modules", "tmp"],
   "include": ["**/*.js", "**/*.ts"]
 }
