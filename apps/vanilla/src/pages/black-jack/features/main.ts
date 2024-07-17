@@ -1,6 +1,3 @@
-
-import { isButtonElement } from '@js-camp/vanilla/type-guards/is-button-element';
-
 import { isNotNull } from '@js-camp/vanilla/type-guards/is-element';
 
 import { DiceGenerator } from './dice-generator';
@@ -23,7 +20,7 @@ function main(): void {
 
 	const rollButton = document.getElementById('roll-dice');
 
-	if (isButtonElement(rollButton)) {
+	if (isNotNull(rollButton)) {
 		rollButton.addEventListener('click', () => {
 			const currentPlayerIndex = turnGenerator.getCurrentPlayerIndex();
 			turnGenerator.notify(currentPlayerIndex);
