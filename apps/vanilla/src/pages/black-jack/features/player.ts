@@ -17,20 +17,20 @@ export class Player implements Subscriber<PlayerTurnResult> {
 	/** The result dice array when new dice is generated will notify to display result subscribers.  */
 	public readonly result: Publisher<number[]> = new Publisher<number[]>();
 
-	// eslint-disable-next-line jsdoc/require-jsdoc
-	public readonly playerIndex: number;
+	/** The index of player. */
+	private readonly playerIndex: number;
 
 	public constructor(playerIndex: number) {
 		this.playerIndex = playerIndex;
 	}
 
 	/** Get player's index. */
-	public get index(): number {
+	protected get index(): number {
 		return this.playerIndex;
 	}
 
 	/** Get the score. */
-	private get getTotalScore(): number {
+	private get totalScore(): number {
 		return this.diceResults.reduce((acc, result) => acc + result, 0);
 	}
 
@@ -44,7 +44,7 @@ export class Player implements Subscriber<PlayerTurnResult> {
 		}
 		this.diceResults.push(turnResult.diceResult);
 		this.result.notify(this.diceResults);
-		if (this.getTotalScore >= WIN_SCORE) {
+		if (this.totalScore >= WIN_SCORE) {
 			this.winStatus.notify(true);
 		}
 

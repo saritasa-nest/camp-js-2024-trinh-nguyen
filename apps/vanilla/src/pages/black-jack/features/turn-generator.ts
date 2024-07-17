@@ -3,16 +3,16 @@ import { Publisher } from '../models/publisher';
 /** Class turn generator. */
 export class TurnGenerator extends Publisher<number> {
 
-	private currentPlayerIndex;
+	private _currentPlayerIndex: number;
 
 	public constructor(private readonly playersCount: number) {
 		super();
-		this.currentPlayerIndex = 0;
+		this._currentPlayerIndex = 0;
 	}
 
 	/** Get the current Index of player. */
-	public getCurrentPlayerIndex(): number {
-		return this.currentPlayerIndex;
+	public get currentPlayerIndex(): number {
+		return this._currentPlayerIndex;
 	}
 
 	/**
@@ -28,6 +28,6 @@ export class TurnGenerator extends Publisher<number> {
 
 	/** Generate next player's turn. */
 	private next(): void {
-		this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.playersCount;
+		this._currentPlayerIndex = (this._currentPlayerIndex + 1) % this.playersCount;
 	}
 }

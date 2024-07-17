@@ -1,8 +1,8 @@
 
 /**
- * Check value is not null.
- * @param value Element need checking.
+ * Check an element is an HTMLElement or not.
+ * @param element Element need checking.
  */
-export function isNotNull<T>(value: T): value is NonNullable<T> {
-	return value !== null && value !== undefined;
+export function isHTMLElement(element: HTMLElement | null | undefined): element is HTMLButtonElement {
+	return element instanceof HTMLElement;
 }

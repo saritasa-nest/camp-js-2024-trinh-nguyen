@@ -1,4 +1,6 @@
-import { isNotNull } from '@js-camp/vanilla/type-guards/is-element';
+import { isHTMLElement } from '@js-camp/vanilla/type-guards/is-element';
+
+import { isHTMLButtonElement } from '@js-camp/vanilla/type-guards/is-button';
 
 import { DiceGenerator } from './dice-generator';
 import { Player } from './player';
@@ -20,10 +22,9 @@ function main(): void {
 
 	const rollButton = document.getElementById('roll-dice');
 
-	if (isNotNull(rollButton)) {
+	if (isHTMLButtonElement(rollButton)) {
 		rollButton.addEventListener('click', () => {
-			const currentPlayerIndex = turnGenerator.getCurrentPlayerIndex();
-			turnGenerator.notify(currentPlayerIndex);
+			turnGenerator.notify(turnGenerator.currentPlayerIndex);
 		});
 	}
 
@@ -34,7 +35,7 @@ function main(): void {
 	function createPlayers(numberOfPlayer: number): Player[] {
 
 		const playerContainer = document.getElementById('player-container');
-		if (!isNotNull(playerContainer)) {
+		if (!isHTMLElement(playerContainer)) {
 			return [];
 		}
 		return Array.from({ length: numberOfPlayer }, (_, index) => {

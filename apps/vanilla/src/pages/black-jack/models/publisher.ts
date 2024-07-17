@@ -2,18 +2,18 @@ import { Subscriber } from './subscriber';
 
 /** Publisher model. */
 export class Publisher<T> {
-	private _subscribers: Subscriber<T>[] = [];
+	private _subscribers = new Set<Subscriber<T>>();
 
 	/**
 	 * Get the subscriber info to push to subscriber db.
 	 * @param subscriber Info new Subscriber.
 	 */
 	public subscribe(subscriber: Subscriber<T>): void {
-		this._subscribers.push(subscriber);
+		this._subscribers.add(subscriber);
 	}
 
 	/** Get the subscribers to get player instance. */
-	protected get subscribers(): readonly Subscriber<T>[] {
+	protected get subscribers(): Set<Subscriber<T>> {
 		return this._subscribers;
 	}
 
@@ -23,7 +23,9 @@ export class Publisher<T> {
 	 */
 	public unsubscribe(subscriber: Subscriber<T>): void {
 
-		this._subscribers = this.subscribers.filter(subscriberItem => subscriberItem !== subscriber);
+		if (this._subscribers.has(subscriber)) {
+			this._subscribers.delete(subscriber);
+		}
 	}
 
 	/**
