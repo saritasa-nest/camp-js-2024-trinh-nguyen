@@ -1,6 +1,7 @@
-import { AnimeStatusEnum } from '../enums/anime-status-enums';
+import { AnimeStatus } from '../enums/anime-status-enums';
 import { AnimeTypeEnum } from '../enums/anime-type-enums';
-import { TDateTimeRange } from '../interfaces/datetime-range';
+
+import { TDateTimeRange } from './datetime-range';
 
 /** Represents anime. */
 export type TAnime = {
@@ -9,10 +10,10 @@ export type TAnime = {
 	readonly id: number;
 
 	/** Created date. */
-	readonly createdDate: string;
+	readonly createdDate: Date;
 
 	/** Modified date. */
-	readonly modifiedDate: string;
+	readonly modifiedDate: Date;
 
 	/** English title. */
 	readonly titleEng: string;
@@ -30,7 +31,7 @@ export type TAnime = {
 	readonly type: AnimeTypeEnum;
 
 	/** Status. */
-	readonly status: AnimeStatusEnum;
+	readonly status: AnimeStatus;
 
 	/** Score. */
 	readonly score: number;

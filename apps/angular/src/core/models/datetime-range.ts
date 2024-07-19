@@ -2,8 +2,8 @@
 export type TDateTimeRange = {
 
 	/** Start date. */
-	start: string;
+	readonly start: Date;
 
 	/** End date. */
-	end: string;
+	readonly end: Date;
 };

@@ -3,6 +3,7 @@ import { IMapper } from '@js-camp/core/mappers/imapper';
 
 import { TAnime } from '../models/anime';
 import { TAnimeDto } from '../dtos/anime.dto';
+import { isDate } from '../guards/is-date';
 
 /** Type of mapper from AnimeDto to Anime Model and vice vera mapper from Anime Model to AnimeDto. */
 export type AnimeMapper = IMapper<TAnimeDto, TAnime>;
@@ -12,8 +13,8 @@ export const animeMapper: AnimeMapper = {
 	fromDto(dto: TAnimeDto) {
 		return {
 			id: dto.id,
-			createdDate: dto.created,
-			modifiedDate: dto.modified,
+			createdDate: new Date(dto.created),
+			modifiedDate: new Date(dto.modified),
 			titleEng: dto.title_eng,
 			titleJpn: dto.title_jpn,
 			image: dto.image,
@@ -29,8 +30,8 @@ export const animeMapper: AnimeMapper = {
 	toDto(model: TAnime) {
 		return {
 			id: model.id,
-			created: model.createdDate,
-			modified: model.modifiedDate,
+			created: new Date(model.createdDate).toString(),
+			modified: new Date(model.modifiedDate).toString(),
 			title_eng: model.titleEng,
 			title_jpn: model.titleJpn,
 			image: model.image,

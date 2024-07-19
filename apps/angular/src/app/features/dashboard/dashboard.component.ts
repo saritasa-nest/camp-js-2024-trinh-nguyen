@@ -15,18 +15,37 @@ import { AnimeTableComponent } from './anime-table/anime-table.component';
 	imports: [AnimeTableComponent],
 })
 export class DashboardComponent {
-	private readonly animeResponse$: Observable<Pagination<TAnime>>;
+	/** Receive api response async. */
+	public animeResponse$: Observable<Pagination<TAnime>>;
 
 	private readonly animeService: AnimeService = inject(AnimeService);
 
 	/** Anime list fetch from back-end api. */
 	protected animeList: TAnime[] = [];
 
-	public constructor() {
-		this.animeResponse$ = this.animeService.getAnime({ pageNumber: 0 });
+	private page: number;
 
-		this.animeResponse$.subscribe(response => {
-			this.animeList = [...response.items];
-		});
+	public constructor() {
+		this.page = 0;
+		this.animeResponse$ = this.animeService.getAnime({ pageNumber: 0 });
+	}
+
+	// eslint-disable-next-line jsdoc/require-jsdoc
+	public loadPage(page: number): void {
+		this.animeResponse$ = this.animeService.getAnime({ pageNumber: page });
+	}
+
+	// eslint-disable-next-line jsdoc/require-jsdoc
+	public nextPage(): void {
+		if (this.animeResponse$) {
+			this.loadPage(++this.page);
+		}
+	}
+
+	// eslint-disable-next-line jsdoc/require-jsdoc
+	public prevPage(): void {
+		if (this.animeResponse$) {
+			this.loadPage(--this.page);
+		}
 	}
 }

@@ -1,6 +1,6 @@
-import { AnimeStatusEnum } from '../enums/anime-status-enums';
+import { AnimeStatus } from '../enums/anime-status-enums';
 import { AnimeTypeEnum } from '../enums/anime-type-enums';
-import { TDateTimeRange } from '../interfaces/datetime-range';
+import { TDateTimeRange } from '../models/datetime-range';
 
 /** Anime DTO. */
 export type TAnimeDto = {
@@ -30,7 +30,7 @@ export type TAnimeDto = {
 	readonly type: AnimeTypeEnum;
 
 	/** Status. */
-	readonly status: AnimeStatusEnum;
+	readonly status: AnimeStatus;
 
 	/** Score. */
 	readonly score: number;

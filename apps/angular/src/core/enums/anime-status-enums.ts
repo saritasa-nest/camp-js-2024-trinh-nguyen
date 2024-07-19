@@ -1,5 +1,5 @@
 /** List of anime status. */
-export enum AnimeStatusEnum {
+export enum AnimeStatus {
 	Airing = 'AIRING',
 	Finished = 'FINISHED',
 	NotYetAired = 'NOT_YET_AIRED',

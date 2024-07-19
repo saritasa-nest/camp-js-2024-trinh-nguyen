@@ -26,11 +26,11 @@ export class AnimeService {
 
 	/**
 	 * Get anime list.
-	 * @param options Todo.
-	 * @returns Todo.
+	 * @param options Params to next/prev page.
 	 */
 	public getAnime(options: { pageNumber: number; }): Observable<Pagination<TAnime>> {
 		const params = new HttpParams()
+			.set('limit', 10)
 			.set('offset', (options.pageNumber * 25).toString());
 
 		const url = `${this.baseUrl}anime/anime/`;
