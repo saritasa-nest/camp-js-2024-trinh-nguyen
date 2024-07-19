@@ -4,11 +4,10 @@ import { IMapper } from '@js-camp/core/mappers/imapper';
 import { TAnime } from '../models/anime';
 import { TAnimeDto } from '../dtos/anime.dto';
 
-// Mapper từ DTO Anime sang Model Anime
-// eslint-disable-next-line jsdoc/require-jsdoc
+/** Type of mapper from AnimeDto to Anime Model and vice vera mapper from Anime Model to AnimeDto. */
 export type AnimeMapper = IMapper<TAnimeDto, TAnime>;
 
-// eslint-disable-next-line jsdoc/require-jsdoc
+/** Implement mapper from AnimeDto to Anime Model and vice vera mapper from Anime Model to AnimeDto. */
 export const animeMapper: AnimeMapper = {
 	fromDto(dto: TAnimeDto) {
 		return {

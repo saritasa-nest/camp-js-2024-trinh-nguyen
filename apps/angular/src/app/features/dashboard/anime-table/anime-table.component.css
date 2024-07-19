@@ -3,7 +3,9 @@
 	height: 150px;
 }
 
-.mat-header-cell, .mat-cell {
+/* stylelint-disable-next-line no-invalid-double-slash-comments */
+// TODO
+.mat-header-cell .mat-cell {
 	padding: 16px;
 	display: flex;
 	align-items: center;

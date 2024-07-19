@@ -9,28 +9,29 @@ import { ResponseWithPaginationDto } from '@js-camp/core/utils/response-with-pag
 
 import { paginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 
+import { environment } from '@js-camp/angular/environments/environment';
+
 import { TAnimeDto } from '../dtos/anime.dto';
 import { TAnime } from '../models/anime';
 import { animeMapper } from '../mappers/anime.mapper';
 
+/** Anime service implement fetch data from back-end api and execute logic data related to Anime object. */
 @Injectable({
 	providedIn: 'root',
 })
-
-// eslint-disable-next-line jsdoc/require-jsdoc
 export class AnimeService {
-	private readonly baseUrl = 'https://api.camp-js.saritasa.rocks/api/v1/';
+	private readonly baseUrl = environment.api;
 
 	private readonly httpClient = inject(HttpClient);
 
 	/**
-	 * Todo.
+	 * Get anime list.
 	 * @param options Todo.
 	 * @returns Todo.
 	 */
-	public getAllAnime(options: { pageNumber: number; }): Observable<Pagination<TAnime>> {
+	public getAnime(options: { pageNumber: number; }): Observable<Pagination<TAnime>> {
 		const params = new HttpParams()
-			.set('offset', options.pageNumber.toString());
+			.set('offset', (options.pageNumber * 25).toString());
 
 		const url = `${this.baseUrl}anime/anime/`;
 

@@ -6,7 +6,7 @@ import { Pagination } from '@js-camp/core/models/pagination.dto';
 
 import { AnimeTableComponent } from './anime-table/anime-table.component';
 
-/** Example component. */
+/** Anime table component. */
 @Component({
 	selector: 'camp-dashboard',
 	templateUrl: './dashboard.component.html',
@@ -19,15 +19,14 @@ export class DashboardComponent {
 
 	private readonly animeService: AnimeService = inject(AnimeService);
 
-	/** */
+	/** Anime list fetch from back-end api. */
 	protected animeList: TAnime[] = [];
 
 	public constructor() {
-		this.animeResponse$ = this.animeService.getAllAnime({ pageNumber: 0 });
+		this.animeResponse$ = this.animeService.getAnime({ pageNumber: 0 });
 
 		this.animeResponse$.subscribe(response => {
 			this.animeList = [...response.items];
-			console.log(response);
 		});
 	}
 }

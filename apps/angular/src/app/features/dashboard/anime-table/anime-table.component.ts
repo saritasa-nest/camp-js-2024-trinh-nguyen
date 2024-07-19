@@ -26,7 +26,7 @@ export class AnimeTableComponent {
 	/** Anime data list. */
 	@Input() public animeList!: TAnime[];
 
-	/** */
+	/** Displayer fields of an anime. */
 	protected readonly fieldsTable: string[] = ['image', 'title_eng', 'title_jpn', 'aired.start', 'type', 'status'];
 
 }
