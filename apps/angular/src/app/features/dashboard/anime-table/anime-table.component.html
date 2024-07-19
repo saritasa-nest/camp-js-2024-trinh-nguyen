@@ -1,0 +1,47 @@
+<mat-table [dataSource]="animeList" class="table-wrapper ">
+	<!-- Name Column -->
+	<ng-container class="image-container" matColumnDef="image">
+	  <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+	  <mat-cell *matCellDef="let element">
+		<div>
+		  <img [src]="element.image" alt="{{element.titleJpn}}" class="image">
+		</div>
+	  </mat-cell>
+	</ng-container>
+	<!-- Company Column -->
+	<ng-container matColumnDef="title_eng">
+	  <mat-header-cell *matHeaderCellDef> Title_eng </mat-header-cell>
+	  <mat-cell *matCellDef="let element"> {{element.titleEng}} </mat-cell>
+	</ng-container>
+
+	<!-- Company Column -->
+	<ng-container matColumnDef="title_jpn">
+		<mat-header-cell *matHeaderCellDef> Title_eng </mat-header-cell>
+		<mat-cell *matCellDef="let element"> {{element.titleJpn}} </mat-cell>
+	  </ng-container>
+
+	<!-- Country Column -->
+	<ng-container matColumnDef="aired.start">
+	  <mat-header-cell *matHeaderCellDef> Aired.Start </mat-header-cell>
+	  <mat-cell *matCellDef="let element"> {{element.aired.start}} </mat-cell>
+	</ng-container>
+
+	<!-- Mobile Column -->
+	<ng-container matColumnDef="type">
+	  <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
+	  <mat-cell *matCellDef="let element"> {{element.type}} </mat-cell>
+	</ng-container>
+
+	<!-- Team Column -->
+	<ng-container matColumnDef="status">
+	  <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+	  <mat-cell *matCellDef="let element">
+		<span class="team-badge" >{{element.status}}</span>
+	  </mat-cell>
+	</ng-container>
+
+
+	<mat-header-row *matHeaderRowDef="fieldsTable"></mat-header-row>
+	<mat-row *matRowDef="let row; columns: fieldsTable;"></mat-row>
+  </mat-table>
+
