@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Blackjack Dice Game</title>
+		<link rel="stylesheet" href="index.css">
+	</head>
+	<body class="body">
+		<div class="container">
+			<h1 class="title">Blackjack Dice Game</h1>
+			<a class="link-to-main-page" href="/">Take me to main page</a>
+			<div id="debug">
+			<h2 class="container__total-score">Total Score: <span id="total-score">0</span></h2>
+			<ul id="players" class="results"></ul>
+		</div>
+			<div id="player-container"></div>
+			<div class="button">
+				<button id="roll-dice">Roll the dice</button>
+			</div>
+		</div>
+		<script type="module" src="./features/main.ts"></script>
+	</body>
+</html>
