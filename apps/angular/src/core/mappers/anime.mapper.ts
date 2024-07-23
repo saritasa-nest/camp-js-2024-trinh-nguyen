@@ -3,7 +3,6 @@ import { IMapper } from '@js-camp/core/mappers/imapper';
 
 import { TAnime } from '../models/anime';
 import { TAnimeDto } from '../dtos/anime.dto';
-import { isDate } from '../guards/is-date';
 
 /** Type of mapper from AnimeDto to Anime Model and vice vera mapper from Anime Model to AnimeDto. */
 export type AnimeMapper = IMapper<TAnimeDto, TAnime>;
