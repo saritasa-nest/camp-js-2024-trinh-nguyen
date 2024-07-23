@@ -2,7 +2,7 @@ import { Subscriber } from './subscriber';
 
 /** Publisher model. */
 export class Publisher<T> {
-	private _subscribers = new Set<Subscriber<T>>();
+	private readonly _subscribers = new Set<Subscriber<T>>();
 
 	/**
 	 * Get the subscriber info to push to subscriber db.
