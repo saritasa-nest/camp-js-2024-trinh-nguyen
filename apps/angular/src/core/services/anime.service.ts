@@ -30,7 +30,7 @@ export class AnimeService {
 	 */
 	public getAnime(options: { pageNumber: number; }): Observable<Pagination<TAnime>> {
 		const params = new HttpParams()
-			.set('limit', 10)
+			.set('limit', 25)
 			.set('offset', (options.pageNumber * 25).toString());
 
 		const url = `${this.baseUrl}anime/anime/`;

@@ -4,23 +4,24 @@
 
 
 </div>
+
 <mat-table [dataSource]="(animeResponse$ | async)!.items" class="table-wrapper">
 	<ng-container class="image-container" matColumnDef="image">
 		<mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
 		<mat-cell *matCellDef="let element">
 			<div>
-				<img [src]="element.image" alt="{{ element.titleJpn }}" class="image" />
+				<img [src]="element.imageUrl" alt="{{ element.titleJapan }}"  class="image" />
 			</div>
 		</mat-cell>
 	</ng-container>
 	<ng-container matColumnDef="title_eng">
 		<mat-header-cell *matHeaderCellDef> Title_eng </mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.titleEng }} </mat-cell>
+		<mat-cell *matCellDef="let element"> {{ element.titleEnglish }} </mat-cell>
 	</ng-container>
 
 	<ng-container matColumnDef="title_jpn">
 		<mat-header-cell *matHeaderCellDef> Title_eng </mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.titleJpn }} </mat-cell>
+		<mat-cell *matCellDef="let element"> {{ element.titleJapan }} </mat-cell>
 	</ng-container>
 
 	<ng-container matColumnDef="aired.start">

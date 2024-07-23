@@ -30,14 +30,13 @@ export class AnimeTableComponent {
 	/** Anime data list. */
 	@Input() public animeResponse$!: Observable<Pagination<TAnime>>;
 
-	// eslint-disable-next-line jsdoc/require-jsdoc
+	/** Function navigate to call api for next offset / next page. */
 	@Input() public nextPage!: () => void;
 
-	// eslint-disable-next-line jsdoc/require-jsdoc
+	/** Function navigate to call api for previous offset / previous page. */
 	@Input() public prevPage!: () => void;
 
 	/** Displayer fields of an anime. */
 	protected readonly fieldsTable: string[] = ['image', 'title_eng', 'title_jpn', 'aired.start', 'type', 'status'];
 
-	// eslint-disable-next-line jsdoc/require-jsdoc
 }

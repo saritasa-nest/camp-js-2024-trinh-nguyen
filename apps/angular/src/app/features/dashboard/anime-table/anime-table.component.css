@@ -4,7 +4,7 @@
 }
 
 .mat-header-cell .mat-cell {
-	padding: 16px;
+	padding: var(--spacing-md);
 	display: flex;
 	align-items: center;
 	height: 100%;
@@ -14,7 +14,7 @@
 	width: 150px;
 	height: 150px;
 	object-fit: contain;
-	margin-right: 8px;
+	margin-right: var(--spacing-sm);
 }
 
 .image-container {

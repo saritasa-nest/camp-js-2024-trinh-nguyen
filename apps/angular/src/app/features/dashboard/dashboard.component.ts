@@ -30,22 +30,30 @@ export class DashboardComponent {
 		this.animeResponse$ = this.animeService.getAnime({ pageNumber: 0 });
 	}
 
-	// eslint-disable-next-line jsdoc/require-jsdoc
+	/**
+	 * Function return api for current page when use click "next/prev" button.
+	 * @param page The index page.
+	 */
 	public loadPage(page: number): void {
 		this.animeResponse$ = this.animeService.getAnime({ pageNumber: page });
 	}
 
 	// eslint-disable-next-line jsdoc/require-jsdoc
 	public nextPage(): void {
-		if (this.animeResponse$) {
-			this.loadPage(++this.page);
-		}
+
+		this.animeResponse$.subscribe(pagination => {
+			if (pagination.hasNext) {
+				this.loadPage(++this.page);
+			}
+		});
 	}
 
 	// eslint-disable-next-line jsdoc/require-jsdoc
 	public prevPage(): void {
-		if (this.animeResponse$) {
-			this.loadPage(--this.page);
-		}
+		this.animeResponse$.subscribe(pagination => {
+			if (pagination.hasPrev) {
+				this.loadPage(--this.page);
+			}
+		});
 	}
 }

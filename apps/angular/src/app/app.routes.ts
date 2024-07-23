@@ -8,4 +8,5 @@ export const appRoutes: Routes = [
 		path: '',
 		component: DashboardComponent,
 	},
+
 ];
