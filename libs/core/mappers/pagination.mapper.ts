@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { PaginationDto } from '../dtos/pagination.dto';
 import { Pagination } from '../models/pagination.dto';
 
-import { IMapperFromDto, MapperFunction } from './imapper';
+import { MapperFromDto, MapperFunction } from './imapper';
 
 /**
  * Map Pagination Dto Model to Pagination Domain Model.
@@ -24,7 +24,7 @@ export class PaginationMapper {
 	 */
 	public mapPaginationFromDto<TDto, TDomain>(
 		paginationDto: PaginationDto<TDto>,
-		mapper: IMapperFromDto<TDto, TDomain> | MapperFunction<TDto, TDomain>,
+		mapper: MapperFromDto<TDto, TDomain> | MapperFunction<TDto, TDomain>,
 	): Pagination<TDomain> {
 
 		const mapperFn = typeof mapper === 'function' ? mapper : mapper.fromDto;
