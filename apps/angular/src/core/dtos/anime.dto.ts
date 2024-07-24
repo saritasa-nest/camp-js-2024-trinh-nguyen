@@ -1,47 +1,66 @@
-import { TDateTimeRange } from '../models/datetime-range';
+
+import { DateTimeRange } from '../models/datetime-range';
 
 import { AnimeStatusDto } from './anime-status.dto';
 import { AnimeTypeDto } from './anime-type.dto';
 
 /** Anime DTO. */
-export type TAnimeDto = {
+export class AnimeDto {
 
 	/** ID. */
-	readonly id: number;
+	public readonly id: number;
 
 	/** Created date. */
-	readonly created: string;
+	public readonly created: string;
 
 	/** Modified date. */
-	readonly modified: string;
+	public readonly modified: string;
 
 	/** English title. */
-	readonly title_eng: string;
+	public readonly title_eng: string;
 
 	/** Japanese title. */
-	readonly title_jpn: string;
+	public readonly title_jpn: string;
 
 	/** Image URL. */
-	readonly image: string;
+	public readonly image: string;
 
 	/** Aired duration. */
-	readonly aired: TDateTimeRange;
+	public readonly aired: DateTimeRange;
 
 	/** Type. */
-	readonly type: AnimeTypeDto;
+	public readonly type: AnimeTypeDto;
 
 	/** Status. */
-	readonly status: AnimeStatusDto;
+	public readonly status: AnimeStatusDto;
 
 	/** Score. */
-	readonly score: number;
+	public readonly score: number;
 
 	/** User score. */
-	readonly user_score: number;
+	public readonly user_score: number;
 
 	/** List of studios. */
-	readonly studios: readonly number[];
+	public readonly studios: readonly number[];
 
 	/** List of genres. */
-	readonly genres: readonly number[];
-};
+	public readonly genres: readonly number[];
+
+	public constructor(
+		data: AnimeDto,
+	) {
+		this.id = data.id;
+		this.created = data.created;
+		this.modified = data.modified;
+		this.title_eng = data.title_eng;
+		this.title_jpn = data.title_jpn;
+		this.image = data.image;
+		this.aired = data.aired;
+		this.type = data.type;
+		this.status = data.status;
+		this.score = data.score;
+		this.user_score = data.user_score;
+		this.studios = data.studios;
+		this.genres = data.genres;
+	}
+}

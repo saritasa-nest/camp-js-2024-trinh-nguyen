@@ -1,5 +1,5 @@
 /** Date Time Range Type. */
-export type TDateTimeRange = {
+export type DateTimeRange = {
 
 	/** Start date. */
 	readonly start: Date;

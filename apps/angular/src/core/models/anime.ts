@@ -1,47 +1,65 @@
 
 import { AnimeStatus } from './anime-status';
 import { AnimeType } from './anime-type';
-import { TDateTimeRange } from './datetime-range';
+import { DateTimeRange } from './datetime-range';
 
 /** Represents anime. */
-export type TAnime = {
+export class Anime {
 
 	/** ID. */
-	readonly id: number;
+	public readonly id: number;
 
 	/** Created date. */
-	readonly createdDate: Date;
+	public readonly createdDate: Date;
 
 	/** Modified date. */
-	readonly modifiedDate: Date;
+	public readonly modifiedDate: Date;
 
 	/** English title. */
-	readonly titleEnglish: string;
+	public readonly titleEnglish: string;
 
 	/** Japanese title. */
-	readonly titleJapan: string;
+	public readonly titleJapan: string;
 
 	/** Image URL. */
-	readonly imageUrl: string;
+	public readonly imageUrl: string;
 
 	/** Id. */
-	readonly aired: TDateTimeRange;
+	public readonly aired: DateTimeRange;
 
 	/** Type. */
-	readonly type: AnimeType;
+	public readonly type: AnimeType;
 
 	/** Status. */
-	readonly status: AnimeStatus;
+	public readonly status: AnimeStatus;
 
 	/** Score. */
-	readonly score: number;
+	public readonly score: number;
 
 	/** User score. */
-	readonly userScore: number;
+	public readonly userScore: number;
 
 	/** List of studios. */
-	readonly studios: readonly number[];
+	public readonly studios: readonly number[];
 
 	/** List of genres. */
-	readonly genres: readonly number[];
-};
+	public readonly genres: readonly number[];
+
+	public constructor(
+		data: Anime,
+	) {
+		this.id = data.id;
+		this.createdDate = data.createdDate;
+		this.modifiedDate = data.modifiedDate;
+		this.titleEnglish = data.titleEnglish;
+		this.titleJapan = data.titleJapan;
+		this.imageUrl = data.imageUrl;
+		this.aired = data.aired;
+		this.type = data.type;
+		this.status = data.status;
+		this.score = data.score;
+		this.userScore = data.userScore;
+		this.studios = data.studios;
+		this.genres = data.genres;
+	}
+}

@@ -1,4 +1,4 @@
-// TODO
+
 /** Mapper type helps convert from Dto to Domain Model. */
 export type IMapperFromDto<TDto, TDomain> = {
 

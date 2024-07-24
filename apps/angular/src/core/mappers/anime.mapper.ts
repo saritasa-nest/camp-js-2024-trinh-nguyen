@@ -1,19 +1,16 @@
-/* eslint-disable jsdoc/require-jsdoc */
-
 import { IMapper } from '@js-camp/core/mappers/imapper';
 
-import { TAnime } from '../models/anime';
-import { TAnimeDto } from '../dtos/anime.dto';
+import { Injectable } from '@angular/core';
+
+import { Anime } from '../models/anime';
+import { AnimeDto } from '../dtos/anime.dto';
 import { AnimeStatusDto } from '../dtos/anime-status.dto';
 import { AnimeStatus } from '../models/anime-status';
 import { AnimeTypeDto } from '../dtos/anime-type.dto';
 import { AnimeType } from '../models/anime-type';
 
-/** Type of mapper from AnimeDto to Anime Model and vice vera mapper from Anime Model to AnimeDto. */
-export type AnimeMapper = IMapper<TAnimeDto, TAnime>;
-
 /** Map AnimeStatusDto to AnimeStatus. */
-const statusMapping: Record<AnimeStatusDto, AnimeStatus> = {
+const statusMappingFromDto: Record<AnimeStatusDto, AnimeStatus> = {
 	[AnimeStatusDto.Airing]: AnimeStatus.Airing,
 	[AnimeStatusDto.Finished]: AnimeStatus.Finished,
 	[AnimeStatusDto.NotYetAired]: AnimeStatus.NotYetAired,
@@ -27,14 +24,14 @@ const statusMappingToDto: Record<AnimeStatus, AnimeStatusDto> = {
 };
 
 /** Record for mapping AnimeTypeDto to AnimeType. */
-const typeMapping: Record<AnimeTypeDto, AnimeType> = {
+const typeMappingFromDto: Record<AnimeTypeDto, AnimeType> = {
 	[AnimeTypeDto.TV]: AnimeType.TV,
 	[AnimeTypeDto.OVA]: AnimeType.OVA,
 	[AnimeTypeDto.Movie]: AnimeType.Movie,
 	[AnimeTypeDto.Special]: AnimeType.Special,
 	[AnimeTypeDto.ONA]: AnimeType.ONA,
 	[AnimeTypeDto.Music]: AnimeType.Music,
-	[AnimeTypeDto.promotionalVideos]: AnimeType.promotionalVideos,
+	[AnimeTypeDto.PromotionalVideos]: AnimeType.PromotionalVideos,
 	[AnimeTypeDto.Unknown]: AnimeType.Unknown,
 };
 
@@ -46,14 +43,22 @@ const typeMappingToDto: Record<AnimeType, AnimeTypeDto> = {
 	[AnimeType.Special]: AnimeTypeDto.Special,
 	[AnimeType.ONA]: AnimeTypeDto.ONA,
 	[AnimeType.Music]: AnimeTypeDto.Music,
-	[AnimeType.promotionalVideos]: AnimeTypeDto.promotionalVideos,
+	[AnimeType.PromotionalVideos]: AnimeTypeDto.PromotionalVideos,
 	[AnimeType.Unknown]: AnimeTypeDto.Unknown,
 };
 
-/** Implement mapper from AnimeDto to Anime Model and vice vera mapper from Anime Model to AnimeDto. */
-export const animeMapper: AnimeMapper = {
-	fromDto(dto: TAnimeDto) {
-		return {
+/** Anime mapper map Model to Dto and vice vera Dto to Model. */
+@Injectable({
+	providedIn: 'root',
+})
+export class AnimeMapper implements IMapper<AnimeDto, Anime> {
+
+	/**
+	 * Map from dto data to model data.
+	 * @param dto Data need mapping.
+	 */
+	public fromDto(dto: AnimeDto): Anime {
+		return new Anime({
 			id: dto.id,
 			createdDate: new Date(dto.created),
 			modifiedDate: new Date(dto.modified),
@@ -61,29 +66,34 @@ export const animeMapper: AnimeMapper = {
 			titleJapan: dto.title_jpn,
 			imageUrl: dto.image,
 			aired: dto.aired,
-			type: typeMapping[dto.type],
-			status: statusMapping[dto.status],
+			type: typeMappingFromDto[dto.type],
+			status: statusMappingFromDto[dto.status],
 			score: dto.score,
 			userScore: dto.user_score,
 			studios: dto.studios,
 			genres: dto.genres,
-		};
-	},
-	toDto(model: TAnime) {
-		return {
-			id: model.id,
-			created: model.createdDate.toString(),
-			modified: model.modifiedDate.toString(),
-			title_eng: model.titleEnglish,
-			title_jpn: model.titleJapan,
-			image: model.imageUrl,
-			aired: model.aired,
-			type: typeMappingToDto[model.type],
-			status: statusMappingToDto[model.status],
-			score: model.score,
-			user_score: model.userScore,
-			studios: model.studios,
-			genres: model.genres,
-		};
-	},
-};
+		});
+	}
+
+	/**
+	 * Map from model data to model data.
+	 * @param data Data need mapping.
+	 */
+	public toDto(data: Anime): AnimeDto {
+		return new AnimeDto({
+			id: data.id,
+			created: data.createdDate.toString(),
+			modified: data.modifiedDate.toString(),
+			title_eng: data.titleEnglish,
+			title_jpn: data.titleJapan,
+			image: data.imageUrl,
+			aired: data.aired,
+			type: typeMappingToDto[data.type],
+			status: statusMappingToDto[data.status],
+			score: data.score,
+			user_score: data.userScore,
+			studios: data.studios,
+			genres: data.genres,
+		});
+	}
+}

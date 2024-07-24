@@ -1,43 +1,43 @@
 <div  *ngIf="animeList$ | async as animeList">
-<div class="pagination-controls">
-	<button mat-button class="navigation-button" type="button" (click)="prevPage()" [disabled]="!animeList.hasPrev" ><<</button>
-	<button mat-button class="navigation-button" type="button" (click)="nextPage()" [disabled]="!animeList.hasNext" >>></button>
+<div class="dashboard__pagination-controls">
+	<button mat-button class="pagination-controls__navigation-button" type="button" (click)="prevPage()" [disabled]="!animeList.hasPrev" ><<</button>
+	<button mat-button class="pagination-controls__navigation-button" type="button" (click)="nextPage()" [disabled]="!animeList.hasNext" >>></button>
 
 </div>
 
-<mat-table [dataSource]="animeList.items" class="table-wrapper">
-	<ng-container class="image-container" matColumnDef="image">
+<mat-table [dataSource]="animeList.items" class="dashboard__table-wrapper">
+	<ng-container class="table__image-container" matColumnDef="image">
 		<mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
 		<mat-cell *matCellDef="let element">
 			<div>
-				<img [src]="element.imageUrl" alt="{{ element.titleJapan }}"  class="image" />
+				<img [src]="element.imageUrl" alt="{{ element.titleJapan }}"  class="table__item-image" />
 			</div>
 		</mat-cell>
 	</ng-container>
 	<ng-container matColumnDef="title_eng">
 		<mat-header-cell *matHeaderCellDef> Title_eng </mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.titleEnglish }} </mat-cell>
+		<mat-cell *matCellDef="let element"> {{ element.titleEnglish | noEmpty }} </mat-cell>
 	</ng-container>
 
 	<ng-container matColumnDef="title_jpn">
 		<mat-header-cell *matHeaderCellDef> Title_eng </mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.titleJapan }} </mat-cell>
+		<mat-cell *matCellDef="let element"> {{ element.titleJapan | noEmpty }} </mat-cell>
 	</ng-container>
 
 	<ng-container matColumnDef="aired.start">
 		<mat-header-cell *matHeaderCellDef> Aired.Start </mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.aired.start }} </mat-cell>
+		<mat-cell *matCellDef="let element"> {{ element.aired.start | noEmpty }} </mat-cell>
 	</ng-container>
 
 	<ng-container matColumnDef="type">
 		<mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.type }} </mat-cell>
+		<mat-cell *matCellDef="let element"> {{ element.type | noEmpty }} </mat-cell>
 	</ng-container>
 
 	<ng-container matColumnDef="status">
 		<mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
 		<mat-cell *matCellDef="let element">
-			<span class="team-badge">{{ element.status }}</span>
+			<span >{{ element.status | noEmpty }}</span>
 		</mat-cell>
 	</ng-container>
 

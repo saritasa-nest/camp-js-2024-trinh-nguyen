@@ -6,6 +6,6 @@ export enum AnimeType {
 	Special = 'Special',
 	ONA = 'ONA',
 	Music = 'Music',
-	promotionalVideos = 'Promotional Videos',
+	PromotionalVideos = 'Promotional Videos',
 	Unknown = 'Unknown',
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { AnimeTableComponent } from './anime-table/anime-table.component';
 
-/** Anime table component. */
+/** Dashboard component. */
 @Component({
 	selector: 'camp-dashboard',
 	templateUrl: './dashboard.component.html',
