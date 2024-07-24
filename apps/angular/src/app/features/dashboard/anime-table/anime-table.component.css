@@ -3,6 +3,27 @@
 	height: 150px;
 }
 
+.pagination-controls {
+	display: flex;
+	justify-content: flex-end;
+	gap: var(--spacing-sm);
+}
+
+.navigation-button {
+	background-color: var(--primary-light-color);
+	border-radius: var(--spacing-sm);
+	padding: var(--spacing-sm) 0;
+}
+
+.navigation-button:not([disabled]):hover {
+	background-color: #9e9e9e33;
+}
+
+.navigation-button[disabled] {
+	color: #00000042;
+	background-color: transparent;
+}
+
 .mat-header-cell .mat-cell {
 	padding: var(--spacing-md);
 	display: flex;

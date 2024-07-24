@@ -55,7 +55,7 @@ export class AnimeTableComponent {
 	protected nextPage(): void {
 		this.animeList$.pipe(
 
-			// Get current value of animeList$.
+			// Get one current value of animeList$ and then unsubscribe.
 			take(1),
 		).subscribe(pagination => {
 			if (pagination.hasNext) {
