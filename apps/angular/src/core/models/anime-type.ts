@@ -1,4 +1,4 @@
-// eslint-disable-next-line jsdoc/require-jsdoc
+/** List of anime type attribute. */
 export enum AnimeType {
 	TV = 'TV',
 	OVA = 'OVA',

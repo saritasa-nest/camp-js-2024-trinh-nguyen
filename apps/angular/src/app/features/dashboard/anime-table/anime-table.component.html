@@ -1,11 +1,12 @@
+<div *ngIf="animeList$ | async as animeList">
 <div class="pagination-controls">
-	<button mat-button type="button" (click)="prevPage()" >Prev</button>
-	<button mat-button type="button" (click)="nextPage()" >Next</button>
+	<button mat-button type="button" (click)="prevPage()" [disabled]="!animeList.hasPrev" >Prev</button>
+	<button mat-button type="button" (click)="nextPage()" [disabled]="!animeList.hasNext" >Next</button>
 
 
 </div>
 
-<mat-table [dataSource]="(animeResponse$ | async)!.items" class="table-wrapper">
+<mat-table [dataSource]="animeList.items" class="table-wrapper">
 	<ng-container class="image-container" matColumnDef="image">
 		<mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
 		<mat-cell *matCellDef="let element">
@@ -44,3 +45,4 @@
 	<mat-header-row *matHeaderRowDef="fieldsTable"></mat-header-row>
 	<mat-row *matRowDef="let row; columns: fieldsTable"></mat-row>
 </mat-table>
+</div>

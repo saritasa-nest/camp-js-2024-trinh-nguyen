@@ -12,7 +12,6 @@ import { AnimeType } from '../models/anime-type';
 /** Type of mapper from AnimeDto to Anime Model and vice vera mapper from Anime Model to AnimeDto. */
 export type AnimeMapper = IMapper<TAnimeDto, TAnime>;
 
-// eslint-disable-next-line jsdoc/require-param
 /** Map AnimeStatusDto to AnimeStatus. */
 const statusMapping: Record<AnimeStatusDto, AnimeStatus> = {
 	[AnimeStatusDto.Airing]: AnimeStatus.Airing,
@@ -62,8 +61,8 @@ export const animeMapper: AnimeMapper = {
 			titleJapan: dto.title_jpn,
 			imageUrl: dto.image,
 			aired: dto.aired,
-			type: typeMapping[dto.type as AnimeTypeDto],
-			status: statusMapping[dto.status as AnimeStatusDto],
+			type: typeMapping[dto.type],
+			status: statusMapping[dto.status],
 			score: dto.score,
 			userScore: dto.user_score,
 			studios: dto.studios,
@@ -73,8 +72,8 @@ export const animeMapper: AnimeMapper = {
 	toDto(model: TAnime) {
 		return {
 			id: model.id,
-			created: new Date(model.createdDate).toString(),
-			modified: new Date(model.modifiedDate).toString(),
+			created: model.createdDate.toString(),
+			modified: model.modifiedDate.toString(),
 			title_eng: model.titleEnglish,
 			title_jpn: model.titleJapan,
 			image: model.imageUrl,
