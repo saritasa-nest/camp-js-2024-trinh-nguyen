@@ -8,7 +8,7 @@ import { Pagination } from '@js-camp/core/models/pagination.dto';
 import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 
-import { environment } from '@js-camp/angular/environments/environment';
+import { environment } from '@js-camp/angular/environments/environment.prod';
 
 import { AnimeDto } from '../dtos/anime.dto';
 import { Anime } from '../models/anime';

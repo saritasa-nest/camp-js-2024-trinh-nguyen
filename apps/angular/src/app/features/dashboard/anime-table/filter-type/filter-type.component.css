@@ -1,0 +1,7 @@
+.table__header {
+	display: flex;
+}
+
+.filter-type__select {
+	display: flex;
+}
