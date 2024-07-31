@@ -1,4 +1,4 @@
-/** List of anime types. */
+/** Anime type DTO. */
 export enum AnimeTypeDto {
 	TV = 'TV',
 	OVA = 'OVA',

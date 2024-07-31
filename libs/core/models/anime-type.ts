@@ -1,4 +1,4 @@
-/** List of anime type attribute. */
+/** Anime type enum. */
 export enum AnimeType {
 	TV = 'TV',
 	OVA = 'OVA',
