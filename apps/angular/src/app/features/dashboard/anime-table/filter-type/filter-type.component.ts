@@ -4,9 +4,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { AnimeType } from '@js-camp/angular/core/models/anime-type';
 import { FormsModule } from '@angular/forms';
-import { CheckboxModule } from 'angular-bootstrap-md';@Component({
+import { AnimeType } from '@js-camp/core/models/anime-type';
+
+@Component({
 	selector: 'camp-filter-type',
 	encapsulation: ViewEncapsulation.None,
 	standalone: true,
@@ -17,7 +18,6 @@ import { CheckboxModule } from 'angular-bootstrap-md';@Component({
 		MatButtonModule,
 		MatIconModule,
 		FormsModule,
-		CheckboxModule,
 	],
 	templateUrl: './filter-type.component.html',
 	styleUrl: './filter-type.component.css',

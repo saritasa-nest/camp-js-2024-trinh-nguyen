@@ -1,53 +1,88 @@
-@if (animeList$ | async; as animeList) {
-
-<div class="pagination-controls">
-
-	<mat-paginator
-	[pageSizeOptions]="[5, 10, 20]"
-	[length]="animeList.totalCount"
-	[pageIndex]="pageSubject$.value.pageIndex"
-	[pageSize]="pageSubject$.value.pageSize"
-	(page)="getPaginatorData($event)"
-	></mat-paginator>
-</div>
-
-<mat-table [dataSource]="animeList.items" class="anime-table-wrapper"  [trackBy]="trackByFn">
-	<ng-container class="table__image-container" [matColumnDef]="animeTableColumns.IMAGE">
-		<mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
-		<mat-cell *matCellDef="let element">
-			<div>
-				<img [src]="element.imageUrl" [alt]="element.titleEnglish"  class="table__item-image" />
-			</div>
-		</mat-cell>
-	</ng-container>
-	<ng-container [matColumnDef]="animeTableColumns.TITLE_EN">
-		<mat-header-cell *matHeaderCellDef> English title </mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.titleEnglish | TransferEmpty }} </mat-cell>
-	</ng-container>
+<div class="anime-table-container">
+	<div class="anime-table__header">
+		<camp-search></camp-search>
+		<camp-filter-type class="anime-table__filter-type"></camp-filter-type>
+	</div>
+	<div>
+		@if(animeListPagination$ | async; as animeList){
+		<table
+			mat-table
+			matSort
+			matSortDisableClear
+			(matSortChange)="sortData($event)"
+			[matSortActive]="sortActive"
+			[matSortDirection]="sortDirection"
+			[dataSource]="animeList.items"
+			class="anime-table-wrapper"
+		>
+			<ng-container class="table__image-container" [matColumnDef]="animeTableColumns.IMAGE">
+				<mat-header-cell class="anime-table__item anime-table__item--textColor" *matHeaderCellDef>
+					Image
+				</mat-header-cell>
+				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
+					<div>
+						<img [src]="element.imageUrl" alt="{{ element.titleJapan }}" class="table__item-image" />
+					</div>
+				</mat-cell>
+			</ng-container>
+			<ng-container [matColumnDef]="animeTableColumns.TITLE_EN">
+				<mat-header-cell
+					mat-sort-header="titleEnglish"
+					class="anime-table__item anime-table__item--textColor"
+					*matHeaderCellDef
+				>
+					{{animeTableColumns.TITLE_EN}}
+				</mat-header-cell>
+				<mat-cell
+					class=" anime-table__item anime-table__item--textColor"
+					*matCellDef="let element"
+				>
+					{{ element.titleEnglish | TransferEmpty }}
+				</mat-cell>
+			</ng-container>
 
 	<ng-container [matColumnDef]="animeTableColumns.TITLE_JPN">
-		<mat-header-cell *matHeaderCellDef> Japanese title </mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.titleJapan | TransferEmpty }} </mat-cell>
+		<mat-header-cell *matHeaderCellDef> {{animeTableColumns.TITLE_JPN}} </mat-header-cell>
+		<mat-cell
+		class=" anime-table__item anime-table__item--textColor"
+		 *matCellDef="let element"> {{ element.titleJapan | TransferEmpty }} </mat-cell>
 	</ng-container>
 
 	<ng-container [matColumnDef]="animeTableColumns.AIRED_START">
-		<mat-header-cell *matHeaderCellDef> Aired start date</mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.aired.start | TransferEmpty }} </mat-cell>
+		<mat-header-cell
+		mat-sort-header="aired"
+		 *matHeaderCellDef> {{animeTableColumns.TITLE_JPN}}</mat-header-cell>
+		<mat-cell
+		class=" anime-table__item anime-table__item--textColor"
+		*matCellDef="let element"> {{ element.aired.start | TransferEmpty }} </mat-cell>
 	</ng-container>
 
 	<ng-container [matColumnDef]="animeTableColumns.TYPE">
-		<mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.type | TransferEmpty }} </mat-cell>
+		<mat-header-cell *matHeaderCellDef> {{animeTableColumns.TYPE}}</mat-header-cell>
+		<mat-cell
+		class=" anime-table__item anime-table__item--textColor"
+		 *matCellDef="let element"> {{ element.type | TransferEmpty }} </mat-cell>
 	</ng-container>
 
-	<ng-container [matColumnDef]="animeTableColumns.STATUS">
-		<mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-		<mat-cell *matCellDef="let element">
-			<span >{{ element.status | TransferEmpty }}</span>
-		</mat-cell>
-	</ng-container>
+			<ng-container [matColumnDef]="animeTableColumns.STATUS">
+				<mat-header-cell
+				mat-sort-header="status"
+				class="anime-table__item anime-table__item--textColor" *matHeaderCellDef>
+					{{animeTableColumns.STATUS}}
+				</mat-header-cell>
+				<mat-cell
 
-	<mat-header-row *matHeaderRowDef="animeTableColumnsArray"></mat-header-row>
-	<mat-row *matRowDef="let row; columns: animeTableColumnsArray"></mat-row>
-</mat-table>
+					class=" anime-table__item anime-table__item--textColor"
+					*matCellDef="let element"
+				>
+					<span>{{ element.status | TransferEmpty }}</span>
+				</mat-cell>
+			</ng-container>
+
+	<mat-header-row class="anime-table__header-row" *matHeaderRowDef="animeTableColumnsArray"></mat-header-row>
+	<mat-row class="anime-table__row " *matRowDef="let row; columns: animeTableColumnsArray"></mat-row>
+</table>
+
+
+
 }
