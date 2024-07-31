@@ -1,10 +1,18 @@
 <div class="anime-table-container">
+	@if(animeListPagination$ | async; as animeList){
 	<div class="anime-table__header">
 		<camp-search></camp-search>
 		<camp-filter-type class="anime-table__filter-type"></camp-filter-type>
+		<mat-paginator
+			class="anime-table__paginator"
+			[pageSizeOptions]="[5, 10, 20]"
+			[length]="animeList.totalCount"
+			[pageIndex]="pageSubject$.value.pageIndex"
+			[pageSize]="pageSubject$.value.pageSize"
+			(page)="getPaginatorData($event)"
+		></mat-paginator>
 	</div>
 	<div>
-		@if(animeListPagination$ | async; as animeList){
 		<table
 			mat-table
 			matSort
@@ -31,58 +39,50 @@
 					class="anime-table__item anime-table__item--textColor"
 					*matHeaderCellDef
 				>
-					{{animeTableColumns.TITLE_EN}}
+					{{ animeTableColumns.TITLE_EN }}
 				</mat-header-cell>
-				<mat-cell
-					class=" anime-table__item anime-table__item--textColor"
-					*matCellDef="let element"
-				>
+				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
 					{{ element.titleEnglish | TransferEmpty }}
 				</mat-cell>
 			</ng-container>
 
-	<ng-container [matColumnDef]="animeTableColumns.TITLE_JPN">
-		<mat-header-cell *matHeaderCellDef> {{animeTableColumns.TITLE_JPN}} </mat-header-cell>
-		<mat-cell
-		class=" anime-table__item anime-table__item--textColor"
-		 *matCellDef="let element"> {{ element.titleJapan | TransferEmpty }} </mat-cell>
-	</ng-container>
+			<ng-container [matColumnDef]="animeTableColumns.TITLE_JPN">
+				<mat-header-cell *matHeaderCellDef> {{ animeTableColumns.TITLE_JPN }} </mat-header-cell>
+				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
+					{{ element.titleJapan | TransferEmpty }}
+				</mat-cell>
+			</ng-container>
 
-	<ng-container [matColumnDef]="animeTableColumns.AIRED_START">
-		<mat-header-cell
-		mat-sort-header="aired"
-		 *matHeaderCellDef> {{animeTableColumns.TITLE_JPN}}</mat-header-cell>
-		<mat-cell
-		class=" anime-table__item anime-table__item--textColor"
-		*matCellDef="let element"> {{ element.aired.start | TransferEmpty }} </mat-cell>
-	</ng-container>
+			<ng-container [matColumnDef]="animeTableColumns.AIRED_START">
+				<mat-header-cell mat-sort-header="aired" *matHeaderCellDef> {{ animeTableColumns.TITLE_JPN }}</mat-header-cell>
+				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
+					{{ element.aired.start | TransferEmpty }}
+				</mat-cell>
+			</ng-container>
 
-	<ng-container [matColumnDef]="animeTableColumns.TYPE">
-		<mat-header-cell *matHeaderCellDef> {{animeTableColumns.TYPE}}</mat-header-cell>
-		<mat-cell
-		class=" anime-table__item anime-table__item--textColor"
-		 *matCellDef="let element"> {{ element.type | TransferEmpty }} </mat-cell>
-	</ng-container>
+			<ng-container [matColumnDef]="animeTableColumns.TYPE">
+				<mat-header-cell *matHeaderCellDef> {{ animeTableColumns.TYPE }}</mat-header-cell>
+				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
+					{{ element.type | TransferEmpty }}
+				</mat-cell>
+			</ng-container>
 
 			<ng-container [matColumnDef]="animeTableColumns.STATUS">
 				<mat-header-cell
-				mat-sort-header="status"
-				class="anime-table__item anime-table__item--textColor" *matHeaderCellDef>
-					{{animeTableColumns.STATUS}}
-				</mat-header-cell>
-				<mat-cell
-
-					class=" anime-table__item anime-table__item--textColor"
-					*matCellDef="let element"
+					mat-sort-header="status"
+					class="anime-table__item anime-table__item--textColor"
+					*matHeaderCellDef
 				>
+					{{ animeTableColumns.STATUS }}
+				</mat-header-cell>
+				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
 					<span>{{ element.status | TransferEmpty }}</span>
 				</mat-cell>
 			</ng-container>
 
-	<mat-header-row class="anime-table__header-row" *matHeaderRowDef="animeTableColumnsArray"></mat-header-row>
-	<mat-row class="anime-table__row " *matRowDef="let row; columns: animeTableColumnsArray"></mat-row>
-</table>
-
-
-
-}
+			<mat-header-row class="anime-table__header-row" *matHeaderRowDef="animeTableColumnsArray"></mat-header-row>
+			<mat-row class="anime-table__row" *matRowDef="let row; columns: animeTableColumnsArray"></mat-row>
+		</table>
+	</div>
+	}
+</div>
