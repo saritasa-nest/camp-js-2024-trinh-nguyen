@@ -1,9 +1,9 @@
-.dashboard__table-wrapper {
+.anime-table-wrapper {
 	width: 100%;
 	height: 150px;
 }
 
-.dashboard__pagination-controls {
+.pagination-controls {
 	display: flex;
 	justify-content: flex-end;
 	gap: var(--spacing-sm);
@@ -13,17 +13,6 @@
 	background-color: var(--primary-light-color);
 	border-radius: var(--spacing-sm);
 	padding: var(--spacing-sm) 0;
-}
-
-.pagination-controls__navigation-button:not([disabled]):hover {
-	/* Use variable */
-	background-color: #9e9e9e33;
-}
-
-.pagination-controls__navigation-button[disabled] {
-	/* Use variable */
-	color: #00000042;
-	background-color: transparent;
 }
 
 .mat-header-cell .mat-cell {

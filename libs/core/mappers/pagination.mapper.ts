@@ -1,15 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { PaginationDto } from '../dtos/pagination.dto';
-import { Pagination } from '../models/pagination.dto';
+import { Pagination } from '../models/pagination';
 
-import { MapperFromDto, MapperFunction } from './imapper';
-
-/**
- * Map Pagination Dto Model to Pagination Domain Model.
- * @param response Pagination Dto.
- * @param mapper Corresponding map: custom Map function or corresponding map type.
- */
+import { MapperFromDto, MapperFunction } from './mapper';
 
 /** Pagination mapper. */
 @Injectable({
@@ -30,8 +24,8 @@ export class PaginationMapper {
 		const mapperFn = typeof mapper === 'function' ? mapper : mapper.fromDto;
 		return new Pagination<TDomain>({
 			totalCount: paginationDto.count,
-			hasNext: Boolean(paginationDto.next),
-			hasPrev: Boolean(paginationDto.previous),
+			hasNext: paginationDto.next !== null,
+			hasPrev: paginationDto.previous !== null,
 			items: paginationDto.results.map(item => mapperFn(item)),
 		});
 	}

@@ -1,4 +1,4 @@
-/** List of anime status attribute. */
+/** Anime status Model. */
 export enum AnimeStatus {
 	Airing = 'Currently Airing',
 	Finished = 'Finished Airing',
