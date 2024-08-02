@@ -25,7 +25,10 @@ export class AnimeMapper implements Mapper<AnimeDto, Anime> {
 			titleEnglish: dto.title_eng,
 			titleJapan: dto.title_jpn,
 			imageUrl: dto.image,
-			aired: dto.aired,
+			aired: {
+				start: dto.aired.start,
+				end: dto.aired.end,
+			},
 			type: typeMappingFromDto[dto.type],
 			status: statusMappingFromDto[dto.status],
 			score: dto.score,

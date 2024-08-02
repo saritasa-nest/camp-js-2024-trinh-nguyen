@@ -1,15 +1,15 @@
 <div class="anime-table-container">
 	@if(animeListPagination$ | async; as animeList){
 	<div class="anime-table__header">
-		<camp-search></camp-search>
-		<camp-filter-type class="anime-table__filter-type"></camp-filter-type>
+		<camp-search (searchChanged)="onSearch($event)" [search]="(filter$ | async)!.search ?? ''"></camp-search>
+		<camp-filter-type (typeChange)="onSelect($event)" [selectedTypes]="(filter$ | async)!.type ?? null"  class="anime-table__filter-type"></camp-filter-type>
 		<mat-paginator
 			class="anime-table__paginator"
 			[pageSizeOptions]="[5, 10, 20]"
+			[pageSize] = "(filter$ | async)!.pageSize"
+			[pageIndex] = "(filter$ | async)!.pageNumber"
 			[length]="animeList.totalCount"
-			[pageIndex]="pageSubject$.value.pageIndex"
-			[pageSize]="pageSubject$.value.pageSize"
-			(page)="getPaginatorData($event)"
+			(page)="onPaginationChange($event)"
 		></mat-paginator>
 	</div>
 	<div>
@@ -17,9 +17,7 @@
 			mat-table
 			matSort
 			matSortDisableClear
-			(matSortChange)="sortData($event)"
-			[matSortActive]="sortActive"
-			[matSortDirection]="sortDirection"
+			(matSortChange)="onSortChange($event)"
 			[dataSource]="animeList.items"
 			class="anime-table-wrapper"
 		>
@@ -34,11 +32,7 @@
 				</mat-cell>
 			</ng-container>
 			<ng-container [matColumnDef]="animeTableColumns.TITLE_EN">
-				<mat-header-cell
-					mat-sort-header="titleEnglish"
-					class="anime-table__item anime-table__item--textColor"
-					*matHeaderCellDef
-				>
+				<mat-header-cell mat-sort-header class="anime-table__item anime-table__item--textColor" *matHeaderCellDef>
 					{{ animeTableColumns.TITLE_EN }}
 				</mat-header-cell>
 				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
@@ -54,7 +48,7 @@
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeTableColumns.AIRED_START">
-				<mat-header-cell mat-sort-header="aired" *matHeaderCellDef> {{ animeTableColumns.TITLE_JPN }}</mat-header-cell>
+				<mat-header-cell mat-sort-header *matHeaderCellDef> {{ animeTableColumns.AIRED_START }}</mat-header-cell>
 				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
 					{{ element.aired.start | TransferEmpty }}
 				</mat-cell>
@@ -68,11 +62,7 @@
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeTableColumns.STATUS">
-				<mat-header-cell
-					mat-sort-header="status"
-					class="anime-table__item anime-table__item--textColor"
-					*matHeaderCellDef
-				>
+				<mat-header-cell mat-sort-header class="anime-table__item anime-table__item--textColor" *matHeaderCellDef>
 					{{ animeTableColumns.STATUS }}
 				</mat-header-cell>
 				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">

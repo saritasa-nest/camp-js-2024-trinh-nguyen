@@ -6,9 +6,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
-import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
+import { Observable, switchMap, take } from 'rxjs';
 import { Pagination } from '@js-camp/core/models/pagination';
 
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
@@ -16,27 +16,26 @@ import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { NoEmptyPipe } from '@js-camp/core/pipes/no-empty.pipe';
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeTableColumns } from '@js-camp/core/enums/animeTableColumns';
-import { AnimeParams } from '@js-camp/core/models/anime-params';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 
 import { SkeletonModule } from 'primeng/skeleton';
 
-import { FilterTypeComponent } from './filter-type/filter-type.component';
+import { AnimeQueryParamsService } from '@js-camp/angular/core/services/anime-query-params.service';
+
+import { ANIME_MANAGE_PARAMS_PROVIDERS, ANIME_MANAGE_PARAMS_TOKEN } from '@js-camp/angular/core/providers/anime-manage-params.provider';
+
+import { AnimeManageParams } from '@js-camp/core/models/anime-manage-params';
+import { SortOptions } from '@js-camp/core/models/sort-options';
+import { AnimeSortFields } from '@js-camp/core/models/anime-sort-fields';
+
+// eslint-disable-next-line no-duplicate-imports
+import { SortDirection } from '@js-camp/core/models/sort-options';
+
+import { AnimeType } from '@js-camp/core/models/anime-type';
 
 import { SearchComponent } from './search/search.component';
 
-type PageEvent = {
-
-	/** The number of item per page. */
-	pageSize: number;
-
-	/** The current index page. */
-	pageIndex: number;
-};
-
-const ITEM_PER_PAGE = 25;
-
-const PAGE_DEFAULT = 0;
+import { FilterTypeComponent } from './filter-type/filter-type.component';
 
 /** Anime Table Component. */
 @Component({
@@ -59,40 +58,34 @@ const PAGE_DEFAULT = 0;
 	templateUrl: './anime-table.component.html',
 	styleUrl: './anime-table.component.css',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	providers: [...ANIME_MANAGE_PARAMS_PROVIDERS],
 })
 
 export class AnimeTableComponent {
 
+	protected filter$ = inject(ANIME_MANAGE_PARAMS_TOKEN);
+
 	/** Receive observable include pagination type of Anime api. */
-	protected animeListPagination$: Observable<Pagination<Anime>>;
+	protected animeListPagination$!: Observable<Pagination<Anime>>;
 
 	private readonly animeService = inject(AnimeService);
 
-	/** Current page index. */
-	protected pageIndex = PAGE_DEFAULT;
-
-	/** Current item per page. */
-	protected pageSize = ITEM_PER_PAGE;
-
-	/**  Notify newest index page to user who subscribe it when user click next/previous page. */
-	protected readonly pageSubject$ = new BehaviorSubject<PageEvent>({ pageSize: ITEM_PER_PAGE, pageIndex: PAGE_DEFAULT });
+	private readonly animeQueryParams = inject(AnimeQueryParamsService);
 
 	/** Enum of anime fields. */
 	protected readonly animeTableColumns: typeof AnimeTableColumns = AnimeTableColumns;
 
-	public sortActive: string;
-
-	public sortDirection: 'asc' | 'desc' | '';
-
-	@ViewChild(MatSort)
-	public matSort!: MatSort;
+	@ViewChild(MatSort) public sort!: MatSort;
 
 	public constructor() {
-		this.sortDirection = '';
-		this.sortActive = '';
+		this.animeListPagination$ = this.filter$.pipe(
+			switchMap(page => this.getDataOnce(((page)))),
+		);
+	}
 
-		this.animeListPagination$ = this.pageSubject$.pipe(
-			switchMap(page => this.animeService.getAnime(new AnimeParams({ pageSize: page.pageSize, pageIndex: page.pageIndex }))),
+	public getDataOnce(animeParams: AnimeManageParams.Combined) {
+		return this.animeService.requestAnime(animeParams).pipe(
+			take(1),
 		);
 	}
 
@@ -100,8 +93,8 @@ export class AnimeTableComponent {
 	 * Paginator navigator control.
 	 * @param event Event includes custom pageSize and pageIndex that user select.
 	 */
-	protected getPaginatorData(event: PageEvent): void {
-		this.pageSubject$.next({ pageSize: event.pageSize, pageIndex: event.pageIndex });
+	protected onPaginationChange(event: PageEvent): void {
+		this.animeQueryParams.append({ pageSize: event.pageSize, pageNumber: event.pageIndex });
 	}
 
 	/**
@@ -114,68 +107,25 @@ export class AnimeTableComponent {
 		return item.id;
 	}
 
-	public isDataAvailable(animeListPagination: Pagination<Anime> | null): boolean {
-		return animeListPagination !== null && animeListPagination.items.length > 0;
+	protected onSortChange(event: Sort) {
+		const sortOption: SortOptions<AnimeSortFields> = {
+			direction: event.direction as SortDirection,
+			field: event.active as AnimeSortFields,
+		};
+		this.animeQueryParams.appendParamsAndResetPageNumber({ sortOptions: sortOption });
 	}
 
-	public setOrderImperatively(sort?: Sort) {
-		if (sort) {
-			this.sortActive = sort.active;
-			this.sortDirection = sort.direction;
-			return;
-		}
-		this.sortActive = this.sortActive === 'titleEnglish' ? 'status' : 'titleEnglish';
-		this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+	protected onSearch(event: string | null) {
+
+		this.animeQueryParams.appendParamsAndResetPageNumber({ search: event });
 	}
 
-	public sortData(sort: Sort): void {
-		this.setOrderImperatively(sort);
-		this.animeListPagination$ = this.animeListPagination$.pipe(
-			switchMap(pagination => {
-				// Sắp xếp items theo titleEnglish
-				const sortedItems = [...pagination.items].sort((a, b) => {
-					switch (sort?.active) {
-						case 'titleEnglish':
-							return compare(a.titleEnglish, b.titleEnglish, sort.direction === 'asc');
-						case 'aired':
-							return compare(a.aired.start.toISOString(), b.aired.start.toISOString(), sort.direction === 'asc');
-						case 'status':
-							return compare(a.status, b.status, sort.direction === 'asc');
-						default:
-							return 0;
-					}
-				});
+	protected onSelect(event: AnimeType | null) {
 
-				// Trả về một Observable mới với đối tượng pagination đã sắp xếp
-				return of({
-					hasPrev: pagination.hasPrev,
-					hasNext: pagination.hasNext,
-					hasItems: pagination.hasItems,
-					totalCount: pagination.totalCount,
-					items: sortedItems,
-				});
-			}),
-		);
+		this.animeQueryParams.appendParamsAndResetPageNumber({ type: event });
 	}
 
 	/** Displayer fields of an anime. */
 	protected readonly animeTableColumnsArray = Object.values(this.animeTableColumns);
 
-}
-
-/**
- * Compares two values.
- * @param a First value.
- * @param b Second value.
- * @param isAsc Whether the comparison should be in ascending order.
- * @returns Comparison result.
- */
-function compare(a: string | number, b: string | number, isAsc: boolean): number {
-	if (a < b) {
-		return isAsc ? -1 : 1;
-	}
-	if (a > b) {
-		return isAsc ? 1 : -1;
-	}
-	return 0;
 }
