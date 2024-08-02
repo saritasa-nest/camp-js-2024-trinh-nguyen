@@ -10,8 +10,6 @@ import { QueryParamsService } from './query-params.service';
 @Injectable({ providedIn: 'root' })
 export class AnimeQueryParamsService {
 
-	// private readonly animeQueryParams = inject(AnimeQueryParamsMapper);
-
 	private readonly queryParamsService = inject(QueryParamsService);
 
 	private readonly animeQueryParams = inject(AnimeQueryParamsMapper);

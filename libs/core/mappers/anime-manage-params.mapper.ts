@@ -1,35 +1,16 @@
 import { inject, Injectable } from '@angular/core';
 
-import { AnimeType } from '../models/anime-type';
-import { AnimeTypeDto } from '../dtos/anime-type.dto';
-import { AnimeSortFields } from '../models/anime-sort-fields';
-import { AnimeSortFieldsDto } from '../dtos/anime-sort-fields.dto';
-
 import { AnimeManageParamsDto } from '../dtos/anime-manage-params.dto';
 import { AnimeManageParams } from '../models/anime-manage-params';
 
 import { DEFAULT_PAGINATION_OPTIONS } from '../constants/pagination';
 
+import { MAP_ANIME_SORT_FIELDS_TO_DTO } from '../records/anime-sort-field-to-dto';
+
+import { MAP_ANIME_TYPE_TO_DTO } from '../records/anime-type-to-dto';
+
 import { MapperToDto } from './mapper';
 import { SortMapper } from './sort.mapper';
-
-const MAP_ANIME_TYPE_TO_DTO: Readonly<Record<AnimeType, AnimeTypeDto>> = {
-	[AnimeType.TV]: AnimeTypeDto.TV,
-	[AnimeType.OVA]: AnimeTypeDto.OVA,
-	[AnimeType.Movie]: AnimeTypeDto.Movie,
-	[AnimeType.Special]: AnimeTypeDto.Special,
-	[AnimeType.ONA]: AnimeTypeDto.ONA,
-	[AnimeType.Music]: AnimeTypeDto.Music,
-	[AnimeType.Unknown]: AnimeTypeDto.Unknown,
-	[AnimeType.PromotionalVideos]: AnimeTypeDto.PromotionalVideos,
-};
-
-const MAP_ANIME_SORT_FIELDS_TO_DTO: Readonly<Record<AnimeSortFields, AnimeSortFieldsDto>> = {
-	[AnimeSortFields.Aired]: AnimeSortFieldsDto.Aired,
-	[AnimeSortFields.Status]: AnimeSortFieldsDto.Status,
-	[AnimeSortFields.TitleEnglish]: AnimeSortFieldsDto.TitleEnglish,
-
-};
 
 /** Mapper for filter params. */
 @Injectable({ providedIn: 'root' })
@@ -73,7 +54,7 @@ export class AnimeManageParamsMapper implements MapperToDto<AnimeManageParamsDto
 	private mapTypeOptionToDto(model: AnimeManageParams.Type): AnimeManageParamsDto.Type | null {
 		if (model.type) {
 			return {
-				type: MAP_ANIME_TYPE_TO_DTO[model.type as AnimeType],
+				type: MAP_ANIME_TYPE_TO_DTO[model.type],
 			};
 		}
 		return null;

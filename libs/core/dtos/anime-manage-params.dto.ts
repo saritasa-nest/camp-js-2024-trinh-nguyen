@@ -27,7 +27,7 @@ export namespace AnimeManageParamsDto {
 	export type Type = {
 
 		/** TODO. */
-		readonly type?: string | null;
+		readonly type?: string;
 	};
 
 	/** Anime query params. */

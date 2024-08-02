@@ -90,14 +90,6 @@ export class AnimeTableComponent {
 	}
 
 	/**
-	 * Paginator navigator control.
-	 * @param event Event includes custom pageSize and pageIndex that user select.
-	 */
-	protected onPaginationChange(event: PageEvent): void {
-		this.animeQueryParams.append({ pageSize: event.pageSize, pageNumber: event.pageIndex });
-	}
-
-	/**
 	 * Function return index of item in an array.
 	 * @param index Index of item.
 	 * @param item The value of item.
@@ -105,6 +97,17 @@ export class AnimeTableComponent {
 	 */
 	protected trackByFn(index: number, item: Anime): number {
 		return item.id;
+	}
+
+	/** Displayer fields of an anime. */
+	protected readonly animeTableColumnsArray = Object.values(this.animeTableColumns);
+
+	/**
+	 * Paginator navigator control.
+	 * @param event Event includes custom pageSize and pageIndex that user select.
+	 */
+	protected onPaginationChange(event: PageEvent): void {
+		this.animeQueryParams.append({ pageSize: event.pageSize, pageNumber: event.pageIndex });
 	}
 
 	protected onSortChange(event: Sort) {
@@ -116,16 +119,11 @@ export class AnimeTableComponent {
 	}
 
 	protected onSearch(event: string | null) {
-
 		this.animeQueryParams.appendParamsAndResetPageNumber({ search: event });
 	}
 
 	protected onSelect(event: AnimeType | null) {
-
 		this.animeQueryParams.appendParamsAndResetPageNumber({ type: event });
 	}
-
-	/** Displayer fields of an anime. */
-	protected readonly animeTableColumnsArray = Object.values(this.animeTableColumns);
 
 }

@@ -27,7 +27,7 @@ export class AnimeHttpParamsService {
 			httpParams = httpParams.set('ordering', params.ordering);
 		}
 		if (params.type !== undefined) {
-			httpParams = httpParams.set('type', params.type ? params.type.toString() : '');
+			httpParams = httpParams.set('type', params.type);
 		}
 		return httpParams;
 	}
