@@ -30,8 +30,8 @@ export class AnimeMapper implements Mapper<AnimeDto, Anime> {
 			status: statusMappingFromDto[dto.status],
 			score: dto.score,
 			userScore: dto.user_score,
-			studios: dto.studios,
-			genres: dto.genres,
+			studioIds: dto.studioIds,
+			genreIds: dto.genreIds,
 		};
 	}
 
@@ -49,8 +49,8 @@ export class AnimeMapper implements Mapper<AnimeDto, Anime> {
 			status: statusMappingToDto[data.status],
 			score: data.score,
 			user_score: data.userScore,
-			studios: data.studios,
-			genres: data.genres,
+			studioIds: data.studioIds,
+			genreIds: data.genreIds,
 		};
 	}
 }

@@ -34,7 +34,7 @@ export class AnimeService {
 	 * Get anime list.
 	 * @param model Params to next/prev page.
 	 */
-	public getAnime(model: AnimeParams): Observable<Pagination<Anime>> {
+	public getList(model: AnimeParams): Observable<Pagination<Anime>> {
 
 		const params = AnimeParamsMapper.toDto(model);
 

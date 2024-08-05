@@ -5,13 +5,13 @@
 	<mat-paginator
 	[pageSizeOptions]="[5, 10, 20]"
 	[length]="animeList.totalCount"
-	[pageIndex]="pageSubject$.value.pageIndex"
-	[pageSize]="pageSubject$.value.pageSize"
-	(page)="getPaginatorData($event)"
-	></mat-paginator>
+	[pageIndex]="pagination$.value.pageIndex"
+	[pageSize]="pagination$.value.pageSize"
+	(page)="onPaginatorChange($event)"
+	/>
 </div>
 
-<mat-table [dataSource]="animeList.items" class="anime-table-wrapper"  [trackBy]="trackByFn">
+<mat-table [dataSource]="animeList.items" class="anime-table-wrapper"  [trackBy]="trackAnime">
 	<ng-container class="table__image-container" [matColumnDef]="animeTableColumns.IMAGE">
 		<mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
 		<mat-cell *matCellDef="let element">

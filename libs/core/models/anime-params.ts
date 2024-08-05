@@ -1,7 +1,6 @@
-import { Immerable, OmitImmerable } from './immerable';
 
 /** Anime params. */
-export class AnimeParams extends Immerable {
+export class AnimeParams {
 
 	/** Default values for AnimeParams. */
 	public static readonly defaultValues = {
@@ -15,11 +14,8 @@ export class AnimeParams extends Immerable {
 	/** Number of elements that can be on a page. */
 	public readonly pageSize: number;
 
-	public constructor(data: Partial<AnimeParamsData> = {}) {
-		super();
+	public constructor(data: Partial<AnimeParams> = {}) {
 		this.pageIndex = data.pageIndex ?? AnimeParams.defaultValues.pageIndex;
 		this.pageSize = data.pageSize ?? AnimeParams.defaultValues.pageSize;
 	}
 }
-
-type AnimeParamsData = OmitImmerable<AnimeParams>;

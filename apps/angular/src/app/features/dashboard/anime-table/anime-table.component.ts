@@ -63,15 +63,15 @@ export class AnimeTableComponent {
 	protected pageSize = ITEM_PER_PAGE;
 
 	/**  Notify newest index page to user who subscribe it when user click next/previous page. */
-	protected readonly pageSubject$ = new BehaviorSubject<PageEvent>({ pageSize: ITEM_PER_PAGE, pageIndex: PAGE_DEFAULT });
+	protected readonly pagination$ = new BehaviorSubject<PageEvent>({ pageSize: ITEM_PER_PAGE, pageIndex: PAGE_DEFAULT });
 
 	/** Enum of anime fields. */
 	protected readonly animeTableColumns: typeof AnimeTableColumns = AnimeTableColumns;
 
 	public constructor() {
 
-		this.animeList$ = this.pageSubject$.pipe(
-			switchMap(page => this.animeService.getAnime(new AnimeParams({ pageSize: page.pageSize, pageIndex: page.pageIndex }))),
+		this.animeList$ = this.pagination$.pipe(
+			switchMap(page => this.animeService.getList(new AnimeParams({ pageSize: page.pageSize, pageIndex: page.pageIndex }))),
 		);
 	}
 
@@ -79,8 +79,8 @@ export class AnimeTableComponent {
 	 * Paginator navigator control.
 	 * @param event Event includes custom pageSize and pageIndex that user select.
 	 */
-	protected getPaginatorData(event: PageEvent): void {
-		this.pageSubject$.next({ pageSize: event.pageSize, pageIndex: event.pageIndex });
+	protected onPaginatorChange(event: PageEvent): void {
+		this.pagination$.next({ pageSize: event.pageSize, pageIndex: event.pageIndex });
 	}
 
 	/**
@@ -89,7 +89,7 @@ export class AnimeTableComponent {
 	 * @param item The value of item.
 	 * @returns
 	 */
-	protected trackByFn(index: number, item: Anime): number {
+	protected trackAnime(index: number, item: Anime): number {
 		return item.id;
 	}
 
