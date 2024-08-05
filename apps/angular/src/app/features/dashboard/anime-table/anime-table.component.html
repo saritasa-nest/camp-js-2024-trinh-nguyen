@@ -22,28 +22,28 @@
 	</ng-container>
 	<ng-container [matColumnDef]="animeTableColumns.TITLE_EN">
 		<mat-header-cell *matHeaderCellDef> English title </mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.titleEnglish | TransferEmpty }} </mat-cell>
+		<mat-cell *matCellDef="let element"> {{ element.titleEnglish | appNullable }} </mat-cell>
 	</ng-container>
 
 	<ng-container [matColumnDef]="animeTableColumns.TITLE_JPN">
 		<mat-header-cell *matHeaderCellDef> Japanese title </mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.titleJapan | TransferEmpty }} </mat-cell>
+		<mat-cell *matCellDef="let element"> {{ element.titleJapan | appNullable }} </mat-cell>
 	</ng-container>
 
 	<ng-container [matColumnDef]="animeTableColumns.AIRED_START">
 		<mat-header-cell *matHeaderCellDef> Aired start date</mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.aired.start | TransferEmpty }} </mat-cell>
+		<mat-cell *matCellDef="let element"> {{ element.aired.start | appNullable }} </mat-cell>
 	</ng-container>
 
 	<ng-container [matColumnDef]="animeTableColumns.TYPE">
 		<mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.type | TransferEmpty }} </mat-cell>
+		<mat-cell *matCellDef="let element"> {{ element.type | appNullable }} </mat-cell>
 	</ng-container>
 
 	<ng-container [matColumnDef]="animeTableColumns.STATUS">
 		<mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
 		<mat-cell *matCellDef="let element">
-			<span >{{ element.status | TransferEmpty }}</span>
+			<span >{{ element.status | appNullable }}</span>
 		</mat-cell>
 	</ng-container>
 

@@ -11,7 +11,7 @@ import { Pagination } from '@js-camp/core/models/pagination';
 
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 
-import { NoEmptyPipe } from '@js-camp/core/pipes/no-empty.pipe';
+import { NullablePipe } from '@js-camp/core/pipes/no-empty.pipe';
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeTableColumns } from '@js-camp/core/enums/animeTableColumns';
 import { AnimeParams } from '@js-camp/core/models/anime-params';
@@ -41,7 +41,7 @@ const PAGE_DEFAULT = 0;
 		MatIconModule,
 		MatPaginatorModule,
 		MatButtonModule,
-		NoEmptyPipe,
+		NullablePipe,
 		MatPaginatorModule,
 	],
 	templateUrl: './anime-table.component.html',
