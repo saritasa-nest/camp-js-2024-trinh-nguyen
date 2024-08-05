@@ -1,0 +1,53 @@
+@if (animeList$ | async; as animeList) {
+
+<div class="pagination-controls">
+
+	<mat-paginator
+	[pageSizeOptions]="[5, 10, 20]"
+	[length]="animeList.totalCount"
+	[pageIndex]="pagination$.value.pageIndex"
+	[pageSize]="pagination$.value.pageSize"
+	(page)="onPaginatorChange($event)"
+	/>
+</div>
+
+<mat-table [dataSource]="animeList.items" class="anime-table-wrapper"  [trackBy]="trackAnime">
+	<ng-container class="table__image-container" [matColumnDef]="animeTableColumns.IMAGE">
+		<mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+		<mat-cell *matCellDef="let element">
+			<div>
+				<img [src]="element.imageUrl" [alt]="element.titleEnglish"  class="table__item-image" />
+			</div>
+		</mat-cell>
+	</ng-container>
+	<ng-container [matColumnDef]="animeTableColumns.TITLE_EN">
+		<mat-header-cell *matHeaderCellDef> English title </mat-header-cell>
+		<mat-cell *matCellDef="let element"> {{ element.titleEnglish | appNullable }} </mat-cell>
+	</ng-container>
+
+	<ng-container [matColumnDef]="animeTableColumns.TITLE_JPN">
+		<mat-header-cell *matHeaderCellDef> Japanese title </mat-header-cell>
+		<mat-cell *matCellDef="let element"> {{ element.titleJapan | appNullable }} </mat-cell>
+	</ng-container>
+
+	<ng-container [matColumnDef]="animeTableColumns.AIRED_START">
+		<mat-header-cell *matHeaderCellDef> Aired start date</mat-header-cell>
+		<mat-cell *matCellDef="let element"> {{ element.aired.start | appNullable }} </mat-cell>
+	</ng-container>
+
+	<ng-container [matColumnDef]="animeTableColumns.TYPE">
+		<mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
+		<mat-cell *matCellDef="let element"> {{ element.type | appNullable }} </mat-cell>
+	</ng-container>
+
+	<ng-container [matColumnDef]="animeTableColumns.STATUS">
+		<mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+		<mat-cell *matCellDef="let element">
+			<span >{{ element.status | appNullable }}</span>
+		</mat-cell>
+	</ng-container>
+
+	<mat-header-row *matHeaderRowDef="animeTableColumnsArray"></mat-header-row>
+	<mat-row *matRowDef="let row; columns: animeTableColumnsArray"></mat-row>
+</mat-table>
+}

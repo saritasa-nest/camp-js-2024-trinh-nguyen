@@ -1,0 +1,34 @@
+.anime-table-wrapper {
+	width: 100%;
+	height: 150px;
+}
+
+.pagination-controls {
+	display: flex;
+	justify-content: flex-end;
+	gap: var(--spacing-sm);
+}
+
+.pagination-controls__navigation-button {
+	background-color: var(--primary-light-color);
+	border-radius: var(--spacing-sm);
+	padding: var(--spacing-sm) 0;
+}
+
+.mat-header-cell .mat-cell {
+	padding: var(--spacing-md);
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+
+.table__item-image {
+	width: 150px;
+	height: 150px;
+	object-fit: contain;
+	margin-right: var(--spacing-sm);
+}
+
+.table__image-container {
+	width: 150px;
+}
