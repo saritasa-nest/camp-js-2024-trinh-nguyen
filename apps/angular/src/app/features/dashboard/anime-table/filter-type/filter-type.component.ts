@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { AnimeType } from '@js-camp/core/models/anime-type';
 
+/** Filter type component. */
 @Component({
 	selector: 'camp-filter-type',
 	encapsulation: ViewEncapsulation.None,
@@ -16,30 +16,29 @@ import { AnimeType } from '@js-camp/core/models/anime-type';
 		MatSelectModule,
 		MatCheckboxModule,
 		MatButtonModule,
-		MatIconModule,
 		FormsModule,
 	],
 	templateUrl: './filter-type.component.html',
 	styleUrl: './filter-type.component.css',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-// eslint-disable-next-line jsdoc/require-jsdoc
 export class FilterTypeComponent {
-	// eslint-disable-next-line jsdoc/require-jsdoc
+
+	/** Anime type. */
 	public readonly animeType = Object.values(AnimeType);
 
-	// eslint-disable-next-line jsdoc/require-jsdoc
+	/** Selected anime anime-type. */
 	@Input() public selectedTypes: AnimeType | null = null;
 
-	/** */
+	/** Type change listener. */
 	@Output() public typeChange = new EventEmitter<AnimeType>();
 
 	/**
-	 * TODO.
-	 * @param event TODO.
+	 * Selection change function.
+	 * @param event Event of selection change.
 	 */
 	protected onSelectionChange(event: MatSelectChange): void {
-		if (event.value in AnimeType) {
+		if (event.value) {
 			this.typeChange.emit(event.value);
 		}
 	}

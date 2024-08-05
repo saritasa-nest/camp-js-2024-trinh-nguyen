@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
@@ -31,18 +31,6 @@ export class AnimeService {
 	private readonly animeMapper = inject(AnimeMapper);
 
 	private readonly httpParamsService = inject(AnimeHttpParamsService);
-
-	/**
-	 * //TODO.
-	 * @param model TODO.
-	 */
-	public getAnime(model: AnimeManageParams.Combined): void {
-		if (!this.cacheAnimePagination$) {
-			this.cacheAnimePagination$ = this.requestAnime(model).pipe(
-				shareReplay({ refCount: true, bufferSize: 1 }),
-			);
-		}
-	}
 
 	/**
 	 * Get anime list.

@@ -32,7 +32,7 @@ export class AnimeQueryParamsMapper implements Mapper<AnimeQueryParams, AnimeMan
 			type: dto.type ?? null,
 			pageNumber: dto.pageNumber ? Number(dto.pageNumber) : DEFAULT_PAGINATION_OPTIONS.pageNumber,
 			pageSize: dto.pageSize ? Number(dto.pageSize) : DEFAULT_PAGINATION_OPTIONS.pageSize,
-			search: dto.search ?? null,
+			search: (dto.search && dto.search !== '') ? dto.search : null,
 			sortOptions: (dto.field && dto.direction) ?
 				{
 					field: dto.field,
@@ -44,8 +44,8 @@ export class AnimeQueryParamsMapper implements Mapper<AnimeQueryParams, AnimeMan
 	/** @inheritdoc */
 	public toDto(model: Partial<AnimeManageParams.Combined>): AnimeQueryParams {
 		return {
-			type: model.type !== undefined ? model.type : undefined,
-			pageNumber: model.pageNumber && model.pageNumber >= 0 ? model.pageNumber : undefined,
+			type: (model.type === undefined) ? undefined : model.type,
+			pageNumber: model.pageNumber !== undefined && model.pageNumber !== null && model.pageNumber >= 0 ? model.pageNumber : undefined,
 			pageSize: model.pageSize ? model.pageSize : undefined,
 			search: model.search !== undefined ? model.search : undefined,
 			field: model.sortOptions?.field ? model.sortOptions.field : undefined,

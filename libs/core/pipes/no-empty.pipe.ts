@@ -4,10 +4,10 @@ const NULL_VALUE = '-';
 
 /** A custom pipe to transform an empty string to a default value. */
 @Pipe({
-	name: 'TransferEmpty',
+	name: 'appNullable',
 	standalone: true,
 })
-export class NoEmptyPipe implements PipeTransform {
+export class NullablePipe implements PipeTransform {
 	/**
 	 * Transform an empty value to a given default value.
 	 * @param value The given value.

@@ -12,7 +12,7 @@ export class QueryParamsService {
 	public constructor(
 		private readonly router: Router,
 		private readonly activatedRoute: ActivatedRoute,
-	) {}
+	) { }
 
 	/**
 	 * Remove undefined fields.
@@ -42,11 +42,20 @@ export class QueryParamsService {
 	 */
 	public append(params: Record<string, any>): void {
 		const paramsWithoutUndefinedField = this.removeUndefinedFields(params);
-		this.router.navigate([], {
-			queryParams: paramsWithoutUndefinedField,
-			relativeTo: this.activatedRoute,
-			queryParamsHandling: 'merge',
+
+		Object.keys(paramsWithoutUndefinedField).forEach(key => {
+			if (paramsWithoutUndefinedField[key] === '' || paramsWithoutUndefinedField[key] === 'all') {
+				paramsWithoutUndefinedField[key] = null;
+			}
 		});
+
+		this.router.navigate([],
+			{
+				queryParams: paramsWithoutUndefinedField,
+				relativeTo: this.activatedRoute,
+				queryParamsHandling: 'merge',
+
+			});
 	}
 
 	/**

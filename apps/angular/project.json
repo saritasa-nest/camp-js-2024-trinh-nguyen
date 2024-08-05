@@ -17,10 +17,7 @@
         "assets": ["apps/angular/src/favicon.ico", "apps/angular/src/assets"],
         "styles": [
           "apps/angular/src/theme/styles.css",
-          "libs/theme/src/index.css",
-					"node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-					"node_modules/primeng/resources/themes/saga-blue/theme.css",
-					"node_modules/primeng/resources/primeng.min.css"
+          "libs/theme/src/index.css"
         ],
         "scripts": []
       },

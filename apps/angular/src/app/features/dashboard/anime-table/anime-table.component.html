@@ -40,28 +40,28 @@
 					{{ animeTableColumns.TITLE_EN }}
 				</mat-header-cell>
 				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
-					{{ element.titleEnglish | TransferEmpty }}
+					{{ element.titleEnglish | appNullable }}
 				</mat-cell>
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeTableColumns.TITLE_JPN">
 				<mat-header-cell *matHeaderCellDef> {{ animeTableColumns.TITLE_JPN }} </mat-header-cell>
 				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
-					{{ element.titleJapan | TransferEmpty }}
+					{{ element.titleJapan | appNullable }}
 				</mat-cell>
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeTableColumns.AIRED_START">
 				<mat-header-cell mat-sort-header *matHeaderCellDef> {{ animeTableColumns.AIRED_START }}</mat-header-cell>
 				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
-					{{ element.aired.start | TransferEmpty }}
+					{{ element.aired.start | appNullable }}
 				</mat-cell>
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeTableColumns.TYPE">
 				<mat-header-cell *matHeaderCellDef> {{ animeTableColumns.TYPE }}</mat-header-cell>
 				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
-					{{ element.type | TransferEmpty }}
+					{{ element.type | appNullable }}
 				</mat-cell>
 			</ng-container>
 
@@ -70,7 +70,7 @@
 					{{ animeTableColumns.STATUS }}
 				</mat-header-cell>
 				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
-					<span>{{ element.status | TransferEmpty }}</span>
+					<span>{{ element.status | appNullable }}</span>
 				</mat-cell>
 			</ng-container>
 

@@ -16,7 +16,7 @@ body {
 	color: var(--text-color-main);
 	background-color: var(--background-color-primary);
 	/* stylelint-disable-next-line font-family-name-quotes */
-	font-family: Roboto, “Helvetica Neue”, sans-serif;
+	font-family: Roboto, “Helvetica Neue”, sans-serif, FontAwesome;
 	font-size: 1.6rem;
 	line-height: 1.5;
 	padding: 6rem 2rem;

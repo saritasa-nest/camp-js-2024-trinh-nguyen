@@ -7,17 +7,16 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { Observable, switchMap, take } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
-import { NoEmptyPipe } from '@js-camp/core/pipes/no-empty.pipe';
+import { NullablePipe } from '@js-camp/core/pipes/no-empty.pipe';
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeTableColumns } from '@js-camp/core/enums/animeTableColumns';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { SkeletonModule } from 'primeng/skeleton';
 import { AnimeQueryParamsService } from '@js-camp/angular/core/services/anime-query-params.service';
 import { ANIME_MANAGE_PARAMS_PROVIDERS, ANIME_MANAGE_PARAMS_TOKEN } from '@js-camp/angular/core/providers/anime-manage-params.provider';
-import { AnimeManageParams } from '@js-camp/core/models/anime-manage-params';
 import { getSortDirection, SortOptions } from '@js-camp/core/models/sort-options';
 import { AnimeType } from '@js-camp/core/models/anime-type';
 
@@ -36,7 +35,7 @@ import { FilterTypeComponent } from './filter-type/filter-type.component';
 		MatIconModule,
 		MatPaginatorModule,
 		MatButtonModule,
-		NoEmptyPipe,
+		NullablePipe,
 		FilterTypeComponent,
 		SearchComponent,
 		SkeletonModule,
@@ -50,7 +49,7 @@ import { FilterTypeComponent } from './filter-type/filter-type.component';
 
 export class AnimeTableComponent {
 
-	protected filter$ = inject(ANIME_MANAGE_PARAMS_TOKEN);
+	protected readonly filter$ = inject(ANIME_MANAGE_PARAMS_TOKEN);
 
 	/** Receive observable include pagination type of Anime api. */
 	protected animeListPagination$!: Observable<Pagination<Anime>>;
@@ -66,13 +65,7 @@ export class AnimeTableComponent {
 
 	public constructor() {
 		this.animeListPagination$ = this.filter$.pipe(
-			switchMap(page => this.getDataOnce(((page)))),
-		);
-	}
-
-	public getDataOnce(animeParams: AnimeManageParams.Combined) {
-		return this.animeService.requestAnime(animeParams).pipe(
-			take(1),
+			switchMap(page => this.animeService.requestAnime(page)),
 		);
 	}
 
