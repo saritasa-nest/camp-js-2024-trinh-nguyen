@@ -1,16 +1,20 @@
 <div class="anime-table-container">
 	@if(animeListPagination$ | async; as animeList){
 	<div class="anime-table__header">
-		<camp-search (searchChanged)="onSearch($event)" [search]="(filter$ | async)!.search ?? ''"></camp-search>
-		<camp-filter-type (typeChange)="onSelect($event)" [selectedTypes]="(filter$ | async)!.type ?? null"  class="anime-table__filter-type"></camp-filter-type>
+		<camp-search (searchChanged)="onSearchChange($event)" [search]="(filter$ | async)!.search ?? ''" />
+		<camp-filter-type
+			(typeChange)="onSelectChange($event)"
+			[selectedTypes]="(filter$ | async)!.type ?? null"
+			class="anime-table__filter-type"
+		/>
 		<mat-paginator
 			class="anime-table__paginator"
 			[pageSizeOptions]="[5, 10, 20]"
-			[pageSize] = "(filter$ | async)!.pageSize"
-			[pageIndex] = "(filter$ | async)!.pageNumber"
+			[pageSize]="(filter$ | async)!.pageSize"
+			[pageIndex]="(filter$ | async)!.pageNumber"
 			[length]="animeList.totalCount"
 			(page)="onPaginationChange($event)"
-		></mat-paginator>
+		/>
 	</div>
 	<div>
 		<table

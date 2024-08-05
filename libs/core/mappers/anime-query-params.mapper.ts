@@ -9,19 +9,13 @@ import { StrictOmit } from '../utils/strcit-omit';
 
 import { SortDirection } from '../models/sort-options';
 
-import { MAP_ANIME_SORT_FIELDS_FROM_DTO } from '../records/anime-sort-field-from-dto';
-
-import { AnimeSortFieldsDto } from '../dtos/anime-sort-fields.dto';
-
-import { MAP_ANIME_SORT_FIELDS_TO_DTO } from '../records/anime-sort-field-to-dto';
-
 import { Mapper } from './mapper';
 
 /** Anime query params. */
 export type AnimeQueryParams = Partial<StrictOmit<AnimeManageParams.Combined, 'sortOptions'> & {
 
 	/** Page number query param. */
-	field: 	AnimeSortFieldsDto | null;
+	field: 	string | null;
 
 	/** Page size query param. */
 	direction: string | null;
@@ -41,7 +35,7 @@ export class AnimeQueryParamsMapper implements Mapper<AnimeQueryParams, AnimeMan
 			search: dto.search ?? null,
 			sortOptions: (dto.field && dto.direction) ?
 				{
-					field: MAP_ANIME_SORT_FIELDS_FROM_DTO[dto.field],
+					field: dto.field,
 					direction: dto.direction as SortDirection,
 				} : null,
 		};
@@ -54,7 +48,7 @@ export class AnimeQueryParamsMapper implements Mapper<AnimeQueryParams, AnimeMan
 			pageNumber: model.pageNumber && model.pageNumber >= 0 ? model.pageNumber : undefined,
 			pageSize: model.pageSize ? model.pageSize : undefined,
 			search: model.search !== undefined ? model.search : undefined,
-			field: model.sortOptions?.field ? MAP_ANIME_SORT_FIELDS_TO_DTO[model.sortOptions.field] : undefined,
+			field: model.sortOptions?.field ? model.sortOptions.field : undefined,
 			direction: model.sortOptions ? model.sortOptions.direction : undefined,
 
 		};

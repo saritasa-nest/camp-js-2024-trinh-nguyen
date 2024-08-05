@@ -7,34 +7,21 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-
 import { Observable, switchMap, take } from 'rxjs';
 import { Pagination } from '@js-camp/core/models/pagination';
-
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
-
 import { NoEmptyPipe } from '@js-camp/core/pipes/no-empty.pipe';
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeTableColumns } from '@js-camp/core/enums/animeTableColumns';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
-
 import { SkeletonModule } from 'primeng/skeleton';
-
 import { AnimeQueryParamsService } from '@js-camp/angular/core/services/anime-query-params.service';
-
 import { ANIME_MANAGE_PARAMS_PROVIDERS, ANIME_MANAGE_PARAMS_TOKEN } from '@js-camp/angular/core/providers/anime-manage-params.provider';
-
 import { AnimeManageParams } from '@js-camp/core/models/anime-manage-params';
-import { SortOptions } from '@js-camp/core/models/sort-options';
-import { AnimeSortFields } from '@js-camp/core/models/anime-sort-fields';
-
-// eslint-disable-next-line no-duplicate-imports
-import { SortDirection } from '@js-camp/core/models/sort-options';
-
+import { getSortDirection, SortOptions } from '@js-camp/core/models/sort-options';
 import { AnimeType } from '@js-camp/core/models/anime-type';
 
 import { SearchComponent } from './search/search.component';
-
 import { FilterTypeComponent } from './filter-type/filter-type.component';
 
 /** Anime Table Component. */
@@ -95,7 +82,7 @@ export class AnimeTableComponent {
 	 * @param item The value of item.
 	 * @returns
 	 */
-	protected trackByFn(index: number, item: Anime): number {
+	protected trackAnime(index: number, item: Anime): number {
 		return item.id;
 	}
 
@@ -111,18 +98,18 @@ export class AnimeTableComponent {
 	}
 
 	protected onSortChange(event: Sort) {
-		const sortOption: SortOptions<AnimeSortFields> = {
-			direction: event.direction as SortDirection,
-			field: event.active as AnimeSortFields,
+		const sortOption: SortOptions<string> = {
+			direction: getSortDirection(event.direction),
+			field: event.active,
 		};
 		this.animeQueryParams.appendParamsAndResetPageNumber({ sortOptions: sortOption });
 	}
 
-	protected onSearch(event: string | null) {
+	protected onSearchChange(event: string | null) {
 		this.animeQueryParams.appendParamsAndResetPageNumber({ search: event });
 	}
 
-	protected onSelect(event: AnimeType | null) {
+	protected onSelectChange(event: AnimeType | null) {
 		this.animeQueryParams.appendParamsAndResetPageNumber({ type: event });
 	}
 
