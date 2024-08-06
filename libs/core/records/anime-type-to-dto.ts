@@ -1,4 +1,4 @@
-import { AnimeTypeDto } from '../dtos/anime-type.dto';
+import { AnimeTypeDto, AnimeTypeUrlDto } from '../dtos/anime-type.dto';
 import { AnimeType } from '../models/anime-type';
 
 /** Map anime type to dto. */
@@ -12,4 +12,17 @@ export const MAP_ANIME_TYPE_TO_DTO: Readonly<Record<AnimeType, AnimeTypeDto>> = 
 	[AnimeType.Unknown]: AnimeTypeDto.Unknown,
 	[AnimeType.PromotionalVideos]: AnimeTypeDto.PromotionalVideos,
 	[AnimeType.All]: AnimeTypeDto.ALL,
+};
+
+/** Map anime type to dto. */
+export const MAP_ANIME_TYPE_TO_URL_DTO: Readonly<Record<AnimeType, AnimeTypeUrlDto>> = {
+	[AnimeType.TV]: AnimeTypeUrlDto.TV,
+	[AnimeType.OVA]: AnimeTypeUrlDto.OVA,
+	[AnimeType.Movie]: AnimeTypeUrlDto.Movie,
+	[AnimeType.Special]: AnimeTypeUrlDto.Special,
+	[AnimeType.ONA]: AnimeTypeUrlDto.ONA,
+	[AnimeType.Music]: AnimeTypeUrlDto.Music,
+	[AnimeType.Unknown]: AnimeTypeUrlDto.Unknown,
+	[AnimeType.PromotionalVideos]: AnimeTypeUrlDto.PromotionalVideos,
+	[AnimeType.All]: AnimeTypeUrlDto.ALL,
 };

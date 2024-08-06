@@ -9,10 +9,16 @@ import { StrictOmit } from '../utils/strcit-omit';
 
 import { getSortDirection } from '../models/sort-options';
 
-import { AnimeTypeDto } from '../dtos/anime-type.dto';
+import { AnimeTypeUrlDto } from '../dtos/anime-type.dto';
 
-import { MAP_ANIME_TYPE_TO_DTO } from '../records/anime-type-to-dto';
-import { MAP_ANIME_TYPE_FROM_DTO } from '../records/anime-type-from-dto';
+import { MAP_ANIME_TYPE_TO_URL_DTO } from '../records/anime-type-to-dto';
+import { MAP_ANIME_TYPE_FROM_URL_DTO } from '../records/anime-type-from-dto';
+
+import { AnimeSortFieldsUrlDto } from '../dtos/anime-sort-fields.dto';
+
+import { MAP_ANIME_SORT_FIELDS_TO_URL_DTO } from '../records/anime-sort-field-to-dto';
+
+import { MAP_ANIME_SORT_FIELDS_FROM_URL_DTO } from '../records/anime-sort-field-from-dto';
 
 import { Mapper } from './mapper';
 
@@ -20,10 +26,10 @@ import { Mapper } from './mapper';
 export type AnimeQueryParams = Partial<StrictOmit<AnimeManageParams.Combined, 'sortOptions' | 'type'> & {
 
 	/** Anime type dto. */
-	type: AnimeTypeDto;
+	type: AnimeTypeUrlDto;
 
 	/** Page number query param. */
-	field: 	string | null;
+	field: 	AnimeSortFieldsUrlDto | null;
 
 	/** Page size query param. */
 	direction: string | null;
@@ -37,13 +43,13 @@ export class AnimeQueryParamsMapper implements Mapper<AnimeQueryParams, AnimeMan
 	/** @inheritdoc */
 	public fromDto(dto: AnimeQueryParams): AnimeManageParams.Combined {
 		return {
-			type: (dto.type !== undefined && dto.type !== null) ? MAP_ANIME_TYPE_FROM_DTO[dto.type] : null,
+			type: (dto.type !== undefined && dto.type !== null) ? MAP_ANIME_TYPE_FROM_URL_DTO[dto.type] : null,
 			pageNumber: dto.pageNumber ? Number(dto.pageNumber) : DEFAULT_PAGINATION_OPTIONS.pageNumber,
 			pageSize: dto.pageSize ? Number(dto.pageSize) : DEFAULT_PAGINATION_OPTIONS.pageSize,
 			search: (dto.search && dto.search !== '') ? dto.search : null,
 			sortOptions: (dto.field && dto.direction) ?
 				{
-					field: dto.field,
+					field: MAP_ANIME_SORT_FIELDS_FROM_URL_DTO[dto.field],
 					direction: getSortDirection(dto.direction),
 				} : null,
 		};
@@ -52,11 +58,11 @@ export class AnimeQueryParamsMapper implements Mapper<AnimeQueryParams, AnimeMan
 	/** @inheritdoc */
 	public toDto(model: Partial<AnimeManageParams.Combined>): AnimeQueryParams {
 		return {
-			type: (model.type !== undefined && model.type !== null) ? MAP_ANIME_TYPE_TO_DTO[model.type] : undefined,
+			type: (model.type !== undefined && model.type !== null) ? MAP_ANIME_TYPE_TO_URL_DTO[model.type] : undefined,
 			pageNumber: model.pageNumber !== undefined && model.pageNumber !== null && model.pageNumber >= 0 ? model.pageNumber : undefined,
 			pageSize: model.pageSize ? model.pageSize : undefined,
 			search: model.search !== undefined ? model.search : undefined,
-			field: model.sortOptions?.field ? model.sortOptions.field : undefined,
+			field: model.sortOptions?.field ? MAP_ANIME_SORT_FIELDS_TO_URL_DTO[model.sortOptions.field] : undefined,
 			direction: model.sortOptions ? model.sortOptions.direction : undefined,
 
 		};

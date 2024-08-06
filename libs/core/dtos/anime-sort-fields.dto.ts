@@ -4,3 +4,9 @@ export enum AnimeSortFieldsDto {
 	Aired = 'aired__startwith',
 	Status = 'status',
 }
+
+export enum AnimeSortFieldsUrlDto {
+	TitleEnglish = 'title-English',
+	Aired = 'aired-date',
+	Status = 'status',
+}

@@ -15,8 +15,10 @@ import { MatSortModule, Sort } from '@angular/material/sort';
 import { SkeletonModule } from 'primeng/skeleton';
 import { AnimeQueryParamsService } from '@js-camp/angular/core/services/anime-query-params.service';
 import { ANIME_MANAGE_PARAMS_PROVIDERS, ANIME_MANAGE_PARAMS_TOKEN } from '@js-camp/angular/core/providers/anime-manage-params.provider';
-import { getSortDirection, SortOptions } from '@js-camp/core/models/sort-options';
+import { getAnimeSortField, getSortDirection, SortOptions } from '@js-camp/core/models/sort-options';
 import { AnimeType } from '@js-camp/core/models/anime-type';
+
+import { AnimeSortFields } from '@js-camp/core/models/anime-sort-fields';
 
 import { SearchComponent } from './search/search.component';
 import { FilterTypeComponent } from './filter-type/filter-type.component';
@@ -94,9 +96,9 @@ export class AnimeTableComponent {
 	 * @param event Event of sort change.
 	 */
 	protected onSortChange(event: Sort): void {
-		const sortOption: SortOptions<string> = {
+		const sortOption: SortOptions<AnimeSortFields> = {
 			direction: getSortDirection(event.direction),
-			field: event.active,
+			field: getAnimeSortField(event.active),
 		};
 		this.animeQueryParams.appendParamsAndResetPageNumber({ sortOptions: sortOption });
 	}

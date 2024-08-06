@@ -1,5 +1,7 @@
 import { SortOptions } from '../models/sort-options';
 
+import { AnimeSortFields } from './anime-sort-fields';
+
 import { AnimeType } from './anime-type';
 
 /** Anime params. */
@@ -26,7 +28,7 @@ export namespace AnimeManageParams {
 	export type Sort = {
 
 		/** Sort options. */
-		readonly sortOptions: SortOptions<string> | null;
+		readonly sortOptions: SortOptions<AnimeSortFields> | null;
 	};
 
 	/** Type param. */
