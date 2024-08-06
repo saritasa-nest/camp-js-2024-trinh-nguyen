@@ -5,7 +5,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { Observable, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Observable, switchMap } from 'rxjs';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { NullablePipe } from '@js-camp/core/pipes/no-empty.pipe';
@@ -62,6 +62,8 @@ export class AnimeTableComponent {
 
 	public constructor() {
 		this.animeListPagination$ = this.filter$.pipe(
+			debounceTime(500),
+			distinctUntilChanged(),
 			switchMap(page => this.animeService.requestAnime(page)),
 		);
 	}
