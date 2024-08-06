@@ -42,9 +42,9 @@ export class QueryParamsService {
 	 */
 	public append(params: Record<string, any>): void {
 		const paramsWithoutUndefinedField = this.removeUndefinedFields(params);
-
 		Object.keys(paramsWithoutUndefinedField).forEach(key => {
-			if (paramsWithoutUndefinedField[key] === '' || paramsWithoutUndefinedField[key] === 'all') {
+			// Remove empty search or none type.
+			if (paramsWithoutUndefinedField[key] === '' || paramsWithoutUndefinedField[key] === 'ALL') {
 				paramsWithoutUndefinedField[key] = null;
 			}
 		});

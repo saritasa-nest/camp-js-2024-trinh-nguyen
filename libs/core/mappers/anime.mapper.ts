@@ -3,10 +3,12 @@ import { Injectable } from '@angular/core';
 
 import { Anime } from '../models/anime';
 import { AnimeDto } from '../dtos/anime.dto';
-import { typeMappingFromDto } from '../records/type-from-dto';
 import { statusMappingFromDto } from '../records/status-from-dto';
-import { typeMappingToDto } from '../records/type-to-dto';
 import { statusMappingToDto } from '../records/status-to-dto';
+
+import { MAP_ANIME_TYPE_TO_DTO } from '../records/anime-type-to-dto';
+
+import { MAP_ANIME_TYPE_FROM_DTO } from '../records/anime-type-from-dto';
 
 import { Mapper } from './mapper';
 
@@ -29,12 +31,12 @@ export class AnimeMapper implements Mapper<AnimeDto, Anime> {
 				start: dto.aired.start,
 				end: dto.aired.end,
 			},
-			type: typeMappingFromDto[dto.type],
+			type: MAP_ANIME_TYPE_FROM_DTO[dto.type],
 			status: statusMappingFromDto[dto.status],
 			score: dto.score,
 			userScore: dto.user_score,
-			studios: dto.studios,
-			genres: dto.genres,
+			studioIds: dto.studioIds,
+			genreIds: dto.genreIds,
 		};
 	}
 
@@ -48,12 +50,12 @@ export class AnimeMapper implements Mapper<AnimeDto, Anime> {
 			title_jpn: data.titleJapan,
 			image: data.imageUrl,
 			aired: data.aired,
-			type: typeMappingToDto[data.type],
+			type: MAP_ANIME_TYPE_TO_DTO[data.type],
 			status: statusMappingToDto[data.status],
 			score: data.score,
 			user_score: data.userScore,
-			studios: data.studios,
-			genres: data.genres,
+			studioIds: data.studioIds,
+			genreIds: data.genreIds,
 		};
 	}
 }

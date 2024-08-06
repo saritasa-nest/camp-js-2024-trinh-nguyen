@@ -5,14 +5,14 @@ import { AnimeType } from './anime-type';
 /** Anime params. */
 export namespace AnimeManageParams {
 
-	/** TODO. */
+	/** Search param. */
 	export type Search = {
 
 		/** Search item. */
 		readonly search: string | null;
 	};
 
-	/** TODO. */
+	/** Pagination param. */
 	export type Pagination = {
 
 		/** Page number. */
@@ -22,17 +22,17 @@ export namespace AnimeManageParams {
 		readonly pageSize: number | null;
 	};
 
-	/** TODO. */
+	/** Sort param. */
 	export type Sort = {
 
-		/** TODO. */
+		/** Sort options. */
 		readonly sortOptions: SortOptions<string> | null;
 	};
 
-	/** TODO. */
+	/** Type param. */
 	export type Type = {
 
-		/** TODO. */
+		/** Anime type. */
 		readonly type: AnimeType | null;
 	};
 

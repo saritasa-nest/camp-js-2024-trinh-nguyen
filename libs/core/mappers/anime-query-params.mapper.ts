@@ -7,12 +7,20 @@ import { DEFAULT_PAGINATION_OPTIONS } from '../constants/pagination';
 
 import { StrictOmit } from '../utils/strcit-omit';
 
-import { SortDirection } from '../models/sort-options';
+import { getSortDirection } from '../models/sort-options';
+
+import { AnimeTypeDto } from '../dtos/anime-type.dto';
+
+import { MAP_ANIME_TYPE_TO_DTO } from '../records/anime-type-to-dto';
+import { MAP_ANIME_TYPE_FROM_DTO } from '../records/anime-type-from-dto';
 
 import { Mapper } from './mapper';
 
 /** Anime query params. */
-export type AnimeQueryParams = Partial<StrictOmit<AnimeManageParams.Combined, 'sortOptions'> & {
+export type AnimeQueryParams = Partial<StrictOmit<AnimeManageParams.Combined, 'sortOptions' | 'type'> & {
+
+	/** Anime type dto. */
+	type: AnimeTypeDto;
 
 	/** Page number query param. */
 	field: 	string | null;
@@ -29,14 +37,14 @@ export class AnimeQueryParamsMapper implements Mapper<AnimeQueryParams, AnimeMan
 	/** @inheritdoc */
 	public fromDto(dto: AnimeQueryParams): AnimeManageParams.Combined {
 		return {
-			type: dto.type ?? null,
+			type: (dto.type !== undefined && dto.type !== null) ? MAP_ANIME_TYPE_FROM_DTO[dto.type] : null,
 			pageNumber: dto.pageNumber ? Number(dto.pageNumber) : DEFAULT_PAGINATION_OPTIONS.pageNumber,
 			pageSize: dto.pageSize ? Number(dto.pageSize) : DEFAULT_PAGINATION_OPTIONS.pageSize,
 			search: (dto.search && dto.search !== '') ? dto.search : null,
 			sortOptions: (dto.field && dto.direction) ?
 				{
 					field: dto.field,
-					direction: dto.direction as SortDirection,
+					direction: getSortDirection(dto.direction),
 				} : null,
 		};
 	}
@@ -44,7 +52,7 @@ export class AnimeQueryParamsMapper implements Mapper<AnimeQueryParams, AnimeMan
 	/** @inheritdoc */
 	public toDto(model: Partial<AnimeManageParams.Combined>): AnimeQueryParams {
 		return {
-			type: (model.type === undefined) ? undefined : model.type,
+			type: (model.type !== undefined && model.type !== null) ? MAP_ANIME_TYPE_TO_DTO[model.type] : undefined,
 			pageNumber: model.pageNumber !== undefined && model.pageNumber !== null && model.pageNumber >= 0 ? model.pageNumber : undefined,
 			pageSize: model.pageSize ? model.pageSize : undefined,
 			search: model.search !== undefined ? model.search : undefined,

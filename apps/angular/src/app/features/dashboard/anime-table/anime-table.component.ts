@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable jsdoc/require-jsdoc */
-import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -13,7 +11,7 @@ import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { NullablePipe } from '@js-camp/core/pipes/no-empty.pipe';
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeTableColumns } from '@js-camp/core/enums/animeTableColumns';
-import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
+import { MatSortModule, Sort } from '@angular/material/sort';
 import { SkeletonModule } from 'primeng/skeleton';
 import { AnimeQueryParamsService } from '@js-camp/angular/core/services/anime-query-params.service';
 import { ANIME_MANAGE_PARAMS_PROVIDERS, ANIME_MANAGE_PARAMS_TOKEN } from '@js-camp/angular/core/providers/anime-manage-params.provider';
@@ -49,10 +47,11 @@ import { FilterTypeComponent } from './filter-type/filter-type.component';
 
 export class AnimeTableComponent {
 
+	/** Filter listen all filter action changes. */
 	protected readonly filter$ = inject(ANIME_MANAGE_PARAMS_TOKEN);
 
 	/** Receive observable include pagination type of Anime api. */
-	protected animeListPagination$!: Observable<Pagination<Anime>>;
+	protected readonly animeListPagination$!: Observable<Pagination<Anime>>;
 
 	private readonly animeService = inject(AnimeService);
 
@@ -60,8 +59,6 @@ export class AnimeTableComponent {
 
 	/** Enum of anime fields. */
 	protected readonly animeTableColumns: typeof AnimeTableColumns = AnimeTableColumns;
-
-	@ViewChild(MatSort) public sort!: MatSort;
 
 	public constructor() {
 		this.animeListPagination$ = this.filter$.pipe(
@@ -79,7 +76,7 @@ export class AnimeTableComponent {
 		return item.id;
 	}
 
-	/** Displayer fields of an anime. */
+	/** Fields of an anime. */
 	protected readonly animeTableColumnsArray = Object.values(this.animeTableColumns);
 
 	/**
@@ -90,7 +87,11 @@ export class AnimeTableComponent {
 		this.animeQueryParams.append({ pageSize: event.pageSize, pageNumber: event.pageIndex });
 	}
 
-	protected onSortChange(event: Sort) {
+	/**
+	 * Sort change function.
+	 * @param event Event of sort change.
+	 */
+	protected onSortChange(event: Sort): void {
 		const sortOption: SortOptions<string> = {
 			direction: getSortDirection(event.direction),
 			field: event.active,
@@ -98,11 +99,19 @@ export class AnimeTableComponent {
 		this.animeQueryParams.appendParamsAndResetPageNumber({ sortOptions: sortOption });
 	}
 
-	protected onSearchChange(event: string | null) {
+	/**
+	 * Search change function.
+	 * @param event Event of search change.
+	 */
+	protected onSearchChange(event: string | null): void {
 		this.animeQueryParams.appendParamsAndResetPageNumber({ search: event });
 	}
 
-	protected onSelectChange(event: AnimeType | null) {
+	/**
+	 * Selec change function.
+	 * @param event Event of select change.
+	 */
+	protected onSelectChange(event: AnimeType | null): void {
 		this.animeQueryParams.appendParamsAndResetPageNumber({ type: event });
 	}
 

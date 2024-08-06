@@ -4,8 +4,10 @@ export enum SortDirection {
 	Descending = 'desc',
 }
 
-// TODO
-// eslint-disable-next-line jsdoc/require-jsdoc
+/**
+ * Get sort direction function.
+ * @param direction Direction parameter.
+ */
 export function getSortDirection(direction: string): SortDirection | null {
 	if (direction === SortDirection.Ascending) {
 		return SortDirection.Ascending;

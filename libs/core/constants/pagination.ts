@@ -3,7 +3,7 @@ import { PaginationOptions } from '../models/pagination-options';
 import { SortDirection, SortOptions } from '../models/sort-options';
 
 /** Anime default sort options. */
-export const ANIME_DEFAULT_SORT_OPTIONS: SortOptions<AnimeSortFields> = {
+export const ANIME_DEFAULT_SORT_OPTIONS: SortOptions<string> = {
 	direction: SortDirection.Ascending,
 	field: AnimeSortFields.Status,
 };

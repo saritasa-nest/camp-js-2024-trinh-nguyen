@@ -1,7 +1,6 @@
 <mat-form-field>
 	<mat-label class="filter-type__label">Choose types</mat-label>
 	<mat-select class="filter-type__select" [(value)]="selectedTypes" (selectionChange)="onSelectionChange($event)">
-		<mat-option value="all">All</mat-option>
 		@for (type of animeType; track type )
 		{
 		<mat-option [value]="type">

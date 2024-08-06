@@ -11,4 +11,5 @@ export const MAP_ANIME_TYPE_FROM_DTO: Readonly<Record<AnimeTypeDto, AnimeType>> 
 	[AnimeTypeDto.Music]: AnimeType.Music,
 	[AnimeTypeDto.Unknown]: AnimeType.Unknown,
 	[AnimeTypeDto.PromotionalVideos]: AnimeType.PromotionalVideos,
+	[AnimeTypeDto.ALL]: AnimeType.All,
 };

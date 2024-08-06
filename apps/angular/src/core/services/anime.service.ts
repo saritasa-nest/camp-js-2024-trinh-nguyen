@@ -20,8 +20,6 @@ import { AnimeHttpParamsService } from './anime-http-params.service';
 })
 export class AnimeService {
 
-	private cacheAnimePagination$!: Observable<Pagination<Anime>>;
-
 	private readonly appUrlsConfig = inject(AppUrlsConfig);
 
 	private readonly httpClient = inject(HttpClient);
