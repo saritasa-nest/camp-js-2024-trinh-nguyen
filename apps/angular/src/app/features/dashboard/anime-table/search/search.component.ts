@@ -4,6 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 /** Search Component. */
 @Component({
@@ -28,13 +29,22 @@ export class SearchComponent {
 	/** Search change listener. */
 	@Output() public readonly searchChanged = new EventEmitter<string | null>();
 
+	/** Debound search. */
+	protected searchUpdate$ = new Subject<string>();
+
 	/**
-	 * Search change function.
-	 * @param event Event search change.
+	 * Get search value.
+	 * @param event Event of search input.
 	 */
-	protected onSearchChange(event: KeyboardEvent): void {
-		const searchValue = (event.target as HTMLInputElement).value;
-		this.searchChanged.emit(searchValue);
+
+	public constructor() {
+		this.searchUpdate$.pipe(
+			debounceTime(400),
+			distinctUntilChanged(),
+		)
+			.subscribe(value => {
+				this.searchChanged.emit(value);
+			});
 	}
 
 }
