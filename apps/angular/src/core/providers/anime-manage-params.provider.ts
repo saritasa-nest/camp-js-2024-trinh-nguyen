@@ -26,7 +26,6 @@ export const ANIME_MANAGE_PARAMS_PROVIDERS: readonly Provider[] = [
  */
 function animeFiltersFactory(activatedRoute: ActivatedRoute): Observable<AnimeManageParams.Combined> {
 	const animeQueryParamsMapper = inject(AnimeQueryParamsMapper);
-
 	return filtersFactory<AnimeManageParams.Combined, AnimeQueryParamsMapper >(activatedRoute, animeQueryParamsMapper);
 
 }

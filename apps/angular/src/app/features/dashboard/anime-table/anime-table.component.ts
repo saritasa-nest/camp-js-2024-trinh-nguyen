@@ -62,8 +62,8 @@ export class AnimeTableComponent implements OnInit, OnDestroy {
 
 	private readonly httpParamService = inject(AnimeHttpParamsService);
 	/** Loading subject. */
-	public isLoading$ = new BehaviorSubject<boolean>(true);
-	private destroy$ = new Subject<void>();
+	protected readonly isLoading$ = new BehaviorSubject<boolean>(true);
+	private readonly destroy$ = new Subject<void>();
 
 	/** Enum of anime fields. */
 	protected readonly animeTableColumns: typeof AnimeTableColumns = AnimeTableColumns;
@@ -84,7 +84,6 @@ export class AnimeTableComponent implements OnInit, OnDestroy {
 		this.animeListPagination$ = this.filter$.pipe(
 			tap(() => this.isLoading$.next(true)),
 			debounceTime(500),
-			distinctUntilChanged(),
 			switchMap(page => this.animeService.requestAnime(this.httpParamService.getHttpParams(page))),
 			tap(() => this.isLoading$.next(false)),
 			catchError(error => {
@@ -95,7 +94,6 @@ export class AnimeTableComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		/** spinner starts on init */
 		this.isLoading$.next(true);
 	}
 

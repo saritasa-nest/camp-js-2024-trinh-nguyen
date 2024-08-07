@@ -11,6 +11,8 @@ import { AnimeType } from '../models/anime-type';
 import { AnimeSortFields } from '../models/anime-sort-fields';
 import { SortDirection } from '../models/sort-options';
 
+import { DEFAULT_PAGINATION_OPTIONS } from '../constants/pagination';
+
 import { BaseFilterParamsMapper } from './base-filter-params.mapper';
 import { Mapper } from './mapper';
 import { SortMapper } from './sort.mapper';
@@ -55,8 +57,8 @@ export class AnimeManageParamsMapper implements Mapper<AnimeManageParamsDto.Comb
 	/** @inheritdoc */
 	public fromDto(dto: AnimeManageParamsDto.Combined): AnimeManageParams.Combined {
 		return {
-			pageNumber: dto.offset ?? 1,
-			pageSize: 10,
+			pageNumber: dto.offset ?? DEFAULT_PAGINATION_OPTIONS.pageNumber,
+			pageSize: DEFAULT_PAGINATION_OPTIONS.pageSize,
 			search: '',
 			type: AnimeType.Music,
 			sortOptions: {
