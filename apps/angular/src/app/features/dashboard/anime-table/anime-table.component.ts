@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { debounceTime, distinctUntilChanged, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, catchError, debounceTime, distinctUntilChanged, Observable, Subject, switchMap, takeUntil, tap, throwError } from 'rxjs';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { NullablePipe } from '@js-camp/core/pipes/no-empty.pipe';
@@ -22,6 +22,10 @@ import { AnimeSortFields } from '@js-camp/core/models/anime-sort-fields';
 
 import { SearchComponent } from './search/search.component';
 import { FilterTypeComponent } from './filter-type/filter-type.component';
+
+import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
+
+import { AnimeHttpParamsService } from '@js-camp/angular/core/services/anime-http-params.service';
 
 /** Anime Table Component. */
 @Component({
@@ -40,14 +44,17 @@ import { FilterTypeComponent } from './filter-type/filter-type.component';
 		SearchComponent,
 		SkeletonModule,
 		MatPaginatorModule,
+		NgxSpinnerModule,
 	],
 	templateUrl: './anime-table.component.html',
 	styleUrl: './anime-table.component.css',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	providers: [...ANIME_MANAGE_PARAMS_PROVIDERS],
+	providers: [
+		...ANIME_MANAGE_PARAMS_PROVIDERS,
+	],
 })
 
-export class AnimeTableComponent {
+export class AnimeTableComponent implements OnInit, OnDestroy {
 
 	/** Filter listen all filter action changes. */
 	protected readonly filter$ = inject(ANIME_MANAGE_PARAMS_TOKEN);
@@ -59,17 +66,50 @@ export class AnimeTableComponent {
 
 	private readonly animeQueryParams = inject(AnimeQueryParamsService);
 
+	private readonly httpParamService = inject(AnimeHttpParamsService);
+	/** Loading subject. */
+	public loading$ = new BehaviorSubject<boolean>(true);
+	private destroy$ = new Subject<void>();
+
+
 	/** Enum of anime fields. */
 	protected readonly animeTableColumns: typeof AnimeTableColumns = AnimeTableColumns;
 
-	public constructor() {
+	public constructor(private spinner: NgxSpinnerService) {
+		this.loading$.pipe(
+			tap((isLoading) => {
+				if (isLoading) {
+
+					this.spinner.show();
+				} else {
+					this.spinner.hide();
+				}
+			}),
+			takeUntil(this.destroy$)
+		).subscribe();
+
+
 		this.animeListPagination$ = this.filter$.pipe(
+			tap(() => this.loading$.next(true)),
 			debounceTime(500),
 			distinctUntilChanged(),
-			switchMap(page => this.animeService.requestAnime(page)),
+			switchMap(page => this.animeService.requestAnime(this.httpParamService.getHttpParams(page))),
+			tap(() => this.loading$.next(false)),
+			catchError(error => {
+				this.loading$.next(false);
+				return throwError(() => error);
+			})
 		);
 	}
+	ngOnInit() {
+		/** spinner starts on init */
+		this.loading$.next(true);
+	}
 
+	ngOnDestroy() {
+		this.destroy$.next();
+		this.destroy$.complete();
+	}
 	/**
 	 * Function return index of item in an array.
 	 * @param index Index of item.

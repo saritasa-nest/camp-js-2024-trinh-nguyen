@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -10,7 +10,6 @@ import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { Anime } from '@js-camp/core/models/anime';
 import { AppUrlsConfig } from '@js-camp/angular/app/shared/urlConfig';
-import { AnimeManageParams } from '@js-camp/core/models/anime-manage-params';
 
 import { AnimeHttpParamsService } from './anime-http-params.service';
 
@@ -32,11 +31,9 @@ export class AnimeService {
 
 	/**
 	 * Get anime list.
-	 * @param model Params to next/prev page.
+	 * @param params Params to next/prev page.
 	 */
-	public requestAnime(model: AnimeManageParams.Combined): Observable<Pagination<Anime>> {
-
-		const params = this.httpParamsService.getHttpParams(model);
+	public requestAnime(params: HttpParams): Observable<Pagination<Anime>> {
 
 		return this.httpClient.get<PaginationDto<AnimeDto>>(this.appUrlsConfig.anime.list, { params }).pipe(
 

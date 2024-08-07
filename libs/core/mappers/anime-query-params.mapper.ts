@@ -43,7 +43,7 @@ export class AnimeQueryParamsMapper implements Mapper<AnimeQueryParams, AnimeMan
 	/** @inheritdoc */
 	public fromDto(dto: AnimeQueryParams): AnimeManageParams.Combined {
 		return {
-			type: (dto.type !== undefined && dto.type !== null) ? MAP_ANIME_TYPE_FROM_URL_DTO[dto.type] : null,
+			type: (dto.type != null) ? MAP_ANIME_TYPE_FROM_URL_DTO[dto.type] : null,
 			pageNumber: dto.pageNumber ? Number(dto.pageNumber) : DEFAULT_PAGINATION_OPTIONS.pageNumber,
 			pageSize: dto.pageSize ? Number(dto.pageSize) : DEFAULT_PAGINATION_OPTIONS.pageSize,
 			search: (dto.search && dto.search !== '') ? dto.search : null,
@@ -58,8 +58,8 @@ export class AnimeQueryParamsMapper implements Mapper<AnimeQueryParams, AnimeMan
 	/** @inheritdoc */
 	public toDto(model: Partial<AnimeManageParams.Combined>): AnimeQueryParams {
 		return {
-			type: (model.type !== undefined && model.type !== null) ? MAP_ANIME_TYPE_TO_URL_DTO[model.type] : undefined,
-			pageNumber: model.pageNumber !== undefined && model.pageNumber !== null && model.pageNumber >= 0 ? model.pageNumber : undefined,
+			type: (model.type != null) ? MAP_ANIME_TYPE_TO_URL_DTO[model.type] : undefined,
+			pageNumber: model.pageNumber != null && model.pageNumber >= 0 ? model.pageNumber : undefined,
 			pageSize: model.pageSize ? model.pageSize : undefined,
 			search: model.search !== undefined ? model.search : undefined,
 			field: model.sortOptions?.field ? MAP_ANIME_SORT_FIELDS_TO_URL_DTO[model.sortOptions.field] : undefined,

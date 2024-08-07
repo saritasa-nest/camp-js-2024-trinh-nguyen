@@ -14,7 +14,7 @@ export const MAP_ANIME_TYPE_TO_DTO: Readonly<Record<AnimeType, AnimeTypeDto>> = 
 	[AnimeType.All]: AnimeTypeDto.ALL,
 };
 
-/** Map anime type to dto. */
+/** Map anime type to url dto. */
 export const MAP_ANIME_TYPE_TO_URL_DTO: Readonly<Record<AnimeType, AnimeTypeUrlDto>> = {
 	[AnimeType.TV]: AnimeTypeUrlDto.TV,
 	[AnimeType.OVA]: AnimeTypeUrlDto.OVA,

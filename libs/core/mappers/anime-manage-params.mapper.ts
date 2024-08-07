@@ -3,41 +3,24 @@ import { inject, Injectable } from '@angular/core';
 import { AnimeManageParamsDto } from '../dtos/anime-manage-params.dto';
 import { AnimeManageParams } from '../models/anime-manage-params';
 
-import { DEFAULT_PAGINATION_OPTIONS } from '../constants/pagination';
-
 import { MAP_ANIME_SORT_FIELDS_TO_DTO } from '../records/anime-sort-field-to-dto';
 
 import { MAP_ANIME_TYPE_TO_DTO } from '../records/anime-type-to-dto';
 
-import { MapperToDto } from './mapper';
+import { AnimeType } from '../models/anime-type';
+import { AnimeSortFields } from '../models/anime-sort-fields';
+import { SortDirection } from '../models/sort-options';
+
+import { BaseFilterParamsMapper } from './base-filter-params.mapper';
+import { Mapper } from './mapper';
 import { SortMapper } from './sort.mapper';
 
 /** Mapper for filter params. */
 @Injectable({ providedIn: 'root' })
-export class AnimeManageParamsMapper implements MapperToDto<AnimeManageParamsDto.Combined, AnimeManageParams.Combined> {
+export class AnimeManageParamsMapper implements Mapper<AnimeManageParamsDto.Combined, AnimeManageParams.Combined> {
 	private readonly sortMapper = inject(SortMapper);
 
-	private mapPaginationOptionsToDto(model: AnimeManageParams.Pagination): AnimeManageParamsDto.Pagination | null {
-		if (model.pageNumber !== null && model.pageSize !== null) {
-			return {
-				offset: model.pageNumber * model.pageSize,
-				limit: model.pageSize,
-			};
-		}
-		return {
-			offset: DEFAULT_PAGINATION_OPTIONS.pageNumber * DEFAULT_PAGINATION_OPTIONS.pageSize,
-			limit: DEFAULT_PAGINATION_OPTIONS.pageSize,
-		};
-	}
-
-	private mapSearchOptionsToDto(model: AnimeManageParams.Search): AnimeManageParamsDto.Search | null {
-		if (model.search) {
-			return {
-				search: model.search,
-			};
-		}
-		return null;
-	}
+	private readonly baseFilterParamsMapper = inject(BaseFilterParamsMapper);
 
 	private mapOrderingOptionToDto(model: AnimeManageParams.Sort): AnimeManageParamsDto.Sort | null {
 
@@ -63,10 +46,24 @@ export class AnimeManageParamsMapper implements MapperToDto<AnimeManageParamsDto
 	/** @inheritdoc */
 	public toDto(model: AnimeManageParams.Combined): AnimeManageParamsDto.Combined {
 		return {
-			...this.mapPaginationOptionsToDto(model),
-			...this.mapSearchOptionsToDto(model),
+			...this.baseFilterParamsMapper.mapCombinedOptionsToDto(model),
 			...this.mapOrderingOptionToDto(model),
 			...this.mapTypeOptionToDto(model),
+		};
+	}
+
+	/** @inheritdoc */
+	public fromDto(dto: AnimeManageParamsDto.Combined): AnimeManageParams.Combined {
+		return {
+			pageNumber: dto.offset ?? 1,
+			pageSize: 10,
+			search: '',
+			type: AnimeType.Music,
+			sortOptions: {
+				field: AnimeSortFields.Aired,
+				direction: SortDirection.Ascending,
+
+			},
 		};
 	}
 }

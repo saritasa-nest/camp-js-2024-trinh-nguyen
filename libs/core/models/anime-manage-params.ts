@@ -3,26 +3,10 @@ import { SortOptions } from '../models/sort-options';
 import { AnimeSortFields } from './anime-sort-fields';
 
 import { AnimeType } from './anime-type';
+import { BaseFilterParams } from './base-filter-params';
 
 /** Anime params. */
 export namespace AnimeManageParams {
-
-	/** Search param. */
-	export type Search = {
-
-		/** Search item. */
-		readonly search: string | null;
-	};
-
-	/** Pagination param. */
-	export type Pagination = {
-
-		/** Page number. */
-		readonly pageNumber: number | null;
-
-		/**  Page size. */
-		readonly pageSize: number | null;
-	};
 
 	/** Sort param. */
 	export type Sort = {
@@ -39,5 +23,5 @@ export namespace AnimeManageParams {
 	};
 
 	/** Anime query params. */
-	export type Combined = Search & Pagination & Sort & Type;
+	export type Combined = BaseFilterParams.Pagination & BaseFilterParams.Search & Sort & Type;
 }

@@ -9,7 +9,7 @@ export const MAP_ANIME_SORT_FIELDS_TO_DTO: Readonly<Record<AnimeSortFields, Anim
 
 };
 
-/** Anime sort field to dto. */
+/** Anime sort field to url dto. */
 export const MAP_ANIME_SORT_FIELDS_TO_URL_DTO: Readonly<Record<AnimeSortFields, AnimeSortFieldsUrlDto>> = {
 	[AnimeSortFields.Aired]: AnimeSortFieldsUrlDto.Aired,
 	[AnimeSortFields.Status]: AnimeSortFieldsUrlDto.Status,
