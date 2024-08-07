@@ -1,5 +1,5 @@
 
-/** TODO. */
+/** Base filter params dto. */
 export namespace BaseFilterParamsDto {
 	export type Search = {
 
@@ -15,6 +15,6 @@ export namespace BaseFilterParamsDto {
 		readonly limit?: number;
 	};
 
-	/** TODO. */
+	/** Combine search and pagination. */
 	export type Combined = Search & Pagination;
 }

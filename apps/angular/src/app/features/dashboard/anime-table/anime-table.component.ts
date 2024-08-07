@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -12,20 +11,16 @@ import { NullablePipe } from '@js-camp/core/pipes/no-empty.pipe';
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeTableColumns } from '@js-camp/core/enums/animeTableColumns';
 import { MatSortModule, Sort } from '@angular/material/sort';
-import { SkeletonModule } from 'primeng/skeleton';
 import { AnimeQueryParamsService } from '@js-camp/angular/core/services/anime-query-params.service';
 import { ANIME_MANAGE_PARAMS_PROVIDERS, ANIME_MANAGE_PARAMS_TOKEN } from '@js-camp/angular/core/providers/anime-manage-params.provider';
 import { getAnimeSortField, getSortDirection, SortOptions } from '@js-camp/core/models/sort-options';
 import { AnimeType } from '@js-camp/core/models/anime-type';
-
 import { AnimeSortFields } from '@js-camp/core/models/anime-sort-fields';
-
 import { SearchComponent } from './search/search.component';
 import { FilterTypeComponent } from './filter-type/filter-type.component';
-
 import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
-
 import { AnimeHttpParamsService } from '@js-camp/angular/core/services/anime-http-params.service';
+import {MatCardModule} from '@angular/material/card';
 
 /** Anime Table Component. */
 @Component({
@@ -35,14 +30,13 @@ import { AnimeHttpParamsService } from '@js-camp/angular/core/services/anime-htt
 		CommonModule,
 		MatTableModule,
 		MatSortModule,
-		MatProgressBarModule,
 		MatIconModule,
+		MatCardModule,
 		MatPaginatorModule,
 		MatButtonModule,
 		NullablePipe,
 		FilterTypeComponent,
 		SearchComponent,
-		SkeletonModule,
 		MatPaginatorModule,
 		NgxSpinnerModule,
 	],
@@ -68,15 +62,14 @@ export class AnimeTableComponent implements OnInit, OnDestroy {
 
 	private readonly httpParamService = inject(AnimeHttpParamsService);
 	/** Loading subject. */
-	public loading$ = new BehaviorSubject<boolean>(true);
+	public isLoading$ = new BehaviorSubject<boolean>(true);
 	private destroy$ = new Subject<void>();
-
 
 	/** Enum of anime fields. */
 	protected readonly animeTableColumns: typeof AnimeTableColumns = AnimeTableColumns;
 
 	public constructor(private spinner: NgxSpinnerService) {
-		this.loading$.pipe(
+		this.isLoading$.pipe(
 			tap((isLoading) => {
 				if (isLoading) {
 
@@ -88,28 +81,29 @@ export class AnimeTableComponent implements OnInit, OnDestroy {
 			takeUntil(this.destroy$)
 		).subscribe();
 
-
 		this.animeListPagination$ = this.filter$.pipe(
-			tap(() => this.loading$.next(true)),
+			tap(() => this.isLoading$.next(true)),
 			debounceTime(500),
 			distinctUntilChanged(),
 			switchMap(page => this.animeService.requestAnime(this.httpParamService.getHttpParams(page))),
-			tap(() => this.loading$.next(false)),
+			tap(() => this.isLoading$.next(false)),
 			catchError(error => {
-				this.loading$.next(false);
+				this.isLoading$.next(false);
 				return throwError(() => error);
 			})
 		);
 	}
+
 	ngOnInit() {
 		/** spinner starts on init */
-		this.loading$.next(true);
+		this.isLoading$.next(true);
 	}
 
 	ngOnDestroy() {
 		this.destroy$.next();
 		this.destroy$.complete();
 	}
+
 	/**
 	 * Function return index of item in an array.
 	 * @param index Index of item.

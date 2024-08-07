@@ -1,5 +1,4 @@
 <div class="anime-table-container">
-	<ngx-spinner *ngIf="loading$ | async" type="ball-scale-multiple"></ngx-spinner>
 	@if( animeListPagination$ | async; as animeList ){
 	<div class="anime-table__header">
 		<camp-search (searchChanged)="onSearchChange($event)" [search]="(filter$ | async)!.search ?? ''" />
@@ -17,7 +16,8 @@
 			(page)="onPaginationChange($event)"
 		/>
 	</div>
-	<div>
+	<ngx-spinner *ngIf="isLoading$ | async" type="ball-scale-multiple"></ngx-spinner>
+
 		<table
 			mat-table
 			matSort
@@ -31,6 +31,7 @@
 					Image
 				</mat-header-cell>
 				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
+
 					<div>
 						<img [src]="element.imageUrl" alt="{{ element.titleJapan }}" class="table__item-image" />
 					</div>
@@ -41,6 +42,7 @@
 					{{ animeTableColumns.TITLE_EN }}
 				</mat-header-cell>
 				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
+
 					{{ element.titleEnglish | appNullable }}
 				</mat-cell>
 			</ng-container>
@@ -48,6 +50,7 @@
 			<ng-container [matColumnDef]="animeTableColumns.TITLE_JPN">
 				<mat-header-cell *matHeaderCellDef> {{ animeTableColumns.TITLE_JPN }} </mat-header-cell>
 				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
+
 					{{ element.titleJapan | appNullable }}
 				</mat-cell>
 			</ng-container>
@@ -55,6 +58,7 @@
 			<ng-container [matColumnDef]="animeTableColumns.AIRED_START">
 				<mat-header-cell mat-sort-header *matHeaderCellDef> {{ animeTableColumns.AIRED_START }}</mat-header-cell>
 				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
+
 					{{ element.aired.start | appNullable }}
 				</mat-cell>
 			</ng-container>
@@ -62,22 +66,25 @@
 			<ng-container [matColumnDef]="animeTableColumns.TYPE">
 				<mat-header-cell *matHeaderCellDef> {{ animeTableColumns.TYPE }}</mat-header-cell>
 				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
+
 					{{ element.type | appNullable }}
 				</mat-cell>
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeTableColumns.STATUS">
 				<mat-header-cell mat-sort-header class="anime-table__item anime-table__item--textColor" *matHeaderCellDef>
+
 					{{ animeTableColumns.STATUS }}
 				</mat-header-cell>
 				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
+
 					<span>{{ element.status | appNullable }}</span>
 				</mat-cell>
 			</ng-container>
-
 			<mat-header-row class="anime-table__header-row" *matHeaderRowDef="animeTableColumnsArray"></mat-header-row>
 			<mat-row class="anime-table__row" *matRowDef="let row; columns: animeTableColumnsArray"></mat-row>
 		</table>
-	</div>
+
+
 	}
 </div>

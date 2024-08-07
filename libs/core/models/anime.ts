@@ -1,8 +1,6 @@
 
 import { AnimeStatus } from './anime-status';
-
 import { AnimeType } from './anime-type';
-
 import { DateTimeRange } from './datetime-range';
 
 /** Represents anime. */

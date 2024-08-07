@@ -8,7 +8,6 @@ import { AnimeManageParamsMapper } from '@js-camp/core/mappers/anime-manage-para
 import { GenericHttpParamsService } from './http-params.service';
 
 /** Http Params Service. */
-/** Http Params Service. */
 @Injectable({
 	providedIn: 'root',
 })
