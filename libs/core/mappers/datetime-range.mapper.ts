@@ -18,7 +18,7 @@ export class DateTimeMapper implements Mapper<string, Date> {
 	 * Return either a valid date or an empty date.
 	 */
 	public fromDto(dto: string): Date {
-		const date = this.parseDate(dto);
+		const date = new Date(dto);
 		return date ?? new Date();
 	}
 

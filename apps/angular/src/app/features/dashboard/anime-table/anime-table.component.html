@@ -68,7 +68,7 @@
 				<mat-header-cell mat-sort-header *matHeaderCellDef class="anime-table-content__item anime-table-content__item--textColor-white" > {{ animeTableColumns.AIRED_START }}</mat-header-cell>
 				<mat-cell class=" anime-table-content__item--textColor-white" *matCellDef="let element">
 					<camp-skeleton-cell [isLoading]="data.isLoading">
-						{{ element.titleJapan | appNullable }}
+						{{ element?.aired?.start ? (element.aired.start | date: "M-d-yyyy") : "N/A" }}
 					</camp-skeleton-cell>
 				</mat-cell>
 			</ng-container>
