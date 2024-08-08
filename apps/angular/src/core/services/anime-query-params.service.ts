@@ -1,7 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-
 import { AnimeManageParams } from '@js-camp/core/models/anime-manage-params';
-
 import { AnimeQueryParamsMapper } from '@js-camp/core/mappers/anime-query-params.mapper';
 
 import { QueryParamsService } from './query-params.service';
@@ -9,7 +7,6 @@ import { QueryParamsService } from './query-params.service';
 /** Jobs query params service. */
 @Injectable({ providedIn: 'root' })
 export class AnimeQueryParamsService {
-
 	private readonly queryParamsService = inject(QueryParamsService);
 
 	private readonly animeQueryParams = inject(AnimeQueryParamsMapper);

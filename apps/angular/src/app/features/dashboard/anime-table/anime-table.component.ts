@@ -48,9 +48,7 @@ import { DEFAULT_PAGINATION_OPTIONS } from '@js-camp/core/constants/pagination';
 		...ANIME_MANAGE_PARAMS_PROVIDERS,
 	],
 })
-
 export class AnimeTableComponent {
-
 
 	/** Filter listen all filter action changes. */
 	protected readonly filter$ = inject(ANIME_MANAGE_PARAMS_TOKEN);
@@ -73,8 +71,6 @@ export class AnimeTableComponent {
 
 	/** Page size options for page size selection. */
 	protected readonly PAGE_SIZE_OPTIONS = PAGE_SIZE_OPTIONS;
-
-
 	private readonly DEBOUNCE_TIME = DEBOUNCE_TIME;
 
 	public constructor() {
@@ -87,15 +83,13 @@ export class AnimeTableComponent {
 			tap(() =>
 				{
 					this.isLoading$.next(false);
-				}
-		),
+				}),
 			catchError(error => {
 				this.isLoading$.next(false);
 				return throwError(() => error);
 			})
 		);
 	}
-
 
 	/**
 	 * Function return index of item in an array.
