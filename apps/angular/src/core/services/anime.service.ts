@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -11,7 +11,9 @@ import { Pagination } from '@js-camp/core/models/pagination';
 import { Anime } from '@js-camp/core/models/anime';
 import { AppUrlsConfig } from '@js-camp/angular/app/shared/urlConfig';
 
-import { AnimeHttpParamsService } from './anime-http-params.service';
+import { AnimeManageParams } from '@js-camp/core/models/anime-manage-params';
+
+import { AnimeParamsService } from './anime-http-params.service';
 
 /** Anime service implement fetch data from back-end api and execute logic data related to Anime object. */
 @Injectable({
@@ -27,18 +29,19 @@ export class AnimeService {
 
 	private readonly animeMapper = inject(AnimeMapper);
 
-	private readonly httpParamsService = inject(AnimeHttpParamsService);
+	/** Anime build http params provider. */
+	protected readonly animeBuildHttpParams = inject(AnimeParamsService);
 
 	/**
 	 * Get anime list.
-	 * @param params Params to next/prev page.
+	 * @param animeParams Params to next/prev page.
 	 */
-	public requestAnime(params: HttpParams): Observable<Pagination<Anime>> {
+	public requestAnime(animeParams: AnimeManageParams.Combined): Observable<Pagination<Anime>> {
+
+		const params = this.animeBuildHttpParams.getHttpParams(animeParams);
 
 		return this.httpClient.get<PaginationDto<AnimeDto>>(this.appUrlsConfig.anime.list, { params }).pipe(
-
 			map(response => this.paginationMapper.mapPaginationFromDto(response, this.animeMapper.fromDto)),
-
 		);
 	}
 }

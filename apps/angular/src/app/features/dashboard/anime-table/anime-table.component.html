@@ -1,17 +1,19 @@
-<div class="anime-table-container">
+<div class="anime-table">
+	<!-- TODO (Trinh Nguyen): Use ngIf to reduce (filter$ | async) -->
 	@if( animeListPagination$ | async; as animeList ){
 	<div class="anime-table__header">
-		<camp-search (searchChanged)="onSearchChange($event)" [search]="(filter$ | async)!.search ?? ''" />
+		<camp-search (searchChanged)="onSearchChange($event)" [search]="(filter$ | async)?.search ?? ''" />
 		<camp-filter-type
 			(typeChange)="onSelectChange($event)"
-			[selectedTypes]="(filter$ | async)!.type ?? null"
+			[selectedTypes]="(filter$ | async)?.type ?? null"
 			class="anime-table__filter-type"
 		/>
+
 		<mat-paginator
 			class="anime-table__paginator"
-			[pageSizeOptions]="[5, 10, 20]"
-			[pageSize]="(filter$ | async)!.pageSize"
-			[pageIndex]="(filter$ | async)!.pageNumber"
+			[pageSizeOptions]="PAGE_SIZE_OPTIONS"
+			[pageSize]="(filter$ | async)?.pageSize"
+			[pageIndex]="(filter$ | async)?.pageNumber"
 			[length]="animeList.totalCount"
 			(page)="onPaginationChange($event)"
 		/>
@@ -24,60 +26,54 @@
 			matSortDisableClear
 			(matSortChange)="onSortChange($event)"
 			[dataSource]="animeList.items"
-			class="anime-table-wrapper"
+			class="anime-table-content"
 		>
-			<ng-container class="table__image-container" [matColumnDef]="animeTableColumns.IMAGE">
-				<mat-header-cell class="anime-table__item anime-table__item--textColor" *matHeaderCellDef>
+			<ng-container [matColumnDef]="animeTableColumns.IMAGE">
+				<mat-header-cell class="anime-table-content__item anime-table-content__item--textColor-white" *matHeaderCellDef>
 					Image
 				</mat-header-cell>
-				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
-
+				<mat-cell class="anime-table__item anime-table-content__item--textColor-white" *matCellDef="let element">
 					<div>
 						<img [src]="element.imageUrl" alt="{{ element.titleJapan }}" class="table__item-image" />
 					</div>
 				</mat-cell>
 			</ng-container>
 			<ng-container [matColumnDef]="animeTableColumns.TITLE_EN">
-				<mat-header-cell mat-sort-header class="anime-table__item anime-table__item--textColor" *matHeaderCellDef>
+				<mat-header-cell mat-sort-header class="anime-table__item anime-table-content__item--textColor-white" *matHeaderCellDef>
 					{{ animeTableColumns.TITLE_EN }}
 				</mat-header-cell>
-				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
-
+				<mat-cell class="anime-table__item anime-table-content__item--textColor-white" *matCellDef="let element">
 					{{ element.titleEnglish | appNullable }}
 				</mat-cell>
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeTableColumns.TITLE_JPN">
 				<mat-header-cell *matHeaderCellDef> {{ animeTableColumns.TITLE_JPN }} </mat-header-cell>
-				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
-
+				<mat-cell class="anime-table__item anime-table-content__item--textColor-white" *matCellDef="let element">
 					{{ element.titleJapan | appNullable }}
 				</mat-cell>
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeTableColumns.AIRED_START">
 				<mat-header-cell mat-sort-header *matHeaderCellDef> {{ animeTableColumns.AIRED_START }}</mat-header-cell>
-				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
-
+				<mat-cell class="anime-table__item anime-table-content__item--textColor-white" *matCellDef="let element">
+					<!-- TODO (Trinh Nguyen): Check null for aired, use date pipe here. -->
 					{{ element.aired.start | appNullable }}
 				</mat-cell>
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeTableColumns.TYPE">
 				<mat-header-cell *matHeaderCellDef> {{ animeTableColumns.TYPE }}</mat-header-cell>
-				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
-
+				<mat-cell class="anime-table__item anime-table-content__item--textColor-white" *matCellDef="let element">
 					{{ element.type | appNullable }}
 				</mat-cell>
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeTableColumns.STATUS">
-				<mat-header-cell mat-sort-header class="anime-table__item anime-table__item--textColor" *matHeaderCellDef>
-
+				<mat-header-cell mat-sort-header class="anime-table__item anime-table-content__item--textColor-white" *matHeaderCellDef>
 					{{ animeTableColumns.STATUS }}
 				</mat-header-cell>
-				<mat-cell class="anime-table__item anime-table__item--textColor" *matCellDef="let element">
-
+				<mat-cell class="anime-table__item anime-table-content__item--textColor-white" *matCellDef="let element">
 					<span>{{ element.status | appNullable }}</span>
 				</mat-cell>
 			</ng-container>

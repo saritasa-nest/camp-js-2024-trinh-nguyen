@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,7 +11,6 @@ import { AnimeType } from '@js-camp/core/models/anime-type';
 	encapsulation: ViewEncapsulation.None,
 	standalone: true,
 	imports: [
-		CommonModule,
 		MatSelectModule,
 		MatCheckboxModule,
 		MatButtonModule,
@@ -28,10 +26,12 @@ export class FilterTypeComponent {
 	public readonly animeType = Object.values(AnimeType);
 
 	/** Selected anime anime-type. */
-	@Input() public selectedTypes: AnimeType | null = null;
+	@Input()
+	public selectedTypes: AnimeType | null = null;
 
 	/** Type change listener. */
-	@Output() public typeChange = new EventEmitter<AnimeType>();
+	@Output()
+	public typeChange = new EventEmitter<AnimeType>();
 
 	/**
 	 * Selection change function.

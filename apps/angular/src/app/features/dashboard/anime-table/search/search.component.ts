@@ -23,18 +23,19 @@ import { MatInputModule } from '@angular/material/input';
 export class SearchComponent {
 
 	/** Search input. */
-	@Input() public search = '';
+	@Input()
+	public search = '';
 
 	/** Search change listener. */
-	@Output() public readonly searchChanged = new EventEmitter<string | null>();
+	@Output()
+	public readonly searchChanged = new EventEmitter<string | null>();
 
 	/**
 	 * Search change function.
-	 * @param event Event search change.
+	 * @param value Event search change.
 	 */
-	protected onSearchChange(event: KeyboardEvent): void {
-		const searchValue = (event.target as HTMLInputElement).value;
-		this.searchChanged.emit(searchValue);
+	protected onSearchChange(value: string): void {
+		this.searchChanged.emit(value);
 	}
 
 }

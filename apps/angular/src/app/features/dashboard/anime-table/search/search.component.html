@@ -1,3 +1,4 @@
+<!-- TODO (Trinh Nguyen): Update BEM here. -->
 <form class="search-form ">
-	<input matInput class="search__input" placeholder="Search" name="search" [ngModel]="search" (keyup)="onSearchChange($event)">
-  </form>
+	<input matInput class="search__input" placeholder="Search" name="search" [ngModel]="search" (ngModelChange)="onSearchChange($event)">
+</form>

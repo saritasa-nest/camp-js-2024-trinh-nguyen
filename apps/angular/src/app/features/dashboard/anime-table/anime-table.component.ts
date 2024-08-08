@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { BehaviorSubject, catchError, debounceTime, distinctUntilChanged, Observable, Subject, switchMap, takeUntil, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap, takeUntil, tap, throwError } from 'rxjs';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { NullablePipe } from '@js-camp/core/pipes/no-empty.pipe';
@@ -19,9 +19,9 @@ import { AnimeSortFields } from '@js-camp/core/models/anime-sort-fields';
 import { SearchComponent } from './search/search.component';
 import { FilterTypeComponent } from './filter-type/filter-type.component';
 import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
-import { AnimeHttpParamsService } from '@js-camp/angular/core/services/anime-http-params.service';
 import {MatCardModule} from '@angular/material/card';
-
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
+import { PAGE_SIZE_OPTIONS } from '@js-camp/angular/core/constants/constants';
 /** Anime Table Component. */
 @Component({
 	selector: 'camp-anime-table',
@@ -48,43 +48,38 @@ import {MatCardModule} from '@angular/material/card';
 	],
 })
 
-export class AnimeTableComponent implements OnInit, OnDestroy {
+export class AnimeTableComponent implements OnInit {
+
+	protected readonly destroyRef = inject(DestroyRef);
 
 	/** Filter listen all filter action changes. */
 	protected readonly filter$ = inject(ANIME_MANAGE_PARAMS_TOKEN);
 
 	/** Receive observable include pagination type of Anime api. */
-	protected readonly animeListPagination$!: Observable<Pagination<Anime>>;
+	protected readonly animeListPagination$: Observable<Pagination<Anime>>;
 
 	private readonly animeService = inject(AnimeService);
 
 	private readonly animeQueryParams = inject(AnimeQueryParamsService);
 
-	private readonly httpParamService = inject(AnimeHttpParamsService);
 	/** Loading subject. */
-	protected readonly isLoading$ = new BehaviorSubject<boolean>(true);
-	private readonly destroy$ = new Subject<void>();
+	protected readonly isLoading$ = new BehaviorSubject(false);
 
 	/** Enum of anime fields. */
-	protected readonly animeTableColumns: typeof AnimeTableColumns = AnimeTableColumns;
+	protected readonly animeTableColumns = AnimeTableColumns;
 
+	/** Fields of an anime. */
+	protected readonly animeTableColumnsArray = Object.values(this.animeTableColumns);
+	protected readonly PAGE_SIZE_OPTIONS = PAGE_SIZE_OPTIONS;
+
+	// TODO (Trinh Nguyen): Use inject.
 	public constructor(private spinner: NgxSpinnerService) {
-		this.isLoading$.pipe(
-			tap((isLoading) => {
-				if (isLoading) {
-
-					this.spinner.show();
-				} else {
-					this.spinner.hide();
-				}
-			}),
-			takeUntil(this.destroy$)
-		).subscribe();
-
 		this.animeListPagination$ = this.filter$.pipe(
-			tap(() => this.isLoading$.next(true)),
 			debounceTime(500),
-			switchMap(page => this.animeService.requestAnime(this.httpParamService.getHttpParams(page))),
+			tap(() => {
+				this.isLoading$.next(true);
+			}),
+			switchMap(page => this.animeService.requestAnime(page)),
 			tap(() => this.isLoading$.next(false)),
 			catchError(error => {
 				this.isLoading$.next(false);
@@ -94,12 +89,17 @@ export class AnimeTableComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		this.isLoading$.next(true);
-	}
-
-	ngOnDestroy() {
-		this.destroy$.next();
-		this.destroy$.complete();
+		// TODO (Trinh Nguyen): Create a component to reduce this boilerplate code.
+		this.isLoading$.pipe(
+			tap((isLoading) => {
+				if (isLoading) {
+					this.spinner.show();
+				} else {
+					this.spinner.hide();
+				}
+			}),
+			takeUntilDestroyed(this.destroyRef)
+		).subscribe();
 	}
 
 	/**
@@ -111,9 +111,6 @@ export class AnimeTableComponent implements OnInit, OnDestroy {
 	protected trackAnime(index: number, item: Anime): number {
 		return item.id;
 	}
-
-	/** Fields of an anime. */
-	protected readonly animeTableColumnsArray = Object.values(this.animeTableColumns);
 
 	/**
 	 * Paginator navigator control.
@@ -128,27 +125,27 @@ export class AnimeTableComponent implements OnInit, OnDestroy {
 	 * @param event Event of sort change.
 	 */
 	protected onSortChange(event: Sort): void {
-		const sortOption: SortOptions<AnimeSortFields> = {
+		const sortOptions: SortOptions<AnimeSortFields> = {
 			direction: getSortDirection(event.direction),
 			field: getAnimeSortField(event.active),
 		};
-		this.animeQueryParams.appendParamsAndResetPageNumber({ sortOptions: sortOption });
+		this.animeQueryParams.appendParamsAndResetPageNumber({ sortOptions });
 	}
 
 	/**
-	 * Search change function.
-	 * @param event Event of search change.
+	 * Handle search change.
+	 * @param search Search.
 	 */
-	protected onSearchChange(event: string | null): void {
-		this.animeQueryParams.appendParamsAndResetPageNumber({ search: event });
+	protected onSearchChange(search: string | null): void {
+		this.animeQueryParams.appendParamsAndResetPageNumber({ search });
 	}
 
 	/**
-	 * Selec change function.
+	 * Handle select change.
 	 * @param event Event of select change.
 	 */
-	protected onSelectChange(event: AnimeType | null): void {
-		this.animeQueryParams.appendParamsAndResetPageNumber({ type: event });
+	protected onSelectChange(type: AnimeType | null): void {
+		this.animeQueryParams.appendParamsAndResetPageNumber({ type });
 	}
 
 }

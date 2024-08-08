@@ -26,6 +26,7 @@ export type AnimeDto = {
 	/** Image URL. */
 	readonly image: string;
 
+	// TODO (Trinh Nguyen): Create DateRangeDto
 	/** Aired duration. */
 	readonly aired: DateTimeRange;
 
