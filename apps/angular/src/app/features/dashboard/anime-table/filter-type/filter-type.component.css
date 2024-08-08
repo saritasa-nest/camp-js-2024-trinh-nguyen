@@ -1,7 +1,3 @@
-.table__header {
-	display: flex;
-}
-
-.filter-type__select {
+.filter-type-select {
 	display: flex;
 }

@@ -18,7 +18,7 @@ export class AnimeQueryParamsService {
 	 * Append query params.
 	 * @param params Job filter params.
 	 */
-	public append(params: Partial<AnimeManageParams.Combined>): void {
+	public append(params: Partial<AnimeManageParams>): void {
 		const queryParams = this.animeQueryParams.toDto(params);
 		this.queryParamsService.append(queryParams);
 	}
@@ -27,7 +27,7 @@ export class AnimeQueryParamsService {
 	 * Append provide query params and reset page number params to the URL.
 	 * @param params Job filter params to append.
 	 */
-	public appendParamsAndResetPageNumber(params: Partial<AnimeManageParams.Combined>): void {
+	public appendParamsAndResetPageNumber(params: Partial<AnimeManageParams>): void {
 		const queryParams = this.animeQueryParams.toDto(params);
 		return this.queryParamsService.appendParamsAndResetPageNumber(queryParams);
 	}

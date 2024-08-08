@@ -1,80 +1,95 @@
 <div class="anime-table">
-	<!-- TODO (Trinh Nguyen): Use ngIf to reduce (filter$ | async) -->
-	@if( animeListPagination$ | async; as animeList ){
+
+	 <ng-container *ngIf = "
+	 {
+	 isLoading: isLoading$ | async,
+	 animeList: (animeListPagination$ | async) ,
+	 filterQueryParams: filter$ | async
+	 } as data
+	 ">
+
 	<div class="anime-table__header">
-		<camp-search (searchChanged)="onSearchChange($event)" [search]="(filter$ | async)?.search ?? ''" />
+		<camp-search (searchChanged)="onSearchChange($event)" [search]="data.filterQueryParams?.search ?? ''" />
 		<camp-filter-type
 			(typeChange)="onSelectChange($event)"
-			[selectedTypes]="(filter$ | async)?.type ?? null"
+			[selectedTypes]="data.filterQueryParams?.type ?? null"
 			class="anime-table__filter-type"
 		/>
 
 		<mat-paginator
 			class="anime-table__paginator"
 			[pageSizeOptions]="PAGE_SIZE_OPTIONS"
-			[pageSize]="(filter$ | async)?.pageSize"
-			[pageIndex]="(filter$ | async)?.pageNumber"
-			[length]="animeList.totalCount"
+			[pageSize]="data.filterQueryParams?.pageSize"
+			[pageIndex]="data.filterQueryParams?.pageNumber"
+			[length]="data.animeList?.totalCount"
 			(page)="onPaginationChange($event)"
 		/>
 	</div>
-	<ngx-spinner *ngIf="isLoading$ | async" type="ball-scale-multiple"></ngx-spinner>
 
 		<table
 			mat-table
 			matSort
 			matSortDisableClear
 			(matSortChange)="onSortChange($event)"
-			[dataSource]="animeList.items"
+			[dataSource]="  data.animeList?.items ?? createSkeletonAnimeSource()"
 			class="anime-table-content"
 		>
 			<ng-container [matColumnDef]="animeTableColumns.IMAGE">
 				<mat-header-cell class="anime-table-content__item anime-table-content__item--textColor-white" *matHeaderCellDef>
 					Image
 				</mat-header-cell>
-				<mat-cell class="anime-table__item anime-table-content__item--textColor-white" *matCellDef="let element">
+				<mat-cell class="anime-table-content__item anime-table-content__item--textColor-white" *matCellDef="let element">
+					<camp-skeleton-cell [isLoading]="data.isLoading">
 					<div>
 						<img [src]="element.imageUrl" alt="{{ element.titleJapan }}" class="table__item-image" />
 					</div>
+				</camp-skeleton-cell>
 				</mat-cell>
 			</ng-container>
 			<ng-container [matColumnDef]="animeTableColumns.TITLE_EN">
-				<mat-header-cell mat-sort-header class="anime-table__item anime-table-content__item--textColor-white" *matHeaderCellDef>
+				<mat-header-cell mat-sort-header class="anime-table-content__item anime-table-content__item--textColor-white" *matHeaderCellDef>
 					{{ animeTableColumns.TITLE_EN }}
 				</mat-header-cell>
-				<mat-cell class="anime-table__item anime-table-content__item--textColor-white" *matCellDef="let element">
+				<mat-cell class=" anime-table-content__item--textColor-white" *matCellDef="let element">
+					<camp-skeleton-cell [isLoading]="data.isLoading">
 					{{ element.titleEnglish | appNullable }}
+					</camp-skeleton-cell>
 				</mat-cell>
 			</ng-container>
-
 			<ng-container [matColumnDef]="animeTableColumns.TITLE_JPN">
-				<mat-header-cell *matHeaderCellDef> {{ animeTableColumns.TITLE_JPN }} </mat-header-cell>
-				<mat-cell class="anime-table__item anime-table-content__item--textColor-white" *matCellDef="let element">
+				<mat-header-cell *matHeaderCellDef class="anime-table-content__item anime-table-content__item--textColor-white" > {{ animeTableColumns.TITLE_JPN }} </mat-header-cell>
+				<mat-cell class=" anime-table-content__item--textColor-white" *matCellDef="let element">
+					<camp-skeleton-cell [isLoading]="data.isLoading">
 					{{ element.titleJapan | appNullable }}
+					</camp-skeleton-cell>
 				</mat-cell>
 			</ng-container>
-
 			<ng-container [matColumnDef]="animeTableColumns.AIRED_START">
-				<mat-header-cell mat-sort-header *matHeaderCellDef> {{ animeTableColumns.AIRED_START }}</mat-header-cell>
-				<mat-cell class="anime-table__item anime-table-content__item--textColor-white" *matCellDef="let element">
-					<!-- TODO (Trinh Nguyen): Check null for aired, use date pipe here. -->
-					{{ element.aired.start | appNullable }}
+				<mat-header-cell mat-sort-header *matHeaderCellDef class="anime-table-content__item anime-table-content__item--textColor-white" > {{ animeTableColumns.AIRED_START }}</mat-header-cell>
+				<mat-cell class=" anime-table-content__item--textColor-white" *matCellDef="let element">
+					<camp-skeleton-cell [isLoading]="data.isLoading">
+						{{ element.titleJapan | appNullable }}
+					</camp-skeleton-cell>
 				</mat-cell>
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeTableColumns.TYPE">
-				<mat-header-cell *matHeaderCellDef> {{ animeTableColumns.TYPE }}</mat-header-cell>
-				<mat-cell class="anime-table__item anime-table-content__item--textColor-white" *matCellDef="let element">
+				<mat-header-cell *matHeaderCellDef class="anime-table-content__item anime-table-content__item--textColor-white"> {{ animeTableColumns.TYPE }}</mat-header-cell>
+				<mat-cell class=" anime-table-content__item--textColor-white" *matCellDef="let element">
+					<camp-skeleton-cell [isLoading]="data.isLoading">
 					{{ element.type | appNullable }}
+					</camp-skeleton-cell>
 				</mat-cell>
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeTableColumns.STATUS">
-				<mat-header-cell mat-sort-header class="anime-table__item anime-table-content__item--textColor-white" *matHeaderCellDef>
+				<mat-header-cell mat-sort-header class="anime-table-content__item anime-table-content__item--textColor-white" *matHeaderCellDef>
 					{{ animeTableColumns.STATUS }}
 				</mat-header-cell>
-				<mat-cell class="anime-table__item anime-table-content__item--textColor-white" *matCellDef="let element">
+				<mat-cell class=" anime-table-content__item--textColor-white" *matCellDef="let element">
+					<camp-skeleton-cell [isLoading]="data.isLoading">
 					<span>{{ element.status | appNullable }}</span>
+					</camp-skeleton-cell>
 				</mat-cell>
 			</ng-container>
 			<mat-header-row class="anime-table__header-row" *matHeaderRowDef="animeTableColumnsArray"></mat-header-row>
@@ -82,5 +97,5 @@
 		</table>
 
 
-	}
+</ng-container>
 </div>

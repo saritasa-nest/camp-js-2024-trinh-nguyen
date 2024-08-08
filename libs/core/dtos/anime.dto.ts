@@ -1,9 +1,8 @@
 
-import { DateTimeRange } from '../models/datetime-range';
-
 import { AnimeStatusDto } from './anime-status.dto';
 
 import { AnimeTypeDto } from './anime-type.dto';
+import { DateTimeRangeDto } from './datetime-range.dto';
 
 /** Anime DTO. */
 export type AnimeDto = {
@@ -28,7 +27,7 @@ export type AnimeDto = {
 
 	// TODO (Trinh Nguyen): Create DateRangeDto
 	/** Aired duration. */
-	readonly aired: DateTimeRange;
+	readonly aired: DateTimeRangeDto;
 
 	/** Type. */
 	readonly type: AnimeTypeDto;

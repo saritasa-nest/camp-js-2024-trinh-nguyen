@@ -23,7 +23,7 @@ import { MAP_ANIME_SORT_FIELDS_FROM_URL_DTO } from '../records/anime-sort-field-
 import { Mapper } from './mapper';
 
 /** Anime query params. */
-export type AnimeQueryParams = Partial<StrictOmit<AnimeManageParams.Combined, 'sortOptions' | 'type'> & {
+export type AnimeQueryParams = Partial<StrictOmit<Partial<AnimeManageParams>, 'sortOptions' | 'type'> & {
 
 	/** Anime type dto. */
 	type: AnimeTypeUrlDto;
@@ -39,9 +39,9 @@ export type AnimeQueryParams = Partial<StrictOmit<AnimeManageParams.Combined, 's
 @Injectable({
 	providedIn: 'root',
 })
-export class AnimeQueryParamsMapper implements Mapper<AnimeQueryParams, AnimeManageParams.Combined> {
+export class AnimeQueryParamsMapper implements Mapper<AnimeQueryParams, Partial<AnimeManageParams>> {
 	/** @inheritdoc */
-	public fromDto(dto: AnimeQueryParams): AnimeManageParams.Combined {
+	public fromDto(dto: AnimeQueryParams): Partial<AnimeManageParams> {
 		return {
 			type: (dto.type != null) ? MAP_ANIME_TYPE_FROM_URL_DTO[dto.type] : null,
 			pageNumber: dto.pageNumber ? Number(dto.pageNumber) : DEFAULT_PAGINATION_OPTIONS.pageNumber,
@@ -56,7 +56,7 @@ export class AnimeQueryParamsMapper implements Mapper<AnimeQueryParams, AnimeMan
 	}
 
 	/** @inheritdoc */
-	public toDto(model: Partial<AnimeManageParams.Combined>): AnimeQueryParams {
+	public toDto(model: Partial<AnimeManageParams>): AnimeQueryParams {
 		return {
 			type: (model.type != null) ? MAP_ANIME_TYPE_TO_URL_DTO[model.type] : undefined,
 			pageNumber: model.pageNumber != null && model.pageNumber >= 0 ? model.pageNumber : undefined,

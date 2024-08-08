@@ -21,6 +21,10 @@
 	--error-color: red;
 	--background-blue-color: #00072d;
 	--blue-title-color: #79a1d8;
+	--background-color-primary-subtle: #222;
+	--background-color-primary-light: #333;
+	--background-color-primary-bright: #444;
+	--background-color-primary-extra-bright: #555;
 
 	/* space */
 	--spacing-sm: 8px;

@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { BehaviorSubject, catchError, debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap, takeUntil, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, debounceTime, Observable, switchMap, tap, throwError } from 'rxjs';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { NullablePipe } from '@js-camp/core/pipes/no-empty.pipe';
@@ -18,10 +18,10 @@ import { AnimeType } from '@js-camp/core/models/anime-type';
 import { AnimeSortFields } from '@js-camp/core/models/anime-sort-fields';
 import { SearchComponent } from './search/search.component';
 import { FilterTypeComponent } from './filter-type/filter-type.component';
-import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 import {MatCardModule} from '@angular/material/card';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
-import { PAGE_SIZE_OPTIONS } from '@js-camp/angular/core/constants/constants';
+import { DEBOUNCE_TIME, PAGE_SIZE_OPTIONS } from '@js-camp/angular/core/constants/constants';
+import { SkeletonCellComponent } from './skeleton-cell/skeleton-cell.component';
+import { DEFAULT_PAGINATION_OPTIONS } from '@js-camp/core/constants/pagination';
 /** Anime Table Component. */
 @Component({
 	selector: 'camp-anime-table',
@@ -38,7 +38,8 @@ import { PAGE_SIZE_OPTIONS } from '@js-camp/angular/core/constants/constants';
 		FilterTypeComponent,
 		SearchComponent,
 		MatPaginatorModule,
-		NgxSpinnerModule,
+		SkeletonCellComponent,
+		DatePipe,
 	],
 	templateUrl: './anime-table.component.html',
 	styleUrl: './anime-table.component.css',
@@ -48,9 +49,8 @@ import { PAGE_SIZE_OPTIONS } from '@js-camp/angular/core/constants/constants';
 	],
 })
 
-export class AnimeTableComponent implements OnInit {
+export class AnimeTableComponent {
 
-	protected readonly destroyRef = inject(DestroyRef);
 
 	/** Filter listen all filter action changes. */
 	protected readonly filter$ = inject(ANIME_MANAGE_PARAMS_TOKEN);
@@ -63,24 +63,32 @@ export class AnimeTableComponent implements OnInit {
 	private readonly animeQueryParams = inject(AnimeQueryParamsService);
 
 	/** Loading subject. */
-	protected readonly isLoading$ = new BehaviorSubject(false);
+	protected readonly isLoading$ = new BehaviorSubject(true);
 
 	/** Enum of anime fields. */
 	protected readonly animeTableColumns = AnimeTableColumns;
 
 	/** Fields of an anime. */
 	protected readonly animeTableColumnsArray = Object.values(this.animeTableColumns);
+
+	/** Page size options for page size selection. */
 	protected readonly PAGE_SIZE_OPTIONS = PAGE_SIZE_OPTIONS;
 
-	// TODO (Trinh Nguyen): Use inject.
-	public constructor(private spinner: NgxSpinnerService) {
+
+	private readonly DEBOUNCE_TIME = DEBOUNCE_TIME;
+
+	public constructor() {
 		this.animeListPagination$ = this.filter$.pipe(
-			debounceTime(500),
+			debounceTime(this.DEBOUNCE_TIME),
 			tap(() => {
 				this.isLoading$.next(true);
 			}),
 			switchMap(page => this.animeService.requestAnime(page)),
-			tap(() => this.isLoading$.next(false)),
+			tap(() =>
+				{
+					this.isLoading$.next(false);
+				}
+		),
 			catchError(error => {
 				this.isLoading$.next(false);
 				return throwError(() => error);
@@ -88,19 +96,6 @@ export class AnimeTableComponent implements OnInit {
 		);
 	}
 
-	ngOnInit() {
-		// TODO (Trinh Nguyen): Create a component to reduce this boilerplate code.
-		this.isLoading$.pipe(
-			tap((isLoading) => {
-				if (isLoading) {
-					this.spinner.show();
-				} else {
-					this.spinner.hide();
-				}
-			}),
-			takeUntilDestroyed(this.destroyRef)
-		).subscribe();
-	}
 
 	/**
 	 * Function return index of item in an array.
@@ -146,6 +141,14 @@ export class AnimeTableComponent implements OnInit {
 	 */
 	protected onSelectChange(type: AnimeType | null): void {
 		this.animeQueryParams.appendParamsAndResetPageNumber({ type });
+	}
+
+	/**
+	 * Create a skeleton template for a table while loading.
+	 * @param pageSize - Page size.
+	 */
+	protected createSkeletonAnimeSource(): any[] {
+		return Array.from({ length: DEFAULT_PAGINATION_OPTIONS.pageSize }).map((_, index) => ({ id: index } ));
 	}
 
 }

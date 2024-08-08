@@ -7,7 +7,7 @@ import { AnimeQueryParamsMapper } from '@js-camp/core/mappers/anime-query-params
 import { filtersFactory } from '../utils/filter-factory';
 
 /** Anime filter params token. */
-export const ANIME_MANAGE_PARAMS_TOKEN = new InjectionToken<Observable<AnimeManageParams.Combined>>(
+export const ANIME_MANAGE_PARAMS_TOKEN = new InjectionToken<Observable<AnimeManageParams>>(
 	'Anime page filter params',
 );
 
@@ -24,8 +24,8 @@ export const ANIME_MANAGE_PARAMS_PROVIDERS: readonly Provider[] = [
  * Factory function for Anime filter params.
  * @param activatedRoute Activated route.
  */
-function animeFiltersFactory(activatedRoute: ActivatedRoute): Observable<AnimeManageParams.Combined> {
+function animeFiltersFactory(activatedRoute: ActivatedRoute): Observable<Partial<AnimeManageParams>> {
 	const animeQueryParamsMapper = inject(AnimeQueryParamsMapper);
-	return filtersFactory<AnimeManageParams.Combined, AnimeQueryParamsMapper >(activatedRoute, animeQueryParamsMapper);
+	return filtersFactory<Partial<AnimeManageParams>, AnimeQueryParamsMapper >(activatedRoute, animeQueryParamsMapper);
 
 }

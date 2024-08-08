@@ -1,6 +1,9 @@
-/* eslint-disable jsdoc/require-jsdoc */
 import { HttpParams } from '@angular/common/http';
 
+/**
+ * Build generic http params.
+ * @param params Generic params.
+ */
 export function buildHttpParamsFromDto<T>(params: T): HttpParams {
 	let httpParams = new HttpParams();
 

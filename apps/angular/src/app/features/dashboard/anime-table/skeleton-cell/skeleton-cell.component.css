@@ -1,0 +1,33 @@
+.skeleton-cell {
+	display: flex;
+	align-items: center;
+}
+
+.skeleton-cell__content {
+	--background-color-dark: var(--background-color-primary-subtle);
+	--background-color-light: var(--background-color-primary-light);
+
+	flex-grow: 1;
+	flex-basis: 0;
+	width: 100%;
+	height: var(--height-skeleton-cell);
+	border: 50px solid transparent;
+	border-image: linear-gradient(to right, var(--background-color-dark), var(--background-color-light)) 1 stretch;
+	border-image-slice: 1;
+	border-image-source: linear-gradient(to right, var(--background-color-dark), var(--background-color-light));
+	animation: border-animation 3s infinite;
+}
+
+@keyframes border-animation {
+	0% {
+		border-image-source: linear-gradient(to right, var(--background-color-dark), var(--background-color-light));
+	}
+
+	50% {
+		border-image-source: linear-gradient(to left, var(--background-color-dark), var(--background-color-light));
+	}
+
+	100% {
+		border-image-source: linear-gradient(to right, var(--background-color-dark), var(--background-color-light));
+	}
+}

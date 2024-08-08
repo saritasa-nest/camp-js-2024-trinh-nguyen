@@ -36,12 +36,12 @@ export class AnimeService {
 	 * Get anime list.
 	 * @param animeParams Params to next/prev page.
 	 */
-	public requestAnime(animeParams: AnimeManageParams.Combined): Observable<Pagination<Anime>> {
+	public requestAnime(animeParams: AnimeManageParams): Observable<Pagination<Anime>> {
 
 		const params = this.animeBuildHttpParams.getHttpParams(animeParams);
 
 		return this.httpClient.get<PaginationDto<AnimeDto>>(this.appUrlsConfig.anime.list, { params }).pipe(
-			map(response => this.paginationMapper.mapPaginationFromDto(response, this.animeMapper.fromDto)),
+			map(response => this.paginationMapper.mapPaginationFromDto(response, dto => this.animeMapper.fromDto(dto))),
 		);
 	}
 }

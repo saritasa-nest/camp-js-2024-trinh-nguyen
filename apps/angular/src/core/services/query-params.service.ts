@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DEFAULT_PAGINATION_OPTIONS } from '@js-camp/core/constants/pagination';
@@ -40,7 +39,7 @@ export class QueryParamsService {
 	 * Append provide query params to the URL.
 	 * @param params Params to append.
 	 */
-	public append(params: Record<string, any>): void {
+	public append(params: Record<string, unknown>): void {
 		const paramsWithoutUndefinedField = this.removeUndefinedFields(params);
 		Object.keys(paramsWithoutUndefinedField).forEach(key => {
 			// Remove empty search or none type.
@@ -91,7 +90,7 @@ export class QueryParamsService {
 	 * Append provide query params and reset page number params to the URL.
 	 * @param params Params to append.
 	 */
-	public appendParamsAndResetPageNumber(params: Record<string, any>): void {
+	public appendParamsAndResetPageNumber(params: Record<string, unknown>): void {
 		return this.append({ ...params, pageNumber: DEFAULT_PAGINATION_OPTIONS.pageNumber });
 	}
 }

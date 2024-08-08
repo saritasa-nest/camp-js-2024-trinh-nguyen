@@ -19,9 +19,9 @@ export class AnimeParamsService {
 	 * Get anime http params.
 	 * @param paramsModel Anime params model.
 	 */
-	public getHttpParams(paramsModel: AnimeManageParams.Combined): HttpParams {
+	public getHttpParams(paramsModel: AnimeManageParams): HttpParams {
 
 		const dto = this.animeManageMapper.toDto(paramsModel);
-		return buildHttpParamsFromDto<AnimeManageParamsDto.Combined>(dto);
+		return buildHttpParamsFromDto<AnimeManageParamsDto>(dto);
 	}
 }

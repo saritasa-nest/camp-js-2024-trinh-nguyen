@@ -19,43 +19,23 @@ import { SortMapper } from './sort.mapper';
 
 /** Mapper for filter params. */
 @Injectable({ providedIn: 'root' })
-export class AnimeManageParamsMapper implements Mapper<AnimeManageParamsDto.Combined, AnimeManageParams.Combined> {
+export class AnimeManageParamsMapper implements Mapper<AnimeManageParamsDto, AnimeManageParams> {
 	private readonly sortMapper = inject(SortMapper);
 
 	private readonly baseFilterParamsMapper = inject(BaseFilterParamsMapper);
 
-	private mapOrderingOptionToDto(model: AnimeManageParams.Sort): AnimeManageParamsDto.Sort | null {
-
-		if (model.sortOptions?.direction && model.sortOptions?.field) {
-
-			return {
-				ordering: this.sortMapper.toDto(model.sortOptions, MAP_ANIME_SORT_FIELDS_TO_DTO),
-			};
-		}
-
-		return null;
-	}
-
-	private mapTypeOptionToDto(model: AnimeManageParams.Type): AnimeManageParamsDto.Type | null {
-		if (model.type) {
-			return {
-				type: MAP_ANIME_TYPE_TO_DTO[model.type],
-			};
-		}
-		return null;
-	}
-
 	/** @inheritdoc */
-	public toDto(model: AnimeManageParams.Combined): AnimeManageParamsDto.Combined {
+	public toDto(model: AnimeManageParams): AnimeManageParamsDto {
 		return {
 			...this.baseFilterParamsMapper.mapCombinedOptionsToDto(model),
-			...this.mapOrderingOptionToDto(model),
-			...this.mapTypeOptionToDto(model),
+			type: model.type ? MAP_ANIME_TYPE_TO_DTO[model.type] : undefined,
+			ordering: model.sortOptions ? this.sortMapper.toDto(model.sortOptions, MAP_ANIME_SORT_FIELDS_TO_DTO) : undefined,
+
 		};
 	}
 
 	/** @inheritdoc */
-	public fromDto(dto: AnimeManageParamsDto.Combined): AnimeManageParams.Combined {
+	public fromDto(dto: AnimeManageParamsDto): AnimeManageParams {
 		return {
 			pageNumber: dto.offset ?? DEFAULT_PAGINATION_OPTIONS.pageNumber,
 			pageSize: DEFAULT_PAGINATION_OPTIONS.pageSize,
