@@ -43,7 +43,7 @@ export class QueryParamsService {
 		const paramsWithoutUndefinedField = this.removeUndefinedFields(params);
 		Object.keys(paramsWithoutUndefinedField).forEach(key => {
 			// Remove empty search or none type.
-			if (paramsWithoutUndefinedField[key] === '' || paramsWithoutUndefinedField[key] === 'All') {
+			if (paramsWithoutUndefinedField[key] === '') {
 				paramsWithoutUndefinedField[key] = null;
 			}
 		});

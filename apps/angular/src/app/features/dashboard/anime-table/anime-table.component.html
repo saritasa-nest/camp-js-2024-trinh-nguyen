@@ -71,7 +71,7 @@
 					{{ animeTableColumns.AiredStart }}</mat-header-cell>
 				<mat-cell class="anime-table-content__item--textColor-white" *matCellDef="let element">
 					<camp-skeleton-cell [isLoading]="data.isLoading">
-						{{ element?.aired?.start ? (element.aired.start | date : "M-d-yyyy") : "N/A" }}
+						{{ element?.aired?.start | date : "M-d-yyyy" | appNullable }}
 					</camp-skeleton-cell>
 				</mat-cell>
 			</ng-container>

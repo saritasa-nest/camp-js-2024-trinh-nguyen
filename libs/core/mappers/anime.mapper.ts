@@ -30,7 +30,6 @@ export class AnimeMapper implements Mapper<AnimeDto, Anime> {
 			titleJapan: dto.title_jpn,
 			imageUrl: dto.image,
 			aired: {
-
 				start: dto.aired.start ? this.dateTimeMapper.fromDto(dto.aired.start) : null,
 				end: dto.aired.end ? this.dateTimeMapper.fromDto(dto.aired.end) : null,
 			},

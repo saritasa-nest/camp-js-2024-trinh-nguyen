@@ -34,7 +34,7 @@ export class AnimeService {
 	 * Get anime list.
 	 * @param animeParams Params to next/prev page.
 	 */
-	public requestAnime(animeParams: AnimeManageParams): Observable<Pagination<Anime>> {
+	public getAnime(animeParams: AnimeManageParams): Observable<Pagination<Anime>> {
 
 		const params = this.animeBuildHttpParams.getHttpParams(animeParams);
 

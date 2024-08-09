@@ -22,9 +22,6 @@ import { AnimeType } from '@js-camp/core/models/anime-type';
 })
 export class FilterTypeComponent {
 
-	/** Anime type. */
-	public readonly animeType = Object.values(AnimeType);
-
 	/** Selected anime anime-type. */
 	@Input()
 	public selectedTypes: AnimeType | null = null;
@@ -32,6 +29,9 @@ export class FilterTypeComponent {
 	/** Type change listener. */
 	@Output()
 	public typeChange = new EventEmitter<AnimeType>();
+
+	/** Anime type. */
+	public readonly animeType = Object.values(AnimeType);
 
 	/**
 	 * Selection change function.

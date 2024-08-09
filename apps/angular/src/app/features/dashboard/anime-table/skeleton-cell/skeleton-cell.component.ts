@@ -9,7 +9,7 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, Input } from '@an
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SkeletonCellComponent {
-	/** Loading status code skeleton cell. */
+	/** Loading status for skeleton cell. */
 	@Input({ required: true, transform: booleanAttribute })
-	public isLoading!: boolean;
+	public isLoading = false;
 }

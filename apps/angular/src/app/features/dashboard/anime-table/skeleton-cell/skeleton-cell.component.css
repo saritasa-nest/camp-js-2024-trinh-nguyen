@@ -10,7 +10,6 @@
 	flex-grow: 1;
 	flex-basis: 0;
 	width: 100%;
-	height: var(--height-skeleton-cell);
 	border: 50px solid transparent;
 	border-image: linear-gradient(to right, var(--background-color-dark), var(--background-color-light)) 1 stretch;
 	border-image-slice: 1;

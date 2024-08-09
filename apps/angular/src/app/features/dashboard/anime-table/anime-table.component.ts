@@ -18,7 +18,7 @@ import { AnimeType } from '@js-camp/core/models/anime-type';
 import { AnimeSortFields } from '@js-camp/core/models/anime-sort-fields';
 import { SearchComponent } from './search/search.component';
 import { FilterTypeComponent } from './filter-type/filter-type.component';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { DEBOUNCE_TIME, PAGE_SIZE_OPTIONS } from '@js-camp/angular/core/constants/constants';
 import { SkeletonCellComponent } from './skeleton-cell/skeleton-cell.component';
 import { DEFAULT_PAGINATION_OPTIONS } from '@js-camp/core/constants/pagination';
@@ -71,19 +71,17 @@ export class AnimeTableComponent {
 
 	/** Page size options for page size selection. */
 	protected readonly PAGE_SIZE_OPTIONS = PAGE_SIZE_OPTIONS;
-	private readonly DEBOUNCE_TIME = DEBOUNCE_TIME;
 
 	public constructor() {
 		this.animeListPagination$ = this.filter$.pipe(
-			debounceTime(this.DEBOUNCE_TIME),
+			debounceTime(DEBOUNCE_TIME),
 			tap(() => {
 				this.isLoading$.next(true);
 			}),
-			switchMap(page => this.animeService.requestAnime(page)),
-			tap(() =>
-				{
-					this.isLoading$.next(false);
-				}),
+			switchMap(page => this.animeService.getAnime(page)),
+			tap(() => {
+				this.isLoading$.next(false);
+			}),
 			catchError(error => {
 				this.isLoading$.next(false);
 				return throwError(() => error);
@@ -141,8 +139,8 @@ export class AnimeTableComponent {
 	 * Create a skeleton template for a table while loading.
 	 * @param pageSize - Page size.
 	 */
-	protected createSkeletonAnimeSource(): any[] {
-		return Array.from({ length: DEFAULT_PAGINATION_OPTIONS.pageSize }).map((_, index) => ({ id: index } ));
+	protected createSkeletonAnimeSource(): readonly object[] {
+		return Array.from({ length: DEFAULT_PAGINATION_OPTIONS.pageSize }).map((_, index) => ({ id: index }));
 	}
 
 }

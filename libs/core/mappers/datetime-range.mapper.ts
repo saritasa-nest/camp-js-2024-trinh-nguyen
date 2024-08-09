@@ -8,11 +8,6 @@ import { Mapper } from './mapper';
 })
 export class DateTimeMapper implements Mapper<string, Date> {
 
-	private parseDate(dateStr: string): Date | null {
-		const date = new Date(dateStr);
-		return isNaN(date.getTime()) ? null : date;
-	}
-
 	/**
 	 * @inheritdoc
 	 * Return either a valid date or an empty date.

@@ -11,7 +11,7 @@ export enum AnimeTypeDto {
 }
 
 export enum AnimeTypeUrlDto {
-	ALL = 'All',
+	ALL = '',
 	TV = 'TV',
 	OVA = 'OVA',
 	Movie = 'Movie',
