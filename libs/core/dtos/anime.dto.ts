@@ -1,11 +1,10 @@
 
 import { AnimeStatusDto } from './anime-status.dto';
-
 import { AnimeTypeDto } from './anime-type.dto';
 import { DateTimeRangeDto } from './datetime-range.dto';
 
 /** Anime DTO. */
-export type AnimeDto = {
+export type AnimeDto = Readonly<{
 
 	/** ID. */
 	readonly id: number;
@@ -46,4 +45,4 @@ export type AnimeDto = {
 	/** Genre IDs. */
 	readonly genreIds: readonly number[];
 
-};
+}>;
