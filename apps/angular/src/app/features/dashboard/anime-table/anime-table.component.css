@@ -1,34 +1,54 @@
-.anime-table-wrapper {
+.anime-table {
+	margin: var(--spacing-3xl) var(--spacing-3xl);
+}
+
+.anime-table-content {
 	width: 100%;
-	height: 150px;
+	background-color: inherit;
+	border-spacing: 0 var(--spacing-sm);
+	gap: var(--spacing-md);
 }
 
-.pagination-controls {
+.anime-table__header {
 	display: flex;
-	justify-content: flex-end;
-	gap: var(--spacing-sm);
+	justify-content: space-between;
 }
 
-.pagination-controls__navigation-button {
-	background-color: var(--primary-light-color);
-	border-radius: var(--spacing-sm);
-	padding: var(--spacing-sm) 0;
-}
-
-.mat-header-cell .mat-cell {
+.anime-table-content__item {
 	padding: var(--spacing-md);
 	display: flex;
 	align-items: center;
 	height: 100%;
 }
 
+.anime-table-content__item--textColor-white {
+	color: var(--primary-contrast-color);
+}
+
 .table__item-image {
-	width: 150px;
-	height: 150px;
+	width: var(--image-container);
+	height: var(--image-container);
 	object-fit: contain;
 	margin-right: var(--spacing-sm);
 }
 
-.table__image-container {
-	width: 150px;
+.anime-table__row {
+	border-bottom: 2px solid var(--primary-light-color);
+	border-top: 2px solid var(--primary-light-color);
+	border-left: 2px solid var(--primary-light-color);
+	border-right: 2px solid var(--primary-light-color);
+	margin-bottom: var(--spacing-md);
+}
+
+.anime-table__header-row {
+	border-bottom: 2px solid var(--primary-contrast-color);
+	border-top: 2px solid var(--primary-contrast-color);
+	border-left: 2px solid var(--primary-contrast-color);
+	border-right: 2px solid var(--primary-contrast-color);
+	margin-bottom: var(--spacing-md);
+	background: var(--blue-title-color);
+}
+
+.anime-table__paginator {
+	height: fit-content;
 }

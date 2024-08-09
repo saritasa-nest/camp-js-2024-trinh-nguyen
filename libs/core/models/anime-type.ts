@@ -1,5 +1,6 @@
 /** Anime type enum. */
 export enum AnimeType {
+	All = 'All',
 	TV = 'TV',
 	OVA = 'OVA',
 	Movie = 'Movie',

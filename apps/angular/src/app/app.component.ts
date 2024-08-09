@@ -9,4 +9,4 @@ import { RouterModule } from '@angular/router';
 	standalone: true,
 	imports: [RouterModule],
 })
-export class AppComponent {}
+export class AppComponent { }

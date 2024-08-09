@@ -1,0 +1,11 @@
+.search {
+	display: flex;
+	flex-flow: nowrap;
+	align-items: center;
+}
+
+.search__input {
+	display: block;
+	width: 100%;
+	border-radius: var(--spacing-sm);
+}

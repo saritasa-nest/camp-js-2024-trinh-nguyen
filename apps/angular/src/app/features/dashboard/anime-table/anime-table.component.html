@@ -1,53 +1,135 @@
-@if (animeList$ | async; as animeList) {
-
-<div class="pagination-controls">
-
-	<mat-paginator
-	[pageSizeOptions]="[5, 10, 20]"
-	[length]="animeList.totalCount"
-	[pageIndex]="pagination$.value.pageIndex"
-	[pageSize]="pagination$.value.pageSize"
-	(page)="onPaginatorChange($event)"
-	/>
+<div class="anime-table">
+	<ng-container
+		*ngIf="{
+			isLoading: isLoading$ | async,
+			animeList: (animeListPagination$ | async),
+			filterQueryParams: filter$ | async
+		} as data"
+	>
+		<div class="anime-table__header">
+			<camp-search (searchChanged)="onSearchChange($event)" [search]="data.filterQueryParams?.search ?? ''" />
+			<camp-filter-type
+				(typeChange)="onSelectChange($event)"
+				[selectedTypes]="data.filterQueryParams?.type ?? null"
+				class="anime-table__filter-type"
+			/>
+			<mat-paginator
+				class="anime-table__paginator"
+				[pageSizeOptions]="PAGE_SIZE_OPTIONS"
+				[pageSize]="data.filterQueryParams?.pageSize"
+				[pageIndex]="data.filterQueryParams?.pageNumber"
+				[length]="data.animeList?.totalCount"
+				(page)="onPaginationChange($event)"
+			/>
+		</div>
+		<table
+			mat-table
+			matSort
+			matSortDisableClear
+			(matSortChange)="onSortChange($event)"
+			[dataSource]="data.animeList?.items ?? createSkeletonAnimeSource()"
+			class="anime-table-content"
+		>
+			<th>
+				<ng-container [matColumnDef]="animeTableColumns.Image">
+					<mat-header-cell
+						class="anime-table-content__item anime-table-content__item--textColor-white"
+						*matHeaderCellDef
+					>
+						Image
+					</mat-header-cell>
+					<mat-cell
+						class="anime-table-content__item anime-table-content__item--textColor-white"
+						*matCellDef="let element"
+					>
+						<camp-skeleton-cell [isLoading]="data.isLoading">
+							<div>
+								<img [src]="element.imageUrl" alt="{{ element.titleJapan }}" class="table__item-image" />
+							</div>
+						</camp-skeleton-cell>
+					</mat-cell>
+				</ng-container>
+			</th>
+			<th>
+				<ng-container [matColumnDef]="animeTableColumns.TitleEnglish">
+					<mat-header-cell
+						mat-sort-header
+						class="anime-table-content__item anime-table-content__item--textColor-white"
+						*matHeaderCellDef
+					>
+						{{ animeTableColumns.TitleEnglish }}
+					</mat-header-cell>
+					<mat-cell class="anime-table-content__item--textColor-white" *matCellDef="let element">
+						<camp-skeleton-cell [isLoading]="data.isLoading">
+							{{ element.titleEnglish | appNullable }}
+						</camp-skeleton-cell>
+					</mat-cell>
+				</ng-container>
+			</th>
+			<th>
+				<ng-container [matColumnDef]="animeTableColumns.TitleJapanese">
+					<mat-header-cell
+						*matHeaderCellDef
+						class="anime-table-content__item anime-table-content__item--textColor-white"
+					>
+						{{ animeTableColumns.TitleJapanese }}
+					</mat-header-cell>
+					<mat-cell class="anime-table-content__item--textColor-white" *matCellDef="let element">
+						<camp-skeleton-cell [isLoading]="data.isLoading">
+							{{ element.titleJapan | appNullable }}
+						</camp-skeleton-cell>
+					</mat-cell>
+				</ng-container>
+			</th>
+			<th>
+				<ng-container [matColumnDef]="animeTableColumns.AiredStart">
+					<mat-header-cell
+						mat-sort-header
+						*matHeaderCellDef
+						class="anime-table-content__item anime-table-content__item--textColor-white"
+					>
+						{{ animeTableColumns.AiredStart }}</mat-header-cell
+					>
+					<mat-cell class="anime-table-content__item--textColor-white" *matCellDef="let element">
+						<camp-skeleton-cell [isLoading]="data.isLoading">
+							{{ element?.aired?.start | date : "M-d-yyyy" | appNullable }}
+						</camp-skeleton-cell>
+					</mat-cell>
+				</ng-container>
+			</th>
+			<th>
+				<ng-container [matColumnDef]="animeTableColumns.Type">
+					<mat-header-cell
+						*matHeaderCellDef
+						class="anime-table-content__item anime-table-content__item--textColor-white"
+					>
+						{{ animeTableColumns.Type }}</mat-header-cell
+					>
+					<mat-cell class="anime-table-content__item--textColor-white" *matCellDef="let element">
+						<camp-skeleton-cell [isLoading]="data.isLoading">
+							{{ element.type | appNullable }}
+						</camp-skeleton-cell>
+					</mat-cell>
+				</ng-container>
+			</th>
+			<th>
+				<ng-container [matColumnDef]="animeTableColumns.Status">
+					<mat-header-cell
+						mat-sort-header
+						class="anime-table-content__item anime-table-content__item--textColor-white"
+						*matHeaderCellDef
+					>
+						{{ animeTableColumns.Status }}
+					</mat-header-cell>
+					<mat-cell class="anime-table-content__item--textColor-white" *matCellDef="let element">
+						<camp-skeleton-cell [isLoading]="data.isLoading">
+							<span>{{ element.status | appNullable }}</span>
+						</camp-skeleton-cell>
+					</mat-cell>
+				</ng-container>
+			</th>
+			<mat-header-row class="anime-table__header-row" *matHeaderRowDef="animeTableColumnsArray"></mat-header-row>
+			<mat-row class="anime-table__row" *matRowDef="let row; columns: animeTableColumnsArray"></mat-row>
+		</table>
+	</ng-container>
 </div>
-
-<mat-table [dataSource]="animeList.items" class="anime-table-wrapper"  [trackBy]="trackAnime">
-	<ng-container class="table__image-container" [matColumnDef]="animeTableColumns.IMAGE">
-		<mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
-		<mat-cell *matCellDef="let element">
-			<div>
-				<img [src]="element.imageUrl" [alt]="element.titleEnglish"  class="table__item-image" />
-			</div>
-		</mat-cell>
-	</ng-container>
-	<ng-container [matColumnDef]="animeTableColumns.TITLE_EN">
-		<mat-header-cell *matHeaderCellDef> English title </mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.titleEnglish | appNullable }} </mat-cell>
-	</ng-container>
-
-	<ng-container [matColumnDef]="animeTableColumns.TITLE_JPN">
-		<mat-header-cell *matHeaderCellDef> Japanese title </mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.titleJapan | appNullable }} </mat-cell>
-	</ng-container>
-
-	<ng-container [matColumnDef]="animeTableColumns.AIRED_START">
-		<mat-header-cell *matHeaderCellDef> Aired start date</mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.aired.start | appNullable }} </mat-cell>
-	</ng-container>
-
-	<ng-container [matColumnDef]="animeTableColumns.TYPE">
-		<mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
-		<mat-cell *matCellDef="let element"> {{ element.type | appNullable }} </mat-cell>
-	</ng-container>
-
-	<ng-container [matColumnDef]="animeTableColumns.STATUS">
-		<mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-		<mat-cell *matCellDef="let element">
-			<span >{{ element.status | appNullable }}</span>
-		</mat-cell>
-	</ng-container>
-
-	<mat-header-row *matHeaderRowDef="animeTableColumnsArray"></mat-header-row>
-	<mat-row *matRowDef="let row; columns: animeTableColumnsArray"></mat-row>
-</mat-table>
-}
