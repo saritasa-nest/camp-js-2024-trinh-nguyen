@@ -16,12 +16,18 @@ import { ANIME_MANAGE_PARAMS_PROVIDERS, ANIME_MANAGE_PARAMS_TOKEN } from '@js-ca
 import { getAnimeSortField, getSortDirection, SortOptions } from '@js-camp/core/models/sort-options';
 import { AnimeType } from '@js-camp/core/models/anime-type';
 import { AnimeSortFields } from '@js-camp/core/models/anime-sort-fields';
+
+import { MatCardModule } from '@angular/material/card';
+
+import { DEBOUNCE_TIME, PAGE_SIZE_OPTIONS } from '@js-camp/angular/core/constants/constants';
+
+import { DEFAULT_PAGINATION_OPTIONS } from '@js-camp/core/constants/pagination';
+
 import { SearchComponent } from './search/search.component';
 import { FilterTypeComponent } from './filter-type/filter-type.component';
-import { MatCardModule } from '@angular/material/card';
-import { DEBOUNCE_TIME, PAGE_SIZE_OPTIONS } from '@js-camp/angular/core/constants/constants';
+
 import { SkeletonCellComponent } from './skeleton-cell/skeleton-cell.component';
-import { DEFAULT_PAGINATION_OPTIONS } from '@js-camp/core/constants/pagination';
+
 /** Anime Table Component. */
 @Component({
 	selector: 'camp-anime-table',
@@ -44,9 +50,7 @@ import { DEFAULT_PAGINATION_OPTIONS } from '@js-camp/core/constants/pagination';
 	templateUrl: './anime-table.component.html',
 	styleUrl: './anime-table.component.css',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	providers: [
-		...ANIME_MANAGE_PARAMS_PROVIDERS,
-	],
+	providers: [...ANIME_MANAGE_PARAMS_PROVIDERS],
 })
 export class AnimeTableComponent {
 
@@ -82,10 +86,10 @@ export class AnimeTableComponent {
 			tap(() => {
 				this.isLoading$.next(false);
 			}),
-			catchError(error => {
+			catchError((error: unknown) => {
 				this.isLoading$.next(false);
 				return throwError(() => error);
-			})
+			}),
 		);
 	}
 
@@ -129,7 +133,7 @@ export class AnimeTableComponent {
 
 	/**
 	 * Handle select change.
-	 * @param event Event of select change.
+	 * @param type Event of select change.
 	 */
 	protected onSelectChange(type: AnimeType | null): void {
 		this.animeQueryParams.appendParamsAndResetPageNumber({ type });
